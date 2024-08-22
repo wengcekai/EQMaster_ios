@@ -1,0 +1,50 @@
+<template>
+  <view :style="{ backgroundColor: bgColor }" class="container">
+    <button @click="changeColor" class="button">点击我</button>
+  </view>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      bgColor: '#FFFFFF' // 初始背景颜色为白色
+    };
+  },
+  methods: {
+    changeColor() {
+      this.bgColor = '#00FF00'; // 点击后背景颜色变为绿色
+    }
+  }
+};
+</script>
+
+<style scoped>
+html, body, .container {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.container {
+  background-color: inherit;
+}
+
+.button {
+  width: 150px;
+  height: 60px;
+  background-color: #000000; /* 按钮背景为黑色 */
+  color: #FFFFFF;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+  line-height: 60px;
+  font-size: 18px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+</style>

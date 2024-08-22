@@ -1,0 +1,259 @@
+<template>
+  <scroll-view scroll-y="true" class="container">
+    <!-- 职场篇模块 -->
+    <view class="section">
+      <view class="header">
+        <text class="title">职场篇</text>
+        <text class="greeting">嘿，瞄瞄你在职场中的情商属性</text>
+      </view>
+
+      <view class="cards">
+        <view class="card large-card highlight">
+          <view class="card-header">
+            <text class="card-title">#职场刺猬</text>
+            <text class="card-description">渗身带刺但能力不俗，依靠怎么思平核鱼，情商升级！</text>
+          </view>
+          <view class="card-body">
+            <image class="icon" src="/static/hedgehog.png"></image>
+            <view class="score-info">
+              <text class="card-score">45</text>
+              <text class="card-score-label">分</text>
+              <text class="card-max-score">/100分</text>
+            </view>
+          </view>
+        </view>
+        <view class="small-cards">
+          <view class="card small-card">
+            <text class="card-title">情绪稳定能力</text>
+            <text class="card-description">当前你最需要提升该项能力！你容易因工作中的小挫折或他人的不同意见而产生较大的情绪波动。</text>
+            <text class="card-score">22%</text>
+          </view>
+          <view class="card small-card">
+            <text class="card-title">高情商小贴士</text>
+            <text class="card-description">冲动是魔鬼。学会冷静是当前你最需要改善的能力。</text>
+            <text class="action-link">查看完整报告和修改档案</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 我的职场情商网模块 -->
+    <view class="section">
+      <text class="network-title">我的职场情商网 —— 深度解析职场人际关系</text>
+      <view class="network-list">
+        <view class="network-item" v-for="(person, index) in people" :key="index">
+          <image :src="person.avatar" class="avatar"></image>
+          <view class="person-info">
+            <text class="name">{{ person.name }}</text>
+            <text class="tags">{{ person.tags.join(' | ') }}</text>
+          </view>
+        </view>
+      </view>
+      <text class="view-more">查看更多</text>
+    </view>
+  </scroll-view>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      people: [
+        { name: 'Chelsea Chen', tags: ['PUA达人', '厚脸皮', '业务经验丰富'], avatar: '/static/chelsea.png' },
+        { name: '一口奶黄包', tags: ['笑面虎', '平级同事'], avatar: '/static/naibao.png' },
+        { name: 'TK', tags: ['摸鱼高手', '实习生'], avatar: '/static/tk.png' },
+        { name: '花开富贵', tags: ['茶水间闲谈', '排队抢购', '打八折'], avatar: '/static/huakai.png' },
+      ]
+    };
+  },
+  onShow() {
+    // 页面每次显示时，确保scroll-view正确初始化
+    this.initializeScrollView();
+  },
+  methods: {
+    initializeScrollView() {
+      // 这里可以放置与scroll-view相关的初始化代码
+      // 例如：重新计算scroll-view内容的高度、滚动位置等
+      console.log("ScrollView 已初始化");
+    }
+  }
+};
+</script>
+
+<style scoped>
+.container {
+  height: auto; /* 将高度设置为自适应 */
+  background-color: #f0f0f0;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.section {
+  margin-bottom: 24px;
+  background-color: #f0f0f0;
+}
+
+.header {
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 18px;
+}
+
+.greeting {
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.cards {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.large-card {
+  background-color: #ccff00;
+  padding: 12px;
+  border-radius: 10px;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.small-cards {
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+  justify-content: space-between;
+}
+
+.card {
+  background-color: #ffffff;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+.small-card {
+  background-color: #e0f7fa;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.highlight {
+  background-color: #ccff00;
+}
+
+.card-header {
+  margin-bottom: 8px;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.card-description {
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.card-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon {
+  width: 160px;
+  height: 160px;
+}
+
+.score-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.card-score {
+  font-size: 40px;
+  font-weight: bold;
+  color: #000;
+}
+
+.card-score-label {
+  font-size: 18px;
+  font-weight: bold;
+  color: #000;
+}
+
+.card-max-score {
+  font-size: 14px;
+  color: #000;
+}
+
+.action-link {
+  font-size: 14px;
+  color: #00bcd4;
+  text-decoration: underline;
+  margin-top: 8px;
+}
+
+/* 我的职场情商网模块样式 */
+.network-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  color: #000;
+}
+
+.network-list {
+  display: flex;
+  flex-direction: column;
+  background-color: #2c2c2e;
+  padding: 16px;
+  border-radius: 10px;
+}
+
+.network-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 12px;
+  background-color: #3a3a3c;
+  border-radius: 10px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.person-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.tags {
+  font-size: 12px;
+  color: #a1a1a1;
+  margin-top: 4px;
+}
+
+.view-more {
+  font-size: 14px;
+  color: #00bcd4;
+  text-align: center;
+  margin-top: 16px;
+}
+</style>
