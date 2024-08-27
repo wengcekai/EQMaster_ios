@@ -8,7 +8,7 @@
       </view>
 
       <view class="cards">
-        <view class="card large-card highlight">
+        <view class="card large-card highlight" >
           <view class="card-header">
             <text class="card-title">#职场刺猬</text>
             <text class="card-description">渗身带刺但能力不俗，依靠怎么思平核鱼，情商升级！</text>
@@ -31,7 +31,7 @@
           <view class="card small-card">
             <text class="card-title">高情商小贴士</text>
             <text class="card-description">冲动是魔鬼。学会冷静是当前你最需要改善的能力。</text>
-            <text class="action-link">查看完整报告和修改档案</text>
+            <text class="action-link" @tap="navigateToDetails">查看完整报告和修改档案</text>
           </view>
         </view>
       </view>
@@ -65,6 +65,14 @@ export default {
         { name: '花开富贵', tags: ['茶水间闲谈', '排队抢购', '打八折'], avatar: '/static/huakai.png' },
       ]
     };
+  },
+  methods: {
+    navigateToDetails() {
+      // Use Uniapp's navigation method
+      uni.navigateTo({
+        url: '/pages/details/details' // Update the path as needed
+      });
+    }
   }
 };
 </script>
@@ -76,8 +84,6 @@ export default {
   padding: 16px;
   box-sizing: border-box;
 }
-
-
 
 .section {
   margin-bottom: 24px;

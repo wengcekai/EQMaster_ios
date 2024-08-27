@@ -1,10 +1,11 @@
 <template>
   <view class="container">
-    <view class="login-box">
-      <text class="title">登录</text>
+    <view class="register-box">
+      <text class="title">注册</text>
       <input class="input" v-model="username" placeholder="请输入账号" />
       <input class="input" v-model="password" placeholder="请输入密码" password />
-      <button class="button" @click="login">登录</button>
+      <input class="input" v-model="phone" placeholder="请输入手机号" />
+      <button class="button" @click="register">确定</button>
     </view>
   </view>
 </template>
@@ -14,18 +15,20 @@ export default {
   data() {
     return {
       username: '',
-      password: ''
+      password: '',
+      phone: ''
     };
   },
   methods: {
-    login() {
-      // 发送登录请求到 FastAPI 后端
+    register() {
+      // 发送注册请求到 FastAPI 后端
       uni.request({
-        url: 'http://localhost:8000/login', // 你的 FastAPI 后端的地址
+        url: 'http://localhost:8000/register', // 你的 FastAPI 后端的地址
         method: 'POST',
         data: {
           username: this.username,
-          password: this.password
+          password: this.password,
+          phone: this.phone
         },
         success: (res) => {
           if (res.statusCode === 200) {
@@ -33,9 +36,9 @@ export default {
               title: res.data.message,
               icon: 'success'
             });
-            // 跳转到experience页面
+            // 注册成功后，跳转到问题页面，并将username作为URL参数传递
             uni.navigateTo({
-              url: `/pages/experience/experience?username=${this.username}`
+              url: `/pages/quiz/welcome?username=${this.username}`
             });
           } else {
             uni.showToast({
@@ -65,7 +68,7 @@ export default {
   background-color: #f5f5f5;
 }
 
-.login-box {
+.register-box {
   width: 80%;
   padding: 20px;
   background-color: #ffffff;

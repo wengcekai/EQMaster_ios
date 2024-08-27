@@ -1,0 +1,240 @@
+<template>
+  <scroll-view scroll-y="true" class="container">
+    <!-- Header Section -->
+    <view class="header">
+      <text class="title">我的职场情商洞察站</text>
+      <view class="score-section">
+        <text class="score-title">#职场刺猬</text>
+        <text class="score-details">当前的职场情商能力：45分/100分</text>
+        <view class="progress-bar">
+          <view class="progress" :style="{ width: '45%' }"></view>
+        </view>
+        <text class="score-description">渗身带刺但能力不俗，依靠怎么平核鱼，情商升级！</text>
+      </view>
+    </view>
+
+    <!-- Score Evaluation Module -->
+    <view class="score-evaluation">
+      <view class="score-item" v-for="(item, indpowerex) in scores" :key="index">
+        <text class="score-item-title">{{ item.title }}</text>
+        <text class="score-item-value">{{ item.value }}</text>
+        <text class="score-item-description">{{ item.description }}</text>
+      </view>
+    </view>
+
+    <!-- Guide Section -->
+    <view class="guide">
+      <text class="guide-title">你的独家职场刚情商修炼指南</text>
+      <view class="guide-content">
+        <text class="guide-section">第一节 - 情绪稳定</text>
+        <text class="guide-section">第二节 - 语言表达</text>
+      </view>
+    </view>
+  </scroll-view>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      scores: [
+        {
+          title: '情绪稳定能力',
+          value: '22%',
+          description: '工作中一点风吹草动，小心情就像火山一样，说爆发就爆发。得做些练习，不能轻易把自己和小伙伴“烤”伤。',
+        },
+        {
+          title: '语言表达分寸感',
+          value: '22%',
+          description: '你说话活动一个音量，心里暗暗嘲讽他人。表达形式确实有本领，但有时情绪太直接可能会让旁人受伤。'
+        },
+        {
+          title: '倾听能力',
+          value: '22%',
+          description: '在注意力不注意自己的沟通，难以给予下次倾听中人的正面反馈。老是忽略他人的背景和想法。专家建议和伙伴们深层沟通。',
+        },
+        {
+          title: '环境变通能力',
+          value: '22%',
+          description: '能够快速地适应不同任务和变化，并调整自己达到目标方式有待加强。能够好好实践与多人交流合作的情商，拥有良好的情商感受。'
+        }
+      ]
+    };
+  },
+  methods: {
+    goToDetails() {
+      // 使用 Uniapp 的 navigateTo 方法跳转到新页面
+      uni.navigateTo({
+        url: '/pages/details/details' // 确保这里的路径是正确的
+      });
+    }
+  }
+};
+</script>
+
+<style scoped>
+.container {
+  height: 160vh; /* 将高度设置为视口的160% */
+  background-color: #f0f0f0;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.score-section {
+  margin-top: 12px;
+}
+
+.score-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.score-details {
+  font-size: 14px;
+  color: #ccc;
+}
+
+.progress-bar {
+  background-color: #3a3a3c;
+  height: 8px;
+  border-radius: 4px;
+  margin: 8px 0;
+  overflow: hidden;
+}
+
+.progress {
+  background-color: #ffcc00;
+  height: 100%;
+  border-radius: 4px;
+}
+
+.score-description {
+  font-size: 14px;
+  margin-top: 8px;
+  color: #000;
+}
+
+.cards {
+  margin-bottom: 24px;
+}
+
+.large-card {
+  background-color: #ccff00;
+  padding: 12px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-header {
+  margin-bottom: 8px;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.card-description {
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.card-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon {
+  width: 160px;
+  height: 160px;
+}
+
+.score-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.card-score {
+  font-size: 40px;
+  font-weight: bold;
+  color: #000;
+}
+
+.card-score-label {
+  font-size: 18px;
+  font-weight: bold;
+  color: #000;
+}
+
+.card-max-score {
+  font-size: 14px;
+  color: #000;
+}
+
+.score-evaluation {
+  margin-bottom: 24px;
+  background-color: #1c1c1e;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.score-item {
+  margin-bottom: 16px;
+}
+
+.score-item-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.score-item-value {
+  font-size: 14px;
+  color: #ff4500;
+  margin-bottom: 4px;
+}
+
+.score-item-description {
+  font-size: 14px;
+  color: #ccc;
+}
+
+.guide {
+  background-color: #3a3a3c;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.guide-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  color: #ffcc00;
+}
+
+.guide-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.guide-section {
+  font-size: 14px;
+  color: #fff;
+  margin-top: 8px;
+}
+</style>
