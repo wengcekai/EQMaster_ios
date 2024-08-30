@@ -18,38 +18,58 @@ export default {
   data() {
     return {
       currentStep: 1,
-      totalSteps: 2, // Updated to reflect two steps
+      totalSteps: 2, // 总共有两步
       backgroundImages: [
-        '/static/过渡页b.png',   // Background image path for the first step
-        '/static/过渡页.png'     // Background image path for the second step
+        '/static/过渡页b.png',   // 第一步的背景图片路径
+        '/static/过渡页.png'     // 第二步的背景图片路径
       ],
-      username: ''  // To store the username passed from the previous page
+      username: '',  // 用于存储从上一页接收的用户名
+      stepData: {}  // 用于存储每个步骤的信息
     };
   },
   computed: {
     progressWidth() {
-      return `${(this.currentStep / this.totalSteps) * 100}%`; // Calculate the width of the progress bar
+      return `${(this.currentStep / this.totalSteps) * 100}%`; // 计算进度条的宽度
     },
     backgroundImage() {
-      return this.backgroundImages[this.currentStep - 1]; // Select the background image based on the current step
+      return this.backgroundImages[this.currentStep - 1]; // 根据当前步骤选择背景图片
     },
   },
   methods: {
     nextStep() {
+      // 记录当前步骤的信息，例如：
+      this.stepData[`step${this.currentStep}`] = {
+        // 这里可以记录用户的选择或输入，比如用户选了哪个选项等
+        selectedOption: 'example'  // 假设用户选择了一个选项，实际情况需根据页面设计修改
+      };
+
       if (this.currentStep < this.totalSteps) {
-        this.currentStep += 1; // Switch to the next step
+        this.currentStep += 1; // 切换到下一步
       } else {
-        // After completing all steps, navigate to the target page and pass the username
-        uni.navigateTo({
-          url: `/pages/preference/preference?username=${this.username}` // Update with the target page path and pass the username
-        });
+        // 使用本地存储来存储步骤数据
+        uni.setStorageSync('stepData', this.stepData); // 存储步骤数据到本地存储
+        console.log('Storing stepData:', this.stepData); // 打印存储的步骤数据
+
+        // 完成所有步骤后，导航到目标页面并传递用户名
+        const url = `/pages/preference/preference?username=${this.username}`;
+        console.log('Navigating to URL:', url); // 添加这行来检查生成的URL
+        uni.navigateTo({ url });
       }
     },
   },
   onLoad(options) {
-    // Retrieve URL parameters
+    // 获取URL传递的参数
+    console.log('Received options:', options); // 打印整个options对象
     if (options.username) {
-      this.username = options.username;  // Store the passed username
+      this.username = options.username;  // 将传递过来的用户名存储起来
+      console.log('Received username:', this.username); // 打印接收到的用户名
+    }
+
+    // 本地存储中可能有步骤数据
+    const storedStepData = uni.getStorageSync('stepData');
+    if (storedStepData) {
+      this.stepData = storedStepData;
+      console.log('Loaded stepData from storage:', this.stepData); // 打印从本地存储加载的步骤数据
     }
   }
 };
@@ -89,9 +109,9 @@ export default {
 .background-image {
   width: 100%;
   flex-grow: 1;
-  background-size: contain; /* 修改为 contain 以确保背景图完整显示 */
+  background-size: contain;
   background-position: center;
-  background-repeat: no-repeat; /* 确保图片不会重复 */
+  background-repeat: no-repeat;
 }
 
 .continue-button {

@@ -1,0 +1,489 @@
+<template>
+  <view class="container">
+    <!-- 背景和弧线 -->
+    <view class="background-curve"></view>
+    <!-- 添加插图 -->
+    <image class="illustration" src="/static/插图1.png" mode="widthFix"></image>
+    <!-- 添加插图 -->
+    <image class="illustration1" src="/static/img.png" mode="widthFix"></image>
+
+    <!-- 添加白色卡片 -->
+    <view class="card">
+      <!-- 标题和分数显示 -->
+      <view class="score-container">
+        <text class="score-title">情商小白</text>
+        <view class="score-details">
+          <text class="score-value-large">{{ score }}</text>
+          <text class="score-value-small">分</text>
+        </view>
+        <!-- 进度条 -->
+        <view class="progress-bar">
+          <view class="progress" :style="{ width: progressWidth(score) }"></view>
+        </view>
+      </view>
+
+      <!-- 五维雷达图 -->
+      <canvas id="radarCanvas" class="radar-canvas" width="500" height="500"></canvas>
+
+      <view class="text-box1">
+        <text class="card-title1">问题诊断</text>
+      </view>
+
+      <view class="card-content">
+        <!-- 插图或图标 -->
+        <image class="emoji" src="/static/emoji.png" mode="widthFix"></image>
+        <!-- 文字内容 -->
+        <view class="card-text-container">
+          <!-- 文字内容框和插图在同一行 -->
+          <view class="icon-text-box">
+            <!-- 插图或图标 -->
+            <image class="icon-illustration" src="/static/Frame 1321316998.png" mode="widthFix"></image>
+            <!-- 文字内容框 -->
+            <view class="text-box">
+              <text class="card-title">冲动是魔鬼，学会冷静才能掌控全场！</text>
+            </view>
+          </view>
+
+          <text class="card-description">你的情绪稳定能力略有欠缺，需要一些提升。工作中遇到挫折或与他人意见不和，都可能会给你带来较大的情绪波动，从而影响你的工作效率和人际关系。</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 添加白色卡片1 -->
+    <view class="card1">
+      <view class="text-box1">
+        <text class="card-title1">提升秘诀</text>
+      </view>
+
+      <view class="card-content">
+        <!-- 插图或图标 -->
+        <image class="emoji" src="/static/emoji.png" mode="widthFix"></image>
+        <!-- 文字内容 -->
+        <view class="card-text-container">
+          <!-- 文字内容框和插图在同一行 -->
+          <view class="icon-text-box">
+            <!-- 插图或图标 -->
+            <image class="icon-illustration" src="/static/Frame 1321316998.png" mode="widthFix"></image>
+            
+            <!-- 文字内容框 -->
+            <view class="text-box">
+              <text class="card-title">对事不对人，学会高效表达！</text>
+            </view>
+          </view>
+
+          <text class="card-description">沟通时，注重倾听，点头和眼神交流表示尊重，先听对方说，再表达自己的想法。</text>
+          <text class="card-description">处理冲突时，保持和平理性，避免带刺的言辞，一起寻找双赢的解决办法。</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 添加白色卡片2 -->
+    <view class="card2">
+      <view class="text-box1">
+        <text class="card-title1">详细报告</text>
+      </view>
+
+      <!-- 维度一 -->
+      <view class="score-container">
+        <text class="score-title1">维度名称一</text>
+        <!-- 进度条 -->
+        <view class="progress-bar1">
+          <view class="progress" :style="{ width: progressWidth(31) }"></view> <!-- 根据31%的数值动态变化 -->
+        </view>
+        <text class="score-title1">31%</text>
+      </view>
+
+      <text class="card-description">沟通时，注重倾听，点头和眼神交流表示尊重，先听对方说，再表达自己的想法。</text>
+      <text class="card-description">处理冲突时，保持和平理性，避免带刺的言辞，一起寻找双赢的解决办法。</text>
+
+      <!-- 维度二 -->
+      <view class="score-container1">
+        <text class="score-title1">维度名称二</text>
+        <!-- 进度条 -->
+        <view class="progress-bar1">
+          <view class="progress" :style="{ width: progressWidth(81) }"></view> <!-- 根据81%的数值动态变化 -->
+        </view>
+        <text class="score-title1">81%</text>
+      </view>
+
+      <text class="card-description">沟通时，注重倾听，点头和眼神交流表示尊重，先听对方说，再表达自己的想法。</text>
+      <text class="card-description">处理冲突时，保持和平理性，避免带刺的言辞，一起寻找双赢的解决办法。</text>
+
+      <!-- 维度三 -->
+      <view class="score-container1">
+        <text class="score-title1">维度名称三</text>
+        <!-- 进度条 -->
+        <view class="progress-bar1">
+          <view class="progress" :style="{ width: progressWidth(51) }"></view> <!-- 根据51%的数值动态变化 -->
+        </view>
+        <text class="score-title1">51%</text>
+      </view>
+
+      <text class="card-description">沟通时，注重倾听，点头和眼神交流表示尊重，先听对方说，再表达自己的想法。</text>
+      <text class="card-description">处理冲突时，保持和平理性，避免带刺的言辞，一起寻找双赢的解决办法。</text>
+
+      <!-- 维度四 -->
+      <view class="score-container1">
+        <text class="score-title1">维度名称四</text>
+        <!-- 进度条 -->
+        <view class="progress-bar1">
+          <view class="progress" :style="{ width: progressWidth(33) }"></view> <!-- 根据33%的数值动态变化 -->
+        </view>
+        <text class="score-title1">33%</text>
+      </view>
+
+      <text class="card-description">沟通时，注重倾听，点头和眼神交流表示尊重，先听对方说，再表达自己的想法。</text>
+      <text class="card-description">处理冲突时，保持和平理性，避免带刺的言辞，一起寻找双赢的解决办法。</text>
+
+      <!-- 维度五 -->
+      <view class="score-container1">
+        <text class="score-title1">维度名称五</text>
+        <!-- 进度条 -->
+        <view class="progress-bar1">
+          <view class="progress" :style="{ width: progressWidth(61) }"></view> <!-- 根据61%的数值动态变化 -->
+        </view>
+        <text class="score-title1">61%</text>
+      </view>
+
+      <text class="card-description">沟通时，注重倾听，点头和眼神交流表示尊重，先听对方说，再表达自己的想法。</text>
+      <text class="card-description">处理冲突时，保持和平理性，避免带刺的言辞，一起寻找双赢的解决办法。</text>
+    </view>
+
+    <!-- 添加蓝色按钮 -->
+    <button class="guide-button" @click="navigateToGuide">查看我的修炼指南</button>
+  </view>
+</template>
+
+<style scoped>
+.container {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  background-color: #F4F6FF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto; /* Allow vertical scrolling */
+}
+
+.background-curve {
+  width: 200%;
+  height: 500rpx;
+  background-color: #F4F6FF;
+  border-radius: 70%;
+  position: absolute;
+  top: -100rpx;
+  left: -300px;
+  transform: rotate(35deg);
+}
+
+.illustration {
+  width: 300rpx;
+  height: auto;
+  position: absolute;
+  top: 00rpx;
+  left: 200px;
+  z-index: 10;
+  /* left: 30%; */
+  margin-bottom: 20rpx;
+}
+
+.illustration1 {
+  width: 700rpx;
+  height: auto;
+  position: relative;
+  z-index: 10;
+  top: -5%;
+  left: -3%;
+  margin-top: 80rpx;
+  margin-bottom: 0rpx;
+}
+
+.card, .card1, .card2 {
+  width: 95%;
+  height: auto;
+  background-color: #FFFFFF;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 20;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60rpx 30rpx 0rpx 30rpx;
+}
+
+.card {
+  top: -5%;
+}
+
+.card1 {
+  top: -3.5%;
+}
+
+.card2 {
+  top: -2%;
+  padding-bottom: 20rpx;
+}
+
+.score-container, .score-container1 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 10rpx;
+}
+
+.score-container1 {
+  margin-top: 100rpx;
+}
+
+.score-title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #BABDE0;
+  margin-bottom: 5rpx;
+}
+
+.score-title1 {
+  font-size: 36rpx;
+  color: #212121;
+  margin-bottom: 5rpx;
+}
+
+.score-details {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 10rpx;
+  width: 100%;
+}
+
+.score-value-large {
+  font-size: 80rpx;
+  font-weight: bold;
+  color: #BABDE0;
+  margin-right: 5rpx;
+}
+
+.score-value-small {
+  font-size: 40rpx;
+  font-weight: normal;
+  color: #BABDE0;
+  position: absolute;
+  top: 40rpx;
+  left: 100rpx;
+}
+
+.progress-bar, .progress-bar1 {
+  width: 100%;
+  height: 10rpx;
+  background-color: #E5E5E5;
+  border-radius: 5rpx;
+  overflow: hidden;
+  margin-top: 5rpx;
+}
+
+.progress-bar1 {
+  margin: 15rpx 5rpx;
+}
+
+.progress {
+  height: 100%;
+  background-color: #BABDE0;
+}
+
+.radar-canvas {
+  width: 700rpx;
+  height: 500rpx;
+  margin: 10rpx;
+  background-color: transparent;
+}
+
+.card-content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.emoji {
+  width: 60rpx;
+  height: auto;
+  margin-right: 10rpx;
+}
+
+.card-text-container {
+  display: flex;
+  align-items: left;
+  justify-content: flex-start;
+  margin-bottom: 20rpx;
+}
+
+.icon-text-box {
+  display: flex;
+  align-items: center;
+}
+
+.icon-illustration {
+  width: 60rpx;
+  height: auto;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  margin-right: 10rpx;
+}
+
+.text-box, .text-box1 {
+  display: inline-flex;
+  align-items: center;
+  border: 1rpx solid #FFFFFF;
+  padding: 5rpx 10rpx;
+  border-radius: 10rpx;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 12rpx 0rpx rgba(0, 0, 0, 0.3);
+  margin: 10rpx;
+}
+
+.text-box1 {
+  padding: 10rpx;
+  box-shadow: 0 0 0rpx 0rpx rgba(0, 0, 0, 0.3);
+  margin: 0rpx 10rpx 10rpx 10rpx;
+}
+
+.card-title {
+  font-size: 28rpx;
+  color: #BABDE0;
+  margin-bottom: 10rpx;
+}
+
+.card-title1 {
+  font-size: 32rpx;
+  color: #666666;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+  top: -10%;
+}
+
+.card-description {
+  font-size: 32rpx;
+  color: #6E6E6E;
+  line-height: 1.5;
+  margin-top: 10rpx;
+}
+
+.guide-button {
+  width: 90%;
+  height: 100rpx;
+  background-color: #6871F9;
+  color: white;
+  font-size: 36rpx;
+  border-radius: 50rpx;
+  /* margin-top: 20rpx; */
+  text-align: center;
+  line-height: 100rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30rpx;
+  /* top:%; */
+  /* box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1); */
+}
+</style>
+
+<script>
+export default {
+  data() {
+    return {
+      score: 28, // 示例中的分数，可以根据实际情况动态改变
+      maxScore: 100 // 假设最大分数是100
+    };
+  },
+  mounted() {
+    this.drawRadar();
+  },
+  methods: {
+    progressWidth(value) {
+      // 计算进度条的宽度百分比
+      const percentage = (value / this.maxScore) * 100;
+      return `${percentage}%`;
+    },
+    drawRadar() {
+      const canvas = document.getElementById('radarCanvas');
+      if (!canvas) return;
+      const radarCtx = canvas.getContext('2d');
+
+      // 控制中心点和半径
+      const center = { x: 150, y: 70 }; // 调整 y 值以便图形不被遮挡
+      const radius = 50;
+
+      // 控制xy两个方向的比例
+      const scaleX = 1.7; // X方向放大1.5倍
+      const scaleY = 1.2;   // Y方向保持原比例
+
+      const data = [80, 70, 85, 60, 90]; // 五个维度的数据
+      const labels = ['', '', '', '', ''];
+
+      // 绘制多边形网格，只绘制两层
+      radarCtx.strokeStyle = '#757CE0'; // 浅蓝色线条
+      radarCtx.lineWidth = 0.5;
+      for (let i = 0; i <= 1; i++) {
+        radarCtx.beginPath();
+        for (let j = 0; j < 5; j++) {
+          const angle = (Math.PI / 2 + (2 * Math.PI * j) / 5);
+          const x = center.x + scaleX * (radius * (2 - i) / 2) * Math.cos(angle);
+          const y = center.y - scaleY * (radius * (2 - i) / 2) * Math.sin(angle);
+          radarCtx.lineTo(x, y);
+        }
+        radarCtx.closePath();
+        radarCtx.stroke();
+      }
+
+      // 绘制从中心点到每个顶点的径向线
+      radarCtx.strokeStyle = '#757CE0'; // 浅蓝色线条，半透明
+      radarCtx.lineWidth = 0.5;
+      for (let j = 0; j < 5; j++) {
+        radarCtx.beginPath();
+        const angle = (Math.PI / 2 + (2 * Math.PI * j) / 5);
+        const x = center.x + scaleX * radius * Math.cos(angle);
+        const y = center.y - scaleY * radius * Math.sin(angle);
+        radarCtx.moveTo(center.x, center.y); // 移动到中心点
+        radarCtx.lineTo(x, y); // 画线到每个顶点
+        radarCtx.stroke();
+      }
+
+      // 绘制数据多边形
+      radarCtx.fillStyle = 'rgba(117, 124, 224, 0.3)'; // 使用半透明的#757CE0颜色
+      radarCtx.strokeStyle = 'rgba(117, 124, 224, 0.8)'; // 边框使用更深的半透明颜色
+      radarCtx.lineWidth = 1;
+      radarCtx.beginPath();
+      for (let i = 0; i < 5; i++) {
+        const angle = (Math.PI / 2 + (2 * Math.PI * i) / 5);
+        const x = center.x + scaleX * (radius * data[i] / 100) * Math.cos(angle);
+        const y = center.y - scaleY * (radius * data[i] / 100) * Math.sin(angle);
+        radarCtx.lineTo(x, y);
+      }
+      radarCtx.closePath();
+      radarCtx.fill();   // 填充多边形
+      radarCtx.stroke(); // 绘制边框
+
+      // 绘制标签
+      radarCtx.fillStyle = '#666666'; // 灰色字体
+      radarCtx.font = '14px Arial';
+      labels.forEach((label, i) => {
+        const angle = (Math.PI / 2 + (2 * Math.PI * i) / 5);
+        const x = center.x + scaleX * (radius + 20) * Math.cos(angle);
+        const y = center.y - scaleY * (radius + 20) * Math.sin(angle);
+        radarCtx.fillText(label, x - 20, y + 5);
+      });
+    },
+    navigateToGuide() {
+      // Use Uniapp's navigation method
+      uni.navigateTo({
+        url: '/pages/dashboard/dashboard' // Update the path as needed
+      });
+    }
+  }
+};
+</script>
+
+

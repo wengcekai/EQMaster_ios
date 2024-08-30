@@ -136,6 +136,12 @@
 	  }
 	},
 	{
+	  "path": "pages/dashboard/dashboar1d",
+	  "style": {
+	    "navigationBarTitleText": ""
+	  }
+	},
+	{
 	  "path": "pages/details/details",
 	  "style": {
 	    "navigationBarTitleText": ""
@@ -143,6 +149,18 @@
 	},
 	{
 	  "path": "pages/login/login",
+	  "style": {
+	    "navigationBarTitleText": ""
+	  }
+	},
+	{
+	  "path": "pages/cta/cta",
+	  "style": {
+	    "navigationBarTitleText": ""
+	  }
+	},
+	{
+	  "path": "pages/result/result",
 	  "style": {
 	    "navigationBarTitleText": ""
 	  }
