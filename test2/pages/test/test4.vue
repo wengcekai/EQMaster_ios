@@ -20,15 +20,15 @@
       <image class="logo" src="/static/Vector.png" mode="aspectFit" />
     </view>
     
-	<!-- <image class="user-avatar" src="/static/npc1.png" mode="aspectFill" /> -->
+	<image class="user-avatar" src="/static/npc2.png" mode="aspectFill" />
     <!-- 调整用户信息模块的位置 -->
-<!--    <view class="user-info" :style="userInfoStyle">
-      <text class="user-name">小王</text>
-    </view> -->
+    <view class="user-info" :style="userInfoStyle">
+      <text class="user-name">小李</text>
+    </view>
     
     <!-- 文字框 -->
     <view class="text-box">
-      <text class="text-content">{{ background }}</text>
+      <text class="text-content">{{ description }}</text>
       <view class="expand-icon" @click="navigateToTest1">▼</view>
     </view>
 
@@ -51,7 +51,8 @@ export default {
       selectedOptions: [], // 添加这个属性
       birthday: null, // 添加这个属性
       scenarioData: null,
-      background: '', // 保留这个属性
+      background: '' ,// 新增属性用于存储背景信息
+	  description: '' ,
       jobId: '' // 新增属性用于存储job_id
     }
   },
@@ -62,7 +63,8 @@ export default {
     this.userId = option.userId || '';
     this.username = decodeURIComponent(option.username || '');
     this.gender = option.gender || '';
-
+    this.jobId = option.jobId; // 添加这行来接收 jobId
+	
     if (option.options) {
       try {
         this.selectedOptions = JSON.parse(decodeURIComponent(option.options));
@@ -90,7 +92,7 @@ export default {
     });
 
     // 发送数据到后端
-    this.sendDataToBackend();
+    this.getScenarioData();
   },
   methods: {
     updateUserInfoPosition(x, y) {
@@ -99,37 +101,37 @@ export default {
       this.userInfoStyle.transform = 'none'; // 移除居中效果
     },
     navigateToTest1() {
-      const testPageUrl = `/pages/test/test1?jobId=${this.jobId}&userId=${this.userId}&username=${encodeURIComponent(this.username)}&gender=${this.gender}&birthday=${encodeURIComponent(JSON.stringify(this.birthday))}&options=${encodeURIComponent(JSON.stringify(this.selectedOptions))}`;
+      const testPageUrl = `/pages/test/test5?jobId=${this.jobId}&userId=${this.userId}&username=${encodeURIComponent(this.username)}&gender=${this.gender}&birthday=${encodeURIComponent(JSON.stringify(this.birthday))}&options=${encodeURIComponent(JSON.stringify(this.selectedOptions))}`;
       
       uni.navigateTo({
         url: testPageUrl
       });
     },
-    sendDataToBackend() {
-      uni.request({
-        url: 'http://10.32.69.27:8180/create_profile',
-        method: 'POST',
-        data: {
-          name: this.username,
-          job_level: this.jobLevel || '',
-          gender: this.gender,
-          concerns: this.selectedOptions,
-        },
-        success: (res) => {
-          console.log('Backend response:', res.data);
-          this.jobId = res.data.job_id; // 存储返回的job_id
+    // sendDataToBackend() {
+    //   uni.request({
+    //     url: 'http://10.32.69.27:8180/create_profile',
+    //     method: 'POST',
+    //     data: {
+    //       name: this.username,
+    //       job_level: this.jobLevel || '',
+    //       gender: this.gender,
+    //       concerns: this.selectedOptions,
+    //     },
+    //     success: (res) => {
+    //       console.log('Backend response:', res.data);
+    //       this.jobId = res.data.job_id; // 存储返回的job_id
 
-          // 获取job_id后立即调用start_scenario
-          this.getScenarioData();
-        },
-        fail: (err) => {
-          console.error('Error sending data to backend:', err);
-        }
-      });
-    },
+    //       // 获取job_id后立即调用start_scenario
+    //       this.getScenarioData();
+    //     },
+    //     fail: (err) => {
+    //       console.error('Error sending data to backend:', err);
+    //     }
+    //   });
+    // },
     getScenarioData() {
       uni.request({
-        url: 'http://10.32.69.27:8180/start_scenario',
+        url: 'http://10.32.69.27:8180/get_current_scenario',
         method: 'GET',
         success: (res) => {
           console.log('Scenario data:', res.data);
@@ -144,12 +146,15 @@ export default {
     handleScenarioData() {
       if (this.scenarioData) {
         // 假设scenarioData包含一个background字段
-        this.background = this.scenarioData.background || '请点击下方箭头继续';
-        // ... 处理其他数据
+        this.description = this.scenarioData.description;
+		
+      // if (this.scenarioData && this.scenarioData.scenes && this.scenarioData.scenes.description) {
+      //   this.description = this.scenarioData.scenes.description;
       } else {
-        this.background = '请点击下方箭头继续';
+        console.warn('Background information not found in scenario data');
+        this.background = '无法获取背景信息';
       }
-    },
+    }
   }
 }
 </script>

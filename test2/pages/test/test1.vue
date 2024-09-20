@@ -20,15 +20,15 @@
       <image class="logo" src="/static/Vector.png" mode="aspectFit" />
     </view>
     
-	<!-- <image class="user-avatar" src="/static/npc1.png" mode="aspectFill" /> -->
+	<image class="user-avatar" src="/static/npc2.png" mode="aspectFill" />
     <!-- 调整用户信息模块的位置 -->
-<!--    <view class="user-info" :style="userInfoStyle">
-      <text class="user-name">小王</text>
-    </view> -->
+    <view class="user-info" :style="userInfoStyle">
+      <text class="user-name">小李</text>
+    </view>
     
     <!-- 文字框 -->
     <view class="text-box">
-      <text class="text-content">{{ background }}</text>
+      <text class="text-content">{{ description }}</text>
       <view class="expand-icon" @click="navigateToTest1">▼</view>
     </view>
 
@@ -49,10 +49,11 @@ export default {
       username: '',
       gender: '',
       selectedOptions: [], // 添加这个属性
-      birthday: null, // 添加这个属性
+      birthday: null, // 添加这属性
       scenarioData: null,
-      background: '', // 保留这个属性
-      jobId: '' // 新增属性用于存储job_id
+      background: '' ,// 新增属性用于存储背景信息
+	  description: '' ,
+      jobId: '', // 添加这个属性
     }
   },
   onLoad(option) {
@@ -62,6 +63,7 @@ export default {
     this.userId = option.userId || '';
     this.username = decodeURIComponent(option.username || '');
     this.gender = option.gender || '';
+	this.jobId = option.jobId || ''; // 将接收到的 jobId 赋值给组件的 jobId 属性
 
     if (option.options) {
       try {
@@ -81,16 +83,9 @@ export default {
       }
     }
 
-    console.log('Parsed data:', {
-      userId: this.userId,
-      username: this.username,
-      gender: this.gender,
-      selectedOptions: this.selectedOptions,
-      birthday: this.birthday
-    });
 
     // 发送数据到后端
-    this.sendDataToBackend();
+    this.getScenarioData();
   },
   methods: {
     updateUserInfoPosition(x, y) {
@@ -99,32 +94,12 @@ export default {
       this.userInfoStyle.transform = 'none'; // 移除居中效果
     },
     navigateToTest1() {
-      const testPageUrl = `/pages/test/test1?jobId=${this.jobId}&userId=${this.userId}&username=${encodeURIComponent(this.username)}&gender=${this.gender}&birthday=${encodeURIComponent(JSON.stringify(this.birthday))}&options=${encodeURIComponent(JSON.stringify(this.selectedOptions))}`;
+      const testPageUrl = `/pages/test/test2?jobId=${this.jobId}&userId=${this.userId}&username=${encodeURIComponent(this.username)}&gender=${this.gender}&birthday=${encodeURIComponent(JSON.stringify(this.birthday))}&options=${encodeURIComponent(JSON.stringify(this.selectedOptions))}`;
       
+      console.log('Navigating to:', testPageUrl); // 添加这行来打印完整的 URL
+
       uni.navigateTo({
         url: testPageUrl
-      });
-    },
-    sendDataToBackend() {
-      uni.request({
-        url: 'http://10.32.69.27:8180/create_profile',
-        method: 'POST',
-        data: {
-          name: this.username,
-          job_level: this.jobLevel || '',
-          gender: this.gender,
-          concerns: this.selectedOptions,
-        },
-        success: (res) => {
-          console.log('Backend response:', res.data);
-          this.jobId = res.data.job_id; // 存储返回的job_id
-
-          // 获取job_id后立即调用start_scenario
-          this.getScenarioData();
-        },
-        fail: (err) => {
-          console.error('Error sending data to backend:', err);
-        }
       });
     },
     getScenarioData() {
@@ -144,12 +119,15 @@ export default {
     handleScenarioData() {
       if (this.scenarioData) {
         // 假设scenarioData包含一个background字段
-        this.background = this.scenarioData.background || '请点击下方箭头继续';
-        // ... 处理其他数据
+        this.description = this.scenarioData.description;
+		
+      // if (this.scenarioData && this.scenarioData.scenes && this.scenarioData.scenes.description) {
+      //   this.description = this.scenarioData.scenes.description;
       } else {
-        this.background = '请点击下方箭头继续';
+        console.warn('Background information not found in scenario data');
+        this.background = '无法获取背景信息';
       }
-    },
+    }
   }
 }
 </script>
@@ -218,8 +196,8 @@ export default {
   padding-bottom: 15px;
   padding-left: 25px; /* 增加左边距 */
   padding-right: 25px; /* 增加右边距 */
-  z-index: 0; /* 确保文字框在用户信息框之下 */
-  min-height: 50px; /* 设置最小高度 */
+  z-index: 0; /* 确保文字框用户信息框之下 */
+  min-height: 50px; /* 设置最小度 */
   max-height: 200px; /* 设置最大高度 */
   overflow: auto; /* 内容溢出时滚动 */
 }

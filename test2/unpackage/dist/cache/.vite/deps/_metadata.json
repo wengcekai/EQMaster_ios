@@ -1,8 +1,15 @@
 {
-  "hash": "70e7f61b",
+  "hash": "1abd8356",
   "configHash": "47a7595d",
-  "lockfileHash": "e3b0c442",
-  "browserHash": "62828736",
-  "optimized": {},
+  "lockfileHash": "e7e21ab0",
+  "browserHash": "00f37958",
+  "optimized": {
+    "uuid": {
+      "src": "../../../../../node_modules/uuid/dist/esm-browser/index.js",
+      "file": "uuid.js",
+      "fileHash": "ad92c0e1",
+      "needsInterop": false
+    }
+  },
   "chunks": {}
 }

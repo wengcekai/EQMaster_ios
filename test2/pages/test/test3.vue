@@ -53,6 +53,8 @@ export default {
       scenarioData: null,
       background: '', // 保留这个属性
       jobId: '' // 新增属性用于存储job_id
+      
+      
     }
   },
   onLoad(option) {
@@ -62,6 +64,7 @@ export default {
     this.userId = option.userId || '';
     this.username = decodeURIComponent(option.username || '');
     this.gender = option.gender || '';
+    this.jobId = option.jobId;
 
     if (option.options) {
       try {
@@ -89,8 +92,21 @@ export default {
       birthday: this.birthday
     });
 
+    // 接收来自 test5 的新信息
+    if (option.roundCount) {
+      this.roundCount = parseInt(option.roundCount, 10);
+    }
+    if (option.num) {
+      this.num = parseInt(option.num, 10);
+    }
+
+    console.log('Parsed data:', {
+      roundCount: this.roundCount,
+      num: this.num
+    });
+
     // 发送数据到后端
-    this.sendDataToBackend();
+    this.getScenarioData();
   },
   methods: {
     updateUserInfoPosition(x, y) {
@@ -99,37 +115,37 @@ export default {
       this.userInfoStyle.transform = 'none'; // 移除居中效果
     },
     navigateToTest1() {
-      const testPageUrl = `/pages/test/test1?jobId=${this.jobId}&userId=${this.userId}&username=${encodeURIComponent(this.username)}&gender=${this.gender}&birthday=${encodeURIComponent(JSON.stringify(this.birthday))}&options=${encodeURIComponent(JSON.stringify(this.selectedOptions))}`;
+      const testPageUrl = `/pages/test/test4?jobId=${this.jobId}&userId=${this.userId}&username=${encodeURIComponent(this.username)}&gender=${this.gender}&birthday=${encodeURIComponent(JSON.stringify(this.birthday))}&options=${encodeURIComponent(JSON.stringify(this.selectedOptions))}&roundCount=${this.roundCount}&num=${this.num}`;
       
       uni.navigateTo({
         url: testPageUrl
       });
     },
-    sendDataToBackend() {
-      uni.request({
-        url: 'http://10.32.69.27:8180/create_profile',
-        method: 'POST',
-        data: {
-          name: this.username,
-          job_level: this.jobLevel || '',
-          gender: this.gender,
-          concerns: this.selectedOptions,
-        },
-        success: (res) => {
-          console.log('Backend response:', res.data);
-          this.jobId = res.data.job_id; // 存储返回的job_id
+    // sendDataToBackend() {
+    //   uni.request({
+    //     url: 'http://10.32.69.27:8180/get_current_scenario',
+    //     method: 'GET',
+    //     // data: {
+    //     //   name: this.username,
+    //     //   job_level: this.jobLevel || '',
+    //     //   gender: this.gender,
+    //     //   concerns: this.selectedOptions,
+    //     // },
+    //     success: (res) => {
+    //       console.log('Backend response:', res.data);
+    //       this.jobId = res.data.job_id; // 存储返回的job_id
 
-          // 获取job_id后立即调用start_scenario
-          this.getScenarioData();
-        },
-        fail: (err) => {
-          console.error('Error sending data to backend:', err);
-        }
-      });
-    },
+    //       // 获取job_id后立即调用start_scenario
+    //       this.getScenarioData();
+    //     },
+    //     fail: (err) => {
+    //       console.error('Error sending data to backend:', err);
+    //     }
+    //   });
+    // },
     getScenarioData() {
       uni.request({
-        url: 'http://10.32.69.27:8180/start_scenario',
+        url: 'http://10.32.69.27:8180/get_current_scenario',
         method: 'GET',
         success: (res) => {
           console.log('Scenario data:', res.data);

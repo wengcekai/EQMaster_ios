@@ -1,77 +1,56 @@
 <template>
   <view class="container">
-    <view class="progress-bar">
-      <!-- Progress bar indicating current step -->
-      <view class="progress-indicator" :style="{ width: progressWidth }"></view>
-    </view>
-
-    <!-- Content area with background image -->
+    <!-- 背景图片 -->
     <view class="background-image" :style="{ backgroundImage: `url(${backgroundImage})` }"></view>
 
-    <!-- Bottom button to proceed to the next step -->
-    <button class="continue-button" @click="nextStep">继续</button>
+    <!-- 内容区域 -->
+    <view class="content">
+      <view class="text-content">
+        <text class="greeting">嗨👋</text>
+        <text class="question">很开心见到你！你叫什么名字？</text>
+        <text class="subtitle">完善个人信息</text>
+      </view>
+
+      <!-- 输入框 -->
+      <input class="name-input" placeholder="请输入" v-model="username" />
+
+      <!-- 继续按钮 -->
+      <view class="button-container">
+        <view class="continue-button" @click="nextStep">
+          <text class="arrow">→</text>
+        </view>
+      </view>
+    </view>
   </view>
 </template>
 
 <script>
+import { v4 as uuidv4 } from 'uuid';
+
 export default {
   data() {
     return {
-      currentStep: 1,
-      totalSteps: 2, // 总共有两步
-      backgroundImages: [
-        '/static/过渡页b.png',   // 第一步的背景图片路径
-        '/static/过渡页.png'     // 第二步的背景图片路径
-      ],
-      username: '',  // 用于存储从上一页接收的用户名
-      stepData: {}  // 用于存储每个步骤的信息
+      username: '',
+      // backgroundImage: '/static/background.png', // 替换为实际的背景图片路径
     };
-  },
-  computed: {
-    progressWidth() {
-      return `${(this.currentStep / this.totalSteps) * 100}%`; // 计算进度条的宽度
-    },
-    backgroundImage() {
-      return this.backgroundImages[this.currentStep - 1]; // 根据当前步骤选择背景图片
-    },
   },
   methods: {
     nextStep() {
-      // 记录当前步骤的信息，例如：
-      this.stepData[`step${this.currentStep}`] = {
-        // 这里可以记录用户的选择或输入，比如用户选了哪个选项等
-        selectedOption: 'example'  // 假设用户选择了一个选项，实际情况需根据页面设计修改
-      };
-
-      if (this.currentStep < this.totalSteps) {
-        this.currentStep += 1; // 切换到下一步
+      if (this.username.trim()) {
+        const userId = uuidv4(); // 生成唯一ID
+        // 保存用户名和ID
+        uni.setStorageSync('username', this.username);
+        uni.setStorageSync('userId', userId);
+        // 导航到下一页，并传递参数
+        uni.navigateTo({ 
+          url: `/pages/preference/preference?userId=${userId}&username=${encodeURIComponent(this.username)}` 
+        });
       } else {
-        // 使用本地存储来存储步骤数据
-        uni.setStorageSync('stepData', this.stepData); // 存储步骤数据到本地存储
-        console.log('Storing stepData:', this.stepData); // 打印存储的步骤数据
-
-        // 完成所有步骤后，导航到目标页面并传递用户名
-        const url = `/pages/preference/preference?username=${this.username}`;
-        console.log('Navigating to URL:', url); // 添加这行来检查生成的URL
-        uni.navigateTo({ url });
+        // 提示用户输入名字
+        uni.showToast({ title: '请输入您的名字', icon: 'none' });
       }
     },
   },
-  onLoad(options) {
-    // 获取URL传递的参数
-    console.log('Received options:', options); // 打印整个options对象
-    if (options.username) {
-      this.username = options.username;  // 将传递过来的用户名存储起来
-      console.log('Received username:', this.username); // 打印接收到的用户名
-    }
-
-    // 本地存储中可能有步骤数据
-    const storedStepData = uni.getStorageSync('stepData');
-    if (storedStepData) {
-      this.stepData = storedStepData;
-      console.log('Loaded stepData from storage:', this.stepData); // 打印从本地存储加载的步骤数据
-    }
-  }
 };
 </script>
 
@@ -79,52 +58,81 @@ export default {
 .container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
   min-height: 100vh;
-  max-height: 100vh;
-  background-color: #ffffff;
-  padding: 0;
+  background-color: #1c1c1e;
   position: relative;
 }
 
-.progress-bar {
-  width: 100%;
-  height: 5px;
-  background-color: #e0e0e0;
-  margin-bottom: 20px;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.progress-indicator {
-  height: 100%;
-  background-color: #4b9eff;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
 .background-image {
-  width: 100%;
-  flex-grow: 1;
-  background-size: contain;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* 改为顶部对齐 */
+  padding: 40px 20px; /* 减少顶部padding */
+  z-index: 1;
+}
+
+.text-content {
+  margin-bottom: 60px; /* 增加底部间距 */
+}
+
+.greeting {
+  font-size: 24px;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.question {
+  font-size: 20px;
+  color: #ffffff;
+  margin-bottom: 5px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #8e8e93;
+}
+
+.name-input {
+  width: 100%;
+  background-color: #2c2c2e;
+  border-radius: 10px;
+  padding: 10px 15px;
+  color: #ffffff;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: auto; /* 将容器推到底部 */
+  margin-bottom: 240px; /* 添加底部间距 */
 }
 
 .continue-button {
-  width: 80%;
-  max-width: 400px;
-  height: 45px;
-  background-color: #4b9eff;
-  color: #ffffff;
-  border-radius: 22.5px;
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 30px;
-  position: absolute;
-  bottom: 10px;
+  width: 50px;  /* 减小按钮宽度 */
+  height: 50px; /* 减小按钮高度 */
+  background-color: #8BC34A;
+  border-radius: 25px; /* 调整圆角以保持圆形 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.arrow {
+  color: #242424;
+  font-size: 20px; /* 稍微减小箭头大小 */
 }
 </style>

@@ -1,13 +1,13 @@
 <template>
   <view class="container">
 	  <view class="debug-info">
-	    <!-- <text>User ID: {{ userId }}</text> -->
+	    <text>User ID: {{ userId }}</text>
 	    <!-- <text>Username: {{ username }}</text> -->
-	    <!-- <text>Gender: {{ gender }}</text> --> -->
-	    <!-- <text>Selected Options: {{ selectedOptions.join(', ') }}</text> -->
+	    <text>Gender: {{ gender }}</text> -->
+	    <text>Selected Options: {{ selectedOptions.join(', ') }}</text>
 	    <!-- <text>Number of Selected Options: {{ selectedOptions.length }}</text>
 	    <!-- <text>Birthday: {{ birthday ? JSON.stringify(birthday) : '未设置' }}</text> -->
-	    <!-- <text>homepageData: {{ JSON.stringify(homepageData) }}</text> -->
+	    <text>homepageData: {{ JSON.stringify(homepageData,response) }}</text>
 	    <!-- <text>Background: {{ background }}</text> -->
 	  </view>
 	  
@@ -28,37 +28,16 @@
         </view>
         <!-- 进度条 -->
         <view class="progress-bar">
-          <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.score) }"></view>
+          <view class="progress" :style="{ width: progressWidth(score) }"></view>
         </view>
       </view>
 
       <!-- 五维雷达图 -->
       <canvas id="radarCanvas" class="radar-canvas" width="500" height="500"></canvas>
 
-      <view class="emotion-detection-box1">
-        <text class="emotion-detection-title">情绪侦查力</text>
-      </view>
-	  
-	  <view class="emotion-detection-box2">
-	    <text class="emotion-detection-title">社交得体度</text>
-	  </view>
-	  
-	  <view class="emotion-detection-box3">
-	    <text class="emotion-detection-title">情绪掌控力</text>
-	  </view>
-	  
-	  <view class="emotion-detection-box4">
-	    <text class="emotion-detection-title">沟通表达力</text>
-	  </view>
-	  
-	  <view class="emotion-detection-box5">
-	    <text class="emotion-detection-title">人际平衡力</text>
-	  </view>
-	  
       <view class="text-box1">
         <text class="card-title1">问题诊断</text>
       </view>
-
 
       <view class="card-content">
         <!-- 插图或图标 -->
@@ -306,7 +285,7 @@
   color: #9EE44D;
   position: absolute;
   top: 40rpx;
-  left: 180rpx;
+  left: 100rpx;
 }
 
 .progress-bar, .progress-bar1 {
@@ -330,7 +309,7 @@
 .radar-canvas {
   width: 700rpx;
   height: 500rpx;
-  margin: 100rpx 100rpx 0rpx 100rpx;
+  margin: 10rpx;
   background-color: transparent;
 }
 
@@ -455,76 +434,6 @@
   line-height: 1.4; /* 调整行高以改善可读性 */
 }
 
-.emotion-detection-box1 {
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 20rpx 30rpx;
-  margin-top: 30rpx;
-  margin-bottom: 20rpx;
-  position: absolute;
-  left: 0rpx;
-  top: 240rpx;
-}
-
-.emotion-detection-box2 {
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 20rpx 30rpx;
-  margin-top: 30rpx;
-  margin-bottom: 20rpx;
-  position: absolute;
-  left: -250rpx;
-  top: 440rpx;
-}
-.emotion-detection-box3 {
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 20rpx 30rpx;
-  margin-top: 30rpx;
-  margin-bottom: 20rpx;
-  position: absolute;
-  left: 250rpx;
-  top: 440rpx;
-}
-.emotion-detection-box4 {
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 20rpx 30rpx;
-  margin-top: 30rpx;
-  margin-bottom: 20rpx;
-  position: absolute;
-  left: -150rpx;
-  top: 700rpx;
-}
-.emotion-detection-box5 {
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 20rpx 30rpx;
-  margin-top: 30rpx;
-  margin-bottom: 20rpx;
-  position: absolute;
-  left: 150rpx;
-  top: 700rpx;
-}
-.emotion-detection-title {
-  font-size: 24rpx;
-  color: #FFFFFF;
-  font-weight: bold;
-  background-color: #4A4A57;
-  padding: 10rpx 20rpx;
-  border-radius: 10rpx;
-}
-
 </style>
 
 <script>
@@ -618,10 +527,10 @@ export default {
     // 立即调用一次
     this.getHomepageData();
 
-    // 设置定调用
+    // 设置定���调用
     this.intervalId = setInterval(() => {
       this.getHomepageData();
-    }, 500); // 每50秒调用一次
+    }, 50000); // 每50秒调用一次
   },
   onUnload() {
     // 页面卸载时清除定时器
@@ -630,18 +539,7 @@ export default {
     }
   },
   mounted() {
-    // 移除这里的 drawRadar 调用
-  },
-  watch: {
-    homepageData: {
-      handler(newVal) {
-        console.log('homepageData updated:', newVal);
-        this.$nextTick(() => {
-          this.drawRadar();
-        });
-      },
-      deep: true
-    }
+    this.drawRadar();
   },
   methods: {
     progressWidth(value) {
@@ -650,20 +548,9 @@ export default {
       return `${percentage}%`;
     },
     drawRadar() {
-      console.log('Drawing radar chart');
       const canvas = document.getElementById('radarCanvas');
-      if (!canvas) {
-        console.error('Canvas element not found');
-        return;
-      }
+      if (!canvas) return;
       const radarCtx = canvas.getContext('2d');
-      if (!radarCtx) {
-        console.error('Unable to get 2D context');
-        return;
-      }
-
-      // 清除之前的绘制内容
-      radarCtx.clearRect(0, 0, canvas.width, canvas.height);
 
       // Control center point and radius
       const center = { x: 150, y: 70 }; // Adjust y value to avoid being covered
@@ -771,11 +658,10 @@ export default {
 
         if (response.statusCode === 200) {
           this.homepageData = response.data;
-          console.log('Homepage data received:', this.homepageData);
-          // 数据加载完成后调用 drawRadar
-          this.$nextTick(() => {
-            this.drawRadar();
-          });
+          console.log('Homepage data received:');
+          console.log('Personal Info:', JSON.stringify(this.homepageData.personal_info, null, 2));
+          console.log('EQ Scores:', JSON.stringify(this.homepageData.response.eq_scores, null, 2));
+          console.log('Contacts:', JSON.stringify(this.homepageData.response.contacts, null, 2));
         } else {
           console.error('Failed to fetch homepage data:', response.statusCode);
         }

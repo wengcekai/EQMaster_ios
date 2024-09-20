@@ -6,10 +6,11 @@
       <!-- <text>Username: {{ username }}</text> -->
       <!-- <text>Gender: {{ gender }}</text> -->
       <!-- <text>Selected Options: {{ selectedOptions.join(', ') }}</text> -->
-      <!-- <text>Number of Selected Options: {{ selectedOptions.length }}</text> -->
+      <text>Number of Selected Options: {{ selectedOptions.length }}</text>
       <!-- <text>Birthday: {{ birthday ? JSON.stringify(birthday) : '未设置' }}</text> -->
       <!-- <text>Scenario Data: {{ JSON.stringify(scenarioData) }}</text> -->
       <!-- <text>Background: {{ background }}</text> -->
+      <text>Num: {{ num }}</text>
     </view>
 
     <image class="background-image" src="/static/bg1.png" mode="aspectFill" />
@@ -20,19 +21,19 @@
       <image class="logo" src="/static/Vector.png" mode="aspectFit" />
     </view>
     
-	<!-- <image class="user-avatar" src="/static/npc1.png" mode="aspectFill" /> -->
-    <!-- 调整用户信息模块的位置 -->
-<!--    <view class="user-info" :style="userInfoStyle">
-      <text class="user-name">小王</text>
-    </view> -->
-    
-    <!-- 文字框 -->
-    <view class="text-box">
-      <text class="text-content">{{ background }}</text>
-      <view class="expand-icon" @click="navigateToTest1">▼</view>
+	
+    <!-- 动态生成选项列表 -->
+    <view v-for="(option, index) in scenarioData?.scenes?.options" :key="index"
+          :class="['text-box', { 'selected': selectedOptionIndex === index }]" 
+          :style="{ top: `${350 + index * 80}px` }"
+          @click="selectOption(index)">
+      <text class="text-content">{{ option.text }}</text>
     </view>
-
-
+	
+    <view class="continue-button" @click="nextStep">
+      <text class="arrow">→</text>
+    </view>
+	
   </view>
 </template>
 
@@ -41,24 +42,26 @@ export default {
   data() {
     return {
       userInfoStyle: {
-        bottom: '180px', // 将这个值从 '220px' 改为 '180px'
+        bottom: '180px',
         left: '50%',
         transform: 'translateX(-50%)'
       },
       userId: '',
       username: '',
       gender: '',
-      selectedOptions: [], // 添加这个属性
-      birthday: null, // 添加这个属性
+      selectedOptions: [],
+      birthday: null,
       scenarioData: null,
-      background: '', // 保留这个属性
-      jobId: '' // 新增属性用于存储job_id
+      background: '',
+      description: '' ,
+      num: null, // Ensure this is included in data
+      selectedOptionIndex: null // Add this line to track the selected option
     }
   },
   onLoad(option) {
     console.log('Received options:', option);
 
-    // 接收上一个页面传递的数据
+    // 接收上一个页面传递的所有数据
     this.userId = option.userId || '';
     this.username = decodeURIComponent(option.username || '');
     this.gender = option.gender || '';
@@ -81,12 +84,16 @@ export default {
       }
     }
 
+    // Add this to receive the num parameter
+    this.num = option.num || null;
+
     console.log('Parsed data:', {
       userId: this.userId,
       username: this.username,
       gender: this.gender,
       selectedOptions: this.selectedOptions,
-      birthday: this.birthday
+      birthday: this.birthday,
+      num: this.num // Log the received num
     });
 
     // 发送数据到后端
@@ -96,60 +103,74 @@ export default {
     updateUserInfoPosition(x, y) {
       this.userInfoStyle.left = `${x}px`;
       this.userInfoStyle.bottom = `${y}px`;
-      this.userInfoStyle.transform = 'none'; // 移除居中效果
+      this.userInfoStyle.transform = 'none';
     },
     navigateToTest1() {
-      const testPageUrl = `/pages/test/test1?jobId=${this.jobId}&userId=${this.userId}&username=${encodeURIComponent(this.username)}&gender=${this.gender}&birthday=${encodeURIComponent(JSON.stringify(this.birthday))}&options=${encodeURIComponent(JSON.stringify(this.selectedOptions))}`;
+      const testPageUrl = `/pages/test/test6?userId=${this.userId}&username=${encodeURIComponent(this.username)}&gender=${this.gender}&birthday=${encodeURIComponent(JSON.stringify(this.birthday))}&options=${encodeURIComponent(JSON.stringify(this.selectedOptions))}&num=${this.num}`;
       
       uni.navigateTo({
         url: testPageUrl
       });
     },
     sendDataToBackend() {
+      // 调试信息，确认 num 的值和类型
+      console.log('发送之前的 num:', this.num); 
+      console.log('num 的类型:', typeof this.num); // 应该是 'number'
+
       uni.request({
-        url: 'http://10.32.69.27:8180/create_profile',
+        url: 'http://127.0.0.1:8180/api/new-scenario',  // 请确保这是正确的后端地址
         method: 'POST',
         data: {
-          name: this.username,
-          job_level: this.jobLevel || '',
+          userId: this.userId,
+          username: this.username,
           gender: this.gender,
-          concerns: this.selectedOptions,
+          selectedOptions: this.selectedOptions,
+          answernum: this.num // 确保这个值被发送并且是一个数字
         },
         success: (res) => {
-          console.log('Backend response:', res.data);
-          this.jobId = res.data.job_id; // 存储返回的job_id
-
-          // 获取job_id后立即调用start_scenario
-          this.getScenarioData();
+          console.log('后端响应:', res.data);
+          this.scenarioData = res.data;
+          this.extractBackground();
         },
         fail: (err) => {
-          console.error('Error sending data to backend:', err);
+          console.error('发送数据到后端出错:', err);
         }
       });
     },
-    getScenarioData() {
-      uni.request({
-        url: 'http://10.32.69.27:8180/start_scenario',
-        method: 'GET',
-        success: (res) => {
-          console.log('Scenario data:', res.data);
-          this.scenarioData = res.data.scenes;
-          this.handleScenarioData();
-        },
-        fail: (err) => {
-          console.error('Error getting scenario data:', err);
-        }
-      });
-    },
-    handleScenarioData() {
-      if (this.scenarioData) {
-        // 假设scenarioData包含一个background字段
-        this.background = this.scenarioData.background || '请点击下方箭头继续';
-        // ... 处理其他数据
+    extractBackground() {
+      if (this.scenarioData && this.scenarioData.scenes && this.scenarioData.scenes.description) {
+        this.description = this.scenarioData.scenes.description;
       } else {
-        this.background = '请点击下方箭头继续';
+        console.warn('Background information not found in scenario data');
+        this.background = '无法获取背景信息';
       }
     },
+    selectOption(index) {
+      this.selectedOptionIndex = index;
+    },
+    nextStep() {
+      if (this.selectedOptionIndex === null) {
+        uni.showToast({
+          title: '请选择一个选项',
+          icon: 'none'
+        });
+        return;
+      }
+
+      // Update num by appending the selected option index + 1
+      this.num = parseInt(this.num.toString() + (this.selectedOptionIndex + 1).toString());
+
+      // Check if num is a five-digit number
+      if (this.num >= 10000 && this.num <= 99999) {
+        // Navigate to cta/cta page
+        uni.navigateTo({
+          url: '/pages/cta/cta'
+        });
+      } else {
+        // Navigate to the next page (test3)
+        this.navigateToTest1();
+      }
+    }
   }
 }
 </script>
@@ -203,25 +224,21 @@ export default {
 }
 
 .logo {
-  width: 20px;  /* 调整logo大小 */
-  height: 20px; /* 调整logo大小 */
+  width: 20px;
+  height: 20px;
 }
 
 .text-box {
   position: absolute;
-  top: 470px; /* 固定上边缘 */
   left: 20px;
   right: 20px;
   background-color: rgba(55, 55, 66, 0.8);
   border-radius: 50px;
-  padding-top: 25px;
-  padding-bottom: 15px;
-  padding-left: 25px; /* 增加左边距 */
-  padding-right: 25px; /* 增加右边距 */
-  z-index: 0; /* 确保文字框在用户信息框之下 */
-  min-height: 50px; /* 设置最小高度 */
-  max-height: 200px; /* 设置最大高度 */
-  overflow: auto; /* 内容溢出时滚动 */
+  padding: 15px 25px;
+  min-height: 50px;
+  max-height: 200px;
+  overflow: auto;
+  transition: background-color 0.3s;
 }
 
 .text-content {
@@ -230,44 +247,36 @@ export default {
   line-height: 1.4;
 }
 
-
-.expand-icon {
-  text-align: center;
-  color: white;
-  font-size: 12px;
-  margin-top: 5px;
+.text-box.selected {
+  background-color: #30d158;
 }
 
-.user-info {
+.continue-button {
+  opacity: 1;
   position: absolute;
-  
-  background-color: rgba(0, 0, 0, 0.6);
-  border-radius: 20px;
-  padding: 5px 15px;
-  display: flex;
-  align-items: center;
-  width: 130px;
-  z-index: 1; /* 确保用户信息框在文字框之上 */
-}
-
-.user-avatar {
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  top: 452px;
-  left: 120px;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #30d158;
   border-radius: 50%;
-  margin-right: 10px;
-  z-index: 2;
-}
-
-.user-name {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: white;
-  font-size: 16px;
-  padding: 5px 5px 5px 25px ;
-
+  font-size: 24px;
+  text-align: center;
+  z-index: 1;
 }
 
+.arrow {
+  color: #ffffff;
+}
+
+.continue-button:active {
+  opacity: 1;
+}
 .debug-info {
   position: absolute;
   top: 0;
@@ -286,4 +295,6 @@ export default {
   display: block;
   margin-bottom: 2px;
 }
+
 </style>
+

@@ -1,132 +1,71 @@
-// {
-//   "pages": [
-//     {
-//       "path": "pages/login/login",
-//       "style": {
-//         "navigationBarTitleText": "登录"
-//       }
-//     },
-//     {
-//       "path": "pages/register/register",
-//       "style": {
-//         "navigationBarTitleText": "注册"
-//       }
-//     },
-//     {
-//       "path": "pages/quiz/quiz0",
-//       "style": {
-//         "navigationBarTitleText": "Quiz"
-//       }
-//     },
-//     {
-//       "path": "pages/dashboard/dashboard",
-//       "style": {
-//         "navigationBarTitleText": "职场篇"
-//       }
-//     },
-//     {
-//       "path": "pages/details/details",
-//       "style": {
-//         "navigationBarTitleText": "职场刺猬详情"
-//       }
-//     },
-//     {
-//       "path": "pages/quiz/welcome",
-//       "style": {
-//         "navigationBarTitleText": "Welcome"
-//       }
-//     },
-//     {
-//       "path": "pages/experience/experience",
-//       "style": {
-//         "navigationBarTitleText": "体验"
-//       }
-//     }
-//   ],
-//   "globalStyle": {
-//     "navigationBarTextStyle": "black",
-//     "navigationBarTitleText": "应用名称",
-//     "navigationBarBackgroundColor": "#FFFFFF",
-//     "backgroundColor": "#F8F8F8"{
-//   "pages": [
-//     {
-//       "path": "pages/landing/landing",
-//       "style": {
-//         "navigationBarTitleText": "欢迎"
-//       }
-//     },
-//     {
-//       "path": "pages/login/login",
-//       "style": {
-//         "navigationBarTitleText": "登录"
-//       }
-//     },
-//     {
-//       "path": "pages/register/register",
-//       "style": {
-//         "navigationBarTitleText": "注册"
-//       }
-//     },
-//     {
-//       "path": "pages/quiz/quiz0",
-//       "style": {
-//         "navigationBarTitleText": "Quiz"
-//       }
-//     },
-//     {
-//       "path": "pages/dashboard/dashboard",
-//       "style": {
-//         "navigationBarTitleText": "职场篇"
-//       }
-//     },
-//     {
-//       "path": "pages/details/details",
-//       "style": {
-//         "navigationBarTitleText": "职场刺猬详情"
-//       }
-//     },
-//     {
-//       "path": "pages/quiz/welcome",
-//       "style": {
-//         "navigationBarTitleText": "Welcome"
-//       }
-//     },
-//     {
-//       "path": "pages/experience/experience",
-//       "style": {
-//         "navigationBarTitleText": "体验"
-//       }
-//     }
-//   ],
-//   "globalStyle": {
-//     "navigationBarTextStyle": "black",
-//     "navigationBarTitleText": "应用名称",
-//     "navigationBarBackgroundColor": "#FFFFFF",
-//     "backgroundColor": "#F8F8F8"
-//   }
-// }
 
-//   }
-// }
 
 {
   "pages": [
     {
       "path": "pages/landing/landing",
       "style": {
-        "navigationBarTitleText": ""
+        "navigationStyle": "custom"
       }
     },
 	{
 	  "path": "pages/preference/preference",
 	  "style": {
-	    "navigationBarTitleText": ""
+        "navigationStyle": "custom"
 	  }
 	},	
 	{
+	  "path": "pages/preference/preference1",
+	  "style": {
+        "navigationStyle": "custom"
+	  }
+	},
+	{
+	  "path": "pages/preference/preference2",
+	  "style": {
+        "navigationStyle": "custom"
+	  }
+	},
+	{
+	  "path": "pages/preference/preference3",
+	  "style": {
+        "navigationStyle": "custom"
+	  }
+	},
+	{
 	  "path": "pages/test/test",
 	  "style": {
-	    "navigationBarTitleText": ""
+        "navigationStyle": "custom"
+	  }
+	},
+	{
+	  "path": "pages/test/test1",
+	  "style": {
+        "navigationStyle": "custom"
+	  }
+	},
+	{
+	  "path": "pages/test/test2",
+	  "style": {
+        "navigationStyle": "custom"
+	  }
+	},
+	{
+	  "path": "pages/test/test3",
+	  "style": {
+        "navigationStyle": "custom"
+	  }
+	},
+	{
+	  "path": "pages/test/test4",
+	  "style": {
+        "navigationStyle": "custom"
+	  }
+	},
+	{
+	  "path": "pages/test/test5",
+	  "style": {
+        "navigationStyle": "custom"
 	  }
 	},
 	{
@@ -156,7 +95,7 @@
 	{
 	  "path": "pages/cta/cta",
 	  "style": {
-	    "navigationBarTitleText": ""
+        "navigationStyle": "custom"
 	  }
 	},
 	{
@@ -168,7 +107,7 @@
     {
       "path": "pages/experience/experience",
       "style": {
-        "navigationBarTitleText": ""
+        "navigationStyle": "custom"
       }
     }
   ],

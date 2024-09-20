@@ -7,7 +7,7 @@
 	    <!-- <text>Selected Options: {{ selectedOptions.join(', ') }}</text> -->
 	    <!-- <text>Number of Selected Options: {{ selectedOptions.length }}</text>
 	    <!-- <text>Birthday: {{ birthday ? JSON.stringify(birthday) : '未设置' }}</text> -->
-	    <!-- <text>homepageData: {{ JSON.stringify(homepageData) }}</text> -->
+	    <text>homepageData: {{ JSON.stringify(homepageData,response) }}</text>
 	    <!-- <text>Background: {{ background }}</text> -->
 	  </view>
 	  

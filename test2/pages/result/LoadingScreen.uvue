@@ -2,9 +2,7 @@
   <view class="loading-container">
     <text class="loading-text">接下来，</text>
     <text class="loading-text">一起来看看你的职场人格类型吧！</text>
-    <view class="avatar-container">
-      <image class="avatar" src="/static/monkey-avatar.png" mode="aspectFit"></image>
-    </view>
+    <image class="avatar" src="/static/monkey-avatar.png" mode="aspectFit"></image>
     <view class="progress-container">
       <view class="progress-bar" :style="{ width: `${progress}%` }"></view>
     </view>
@@ -41,20 +39,10 @@ export default {
   margin-bottom: 10rpx;
 }
 
-.avatar-container {
-  width: 200rpx;
-  height: 200rpx;
-  background-color: #8E44AD;
-  border-radius: 100rpx;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 60rpx 0;
-}
-
 .avatar {
-  width: 160rpx;
-  height: 160rpx;
+  width: 500rpx;
+  height: 500rpx;
+  margin: 60rpx 0;
 }
 
 .progress-container {
