@@ -1,0 +1,195 @@
+<template>
+  <view class="container">
+    <!-- 使用 scroll-view 实现页面滚动 -->
+    <scroll-view
+      scroll-y
+      style="height: 100%;"
+    >
+      <view class="content">
+        <!-- 模拟多段长文本 -->
+        <!-- <view class="text-block" v-for="n in 20" :key="n"> -->
+          <!-- 这是第 {{ n }} 段内容。这是一个非常长的文本段落，用于测试页面是否可以正常滚动。 -->
+        <!-- </view> -->
+		<text class="score-title-head">我的检测结果</text>
+		<!-- 背景和弧线 -->
+		<view class="background-curve"></view>
+		<!-- 添加插图 -->
+		<image class="illustration1" src="/static/img1.png" mode="widthFix"></image>
+		
+		<!-- 添加白色卡片 -->
+		<view class="card">
+		  <!-- 标题和分数显示 -->
+		  <view class="score-container">
+		    <text class="score-title">情商小白</text>
+		    <view class="score-details">
+		      <text class="score-value-large">{{ homepageData.response.eq_scores.score }}</text>
+		      <text class="score-value-small">分</text>
+		    </view>
+		    <!-- 进度条 -->
+		    <view class="progress-bar">
+		      <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.score) }"></view>
+		    </view>
+		  </view>
+		
+		  <!-- 五维雷达图 -->
+		  <canvas id="radarCanvas" class="radar-canvas" width="500" height="500"></canvas>
+		  <!-- <canvas canvas-id="radarCanvas" class="radar-canvas" style="width: 700rpx; height: 500rpx;"></canvas> -->
+		
+		  <!-- 情绪侦查力等标签 -->
+		  <view class="emotion-detection-box1">
+		    <text class="emotion-detection-title">情绪侦查力</text>
+		  </view>
+		  <view class="emotion-detection-box2">
+		    <text class="emotion-detection-title">社交得体度</text>
+		  </view>
+		  <view class="emotion-detection-box3">
+		    <text class="emotion-detection-title">情绪掌控力</text>
+		  </view>
+		  <view class="emotion-detection-box4">
+		    <text class="emotion-detection-title">沟通表达力</text>
+		  </view>
+		  <view class="emotion-detection-box5">
+		    <text class="emotion-detection-title">人际平衡力</text>
+		  </view>
+		
+		  <view class="text-box1">
+		    <text class="card-title1">问题诊断</text>
+		  </view>
+		
+		  <view class="card-content">
+		    <!-- 插图或图标 -->
+		    <image class="emoji" src="/static/emoji.png" mode="widthFix"></image>
+		    <!-- 文字内容 -->
+		    <view class="card-text-container">
+		      <!-- 文字内容框和插图在同一行 -->
+		      <view class="icon-text-box">
+		        <!-- 文字内容框 -->
+		        <view class="text-box">
+		          <text class="card-title">{{ homepageData.response.eq_scores.summary }}</text>
+		        </view>
+		      </view>
+		
+		      <text class="card-description">{{ homepageData.response.eq_scores.overall_suggestion }}</text>
+		    </view>
+		  </view>
+		</view>
+		
+		<!-- 添加白色卡片1 -->
+		<view class="card1">
+		  <view class="text-box1">
+		    <text class="card-title1">提升秘诀</text>
+		  </view>
+		
+		  <view class="card-content">
+		    <!-- 插图或图标 -->
+		    <image class="emoji" src="/static/emoji.png" mode="widthFix"></image>
+		    <!-- 文字内容 -->
+		    <view class="card-text-container">
+		      <!-- 文字内容框和插图在同一行 -->
+		      <view class="icon-text-box">
+		        <!-- 文字内容框 -->
+		        <view class="text-box">
+		          <text class="card-title">{{ homepageData.response.eq_scores.summary }}</text>
+		        </view>
+		      </view>
+		
+		      <text class="card-description">{{ homepageData.response.eq_scores.detail }}</text>
+		    </view>
+		  </view>
+		</view>
+		
+		<!-- 添加白色卡片2 -->
+		<view class="card2">
+		  <view class="text-box1">
+		    <text class="card-title1">详细报告</text>
+		  </view>
+		
+		  <!-- 维度一 -->
+		  <view class="score-container1">
+		    <text class="score-title1">情绪侦查力</text>
+		    <!-- 进度条 -->
+		    <view class="progress-bar1">
+		      <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension1_score) }"></view>
+		    </view>
+		    <text class="score-title1">{{ homepageData.response.eq_scores.dimension1_score }}%</text>
+		  </view>
+		
+		  <text class="card-description">{{ homepageData.response.eq_scores.dimension1_detail }}</text>
+		
+		  <!-- 维度二 -->
+		  <view class="score-container1">
+		    <text class="score-title1">社交得体度</text>
+		    <!-- 进度条 -->
+		    <view class="progress-bar1">
+		      <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension2_score) }"></view>
+		    </view>
+		    <text class="score-title1">{{ homepageData.response.eq_scores.dimension2_score }}%</text>
+		  </view>
+		
+		  <text class="card-description">{{ homepageData.response.eq_scores.dimension2_detail }}</text>
+		
+		  <!-- 维度三 -->
+		  <view class="score-container1">
+		    <text class="score-title1">情绪掌控力</text>
+		    <!-- 进度条 -->
+		    <view class="progress-bar1">
+		      <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension3_score) }"></view>
+		    </view>
+		    <text class="score-title1">{{ homepageData.response.eq_scores.dimension3_score }}%</text>
+		  </view>
+		
+		  <text class="card-description">{{ homepageData.response.eq_scores.dimension3_detail }}</text>
+		
+		  <!-- 维度四 -->
+		  <view class="score-container1">
+		    <text class="score-title1">沟通表达力</text>
+		    <!-- 进度条 -->
+		    <view class="progress-bar1">
+		      <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension4_score) }"></view>
+		    </view>
+		    <text class="score-title1">{{ homepageData.response.eq_scores.dimension4_score }}%</text>
+		  </view>
+		
+		  <text class="card-description">{{ homepageData.response.eq_scores.dimension4_detail }}</text>
+		
+		  <!-- 维度五 -->
+		  <view class="score-container1">
+		    <text class="score-title1">人际平衡力</text>
+		    <!-- 进度条 -->
+		    <view class="progress-bar1">
+		      <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension5_score) }"></view>
+		    </view>
+		    <text class="score-title1">{{ homepageData.response.eq_scores.dimension5_score }}%</text>
+		  </view>
+		
+		  <text class="card-description">{{ homepageData.response.eq_scores.dimension5_detail }}</text>
+		</view>
+		
+		<!-- 添加蓝色按钮 -->
+		<button class="guide-button" @click="navigateToGuide">开启高情商之旅</button>
+		
+      </view>
+    </scroll-view>
+  </view>
+</template>
+
+<script>
+export default {
+};
+</script>
+
+<style>
+/* 确保父级元素高度正确 */
+.container {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* 启用 iOS 惯性滚动 */
+}
+
+.content {
+  display: block; /* 避免 flex 布局干扰 */
+}
+
+
+</style>

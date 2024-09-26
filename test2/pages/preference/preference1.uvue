@@ -1,105 +1,138 @@
 <template>
   <view class="container">
-    <view class="content">
-      <view class="text-content">
-        <text class="question">👑你的生日是什么时候？</text>
-        <text class="subtitle">完善个人信息</text>
-      </view>
-
-      <view class="date-picker-container">
-        <view class="mask top"></view>
-        <picker-view 
-          class="date-picker" 
-          :indicator-style="indicatorStyle" 
-          :value="dateValue" 
-          @change="onDateChange"
-        >
-          <picker-view-column>
-            <view class="picker-item" :class="{ 'active': index === dateValue[0] }" v-for="(month, index) in months" :key="month">{{ month }}</view>
-          </picker-view-column>
-          <picker-view-column>
-            <view class="picker-item" :class="{ 'active': index === dateValue[1] }" v-for="(day, index) in days" :key="day">{{ day }}</view>
-          </picker-view-column>
-          <picker-view-column>
-            <view class="picker-item" :class="{ 'active': index === dateValue[2] }" v-for="(year, index) in years" :key="year">{{ year }}</view>
-          </picker-view-column>
-        </picker-view>
-        <view class="mask bottom"></view>
-      </view>
-
-      <view class="continue-button" @click="nextStep">
-        <text class="arrow">→</text>
-      </view>
+    <view class="text-content">
+      <text class="question">🎂 你的生日是什么时候？</text>
+      <text class="subtitle">完善个人信息</text>
     </view>
+    
+    <view class="date-picker-container">
+      <view class="mask top"></view>
+      <picker-view
+        class="picker-view"
+        :indicator-style="indicatorStyle"
+        :value="value"
+        @change="bindChange"
+      >
+        <picker-view-column class="picker-view-column">
+          <view
+            class="item"
+            v-for="(item, index) in years"
+            :key="index"
+          >
+            <text class="text">{{ item }}年</text>
+          </view>
+        </picker-view-column>
+        <picker-view-column class="picker-view-column">
+          <view
+            class="item"
+            v-for="(item, index) in months"
+            :key="index"
+          >
+            <text class="text">{{ item }}月</text>
+          </view>
+        </picker-view-column>
+        <picker-view-column class="picker-view-column">
+          <view
+            class="item"
+            v-for="(item, index) in days"
+            :key="index"
+          >
+            <text class="text">{{ item }}日</text>
+          </view>
+        </picker-view-column>
+      </picker-view>
+      <view class="mask bottom"></view>
+    </view>
+    
+  </view>
+  <view class="continue-button" @click="goToNextPage">
+    <text class="arrow">→</text>
   </view>
 </template>
 
-<script>
+<script lang="uts">
 export default {
   data() {
+    const date = new Date();
+    const _years = [];
+    const _year = date.getFullYear();
+    const _months = [];
+    const _month = date.getMonth() + 1;
+    const _days = [];
+    const _day = date.getDate();
+    for (let i = 2000; i <= _year; i++) {
+      _years.push(i);
+    }
+    for (let i = 1; i <= 12; i++) {
+      _months.push(i);
+    }
+    for (let i = 1; i <= 31; i++) {
+      _days.push(i);
+    }
     return {
-      months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      days: Array.from({length: 31}, (_, i) => i + 1),
-      years: Array.from({length: 50}, (_, i) => 2024 - i),
-      dateValue: [8, 16, 5], // Default to September 17, 2018
-      indicatorStyle: 'height: 50px; border-top: 1px solid rgba(255, 255, 255, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.1);',
+      title: 'picker-view',
+      years: _years,
+      year: _year,
+      months: _months,
+      month: _month,
+      days: _days,
+      day: _day,
+      value: [_year - 2000, _month - 1, _day - 1],
+      result: [],
+      indicatorStyle: 'height: 50px;',
       userId: '',
       username: '',
       gender: '',
     };
   },
   onLoad(options) {
-    // 接收上一页传递的参数
+    // Retrieve data from the previous page
     this.userId = options.userId;
     this.username = decodeURIComponent(options.username);
     this.gender = options.gender;
-    console.log('Received data:', { userId: this.userId, username: this.username, gender: this.gender });
   },
   methods: {
-    onDateChange(e) {
-      this.dateValue = e.detail.value;
+    bindChange(e) {
+      const val = e.detail.value;
+      this.result = val;
+      this.year = this.years[val[0]];
+      this.month = this.months[val[1]];
+      this.day = this.days[val[2]];
     },
-    nextStep() {
+    goToNextPage() {
+      // Prepare the selected date as a JSON string
       const selectedDate = {
-        month: this.months[this.dateValue[0]],
-        day: this.days[this.dateValue[1]],
-        year: this.years[this.dateValue[2]]
+        year: this.year,
+        month: this.month,
+        day: this.day,
       };
-      // 保存生日信息
-      uni.setStorageSync('birthday', selectedDate);
-      
-      // 构建URL，包含所有收集的信息
+      // Navigate to the next page with all data passed as URL parameters
       const nextPageUrl = `/pages/preference/preference2?userId=${this.userId}&username=${encodeURIComponent(this.username)}&gender=${this.gender}&birthday=${encodeURIComponent(JSON.stringify(selectedDate))}`;
-      
-      // 导航到下一个页面
-      uni.navigateTo({ url: nextPageUrl });
-    }
-  }
+      uni.navigateTo({
+        url: nextPageUrl,
+      });
+    },
+  },
 };
+
 </script>
 
-<style scoped>
+<style>
 .container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
   background-color: #1c1c1e;
   padding: 40px 20px;
 }
 
-.content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
 
 .text-content {
+  margin-top: 60px;
   margin-bottom: 40px;
 }
 
 .question {
-  font-size: 24px;
+  font-size: 20px;
   color: #ffffff;
   margin-bottom: 8px;
 }
@@ -110,26 +143,40 @@ export default {
 }
 
 .date-picker-container {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: relative;
-  overflow: hidden;
+  width: 100%;
+  height: 250px;
+  margin-top: 10px;
+background-color: #1c1c1e; /* 设置为您想要的颜色 */
+margin-bottom: 500px;
+
 }
 
-.date-picker {
+.picker-view {
   width: 100%;
-  height: 250px; /* 增加高度 */
+  height: 250px;
+  position: relative;
+  z-index: 1;
+  background-color: #1c1c1e; /* 设置为您想要的颜色 */
+}
+
+.item {
+  height: 50px;
+}
+
+.text {
+  line-height: 50px;
+  text-align: center;
+  color: #ffffff;
 }
 
 .mask {
   position: absolute;
   left: 0;
   right: 0;
-  height: 100px;
-  background-color: #1c1c1e; /* 将背景色改为与容器相同的颜色 */
-  z-index: 1;
+  height: 100px; /* 根据设计需要调整 */
+  background-color: rgba(28, 28, 30, 1); /* 调整透明度 */
+  z-index: 2;
 }
 
 .mask.top {
@@ -140,41 +187,24 @@ export default {
   bottom: 0;
 }
 
-.picker-item {
-  line-height: 50px;
-  text-align: center;
-  color: rgba(255, 255, 255, 0.3); /* 未选中项的颜色 */
-  transition: color 0.3s;
-}
 
-.picker-item.active {
-  color: #ffffff; /* 选中项的颜色 */
-  font-weight: bold;
-}
-
+/* 继续按钮设置 */
 .continue-button {
   width: 50px;
   height: 50px;
-  background-color: #30d158;
+  position:absolute;
+  background-color: #8BC34A;
   border-radius: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
   align-self: center;
-  margin-bottom: 80px;
+  margin-top: 700px;
+  /* margin-bottom: 600px; */
 }
 
 .arrow {
-  color: #ffffff;
+  color: #242424;
   font-size: 20px;
-}
-
-.uni-picker-view-indicator {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.uni-picker-view-mask {
-  background-image: linear-gradient(180deg, rgba(28, 28, 30, 0.9), rgba(28, 28, 30, 0.4)),
-                    linear-gradient(0deg, rgba(28, 28, 30, 0.9), rgba(28, 28, 30, 0.4));
 }
 </style>

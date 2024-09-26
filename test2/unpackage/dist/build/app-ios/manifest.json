@@ -1,0 +1,34 @@
+{
+  "id": "__UNI__F26DB6F",
+  "name": "test2",
+  "description": "",
+  "version": {
+    "name": "1.0.5",
+    "code": 105
+  },
+  "uni-app-x": {
+    "compilerVersion": "4.26"
+  },
+  "app": {
+    "distribute": {
+      "icons": {
+        "android": {
+          "hdpi": "unpackage/res/icons/72x72.png",
+          "xhdpi": "unpackage/res/icons/96x96.png",
+          "xxhdpi": "unpackage/res/icons/144x144.png",
+          "xxxhdpi": "unpackage/res/icons/192x192.png"
+        },
+        "ios": {
+          "appstore": "unpackage/res/icons/1024x1024.png"
+        }
+      },
+      "modules": {
+        "uni-network": {},
+        "uni-storage": {},
+        "uni-prompt": {},
+        "uni-getSystemInfo": {},
+        "uni-canvas": {}
+      }
+    }
+  }
+}

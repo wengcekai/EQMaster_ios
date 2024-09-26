@@ -1,0 +1,285 @@
+<template>
+  <view class="container">
+    <!-- 调试信息显示区域 -->
+    <!-- <view class="debug-info"> -->
+      <!-- <text>Scenario Data: {{ JSON.stringify(scenarioData) }}</text> -->
+    <!-- </view> -->
+
+    <!-- 背景图片 -->
+    <image class="background-image" src="/static/bg1.png" mode="aspectFill" />
+	
+	<image class="logo" src="/static/sign.png" mode="aspectFit" />
+	<text class="room-text">三楼电梯间</text>
+	
+	<image class="user-avatar" src="/static/npc2.png" mode="aspectFill" />
+	<!-- 调整用户x信息模块的位置 -->
+	<view class="user-info" :style="userInfoStyle">
+	  <text class="user-name">小李</text>
+	</view>
+
+    <!-- 灰色圆圈和图标 -->
+<!--    <view class="gray-circle">
+      <image class="logo" src="/static/sign.png" mode="aspectFit" />
+    </view> -->
+    
+    <!-- 文字框 -->
+    <view class="text-box">
+      <text class="text-content">{{ description }}</text>
+      <view class="expand-icon" @tap="navigateToTest1" style="margin-left: auto;">
+        <image class="icon-image" src="/static/icon3.png" mode="aspectFit" />
+      </view>
+    </view>
+	
+  </view>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      userInfoStyle: {
+        bottom: '180px',
+        left: '50%',
+        marginLeft: '-65px' // 替换 transform
+      },
+      userId: '',
+      username: '',
+      gender: '',
+      selectedOptions: [],
+      birthday: null,
+      scenarioData: null,
+      background: '',
+      description: '',
+      jobId: '',
+      baseURL: 'https://eqmaster.azurewebsites.net' // 请替换为您的实际后端地址
+    }
+  },
+  onLoad(option) {
+    console.log('Received options:', option);
+
+    // 接收上一个页面传递的数据
+    this.userId = option.userId || '';
+    this.username = decodeURIComponent(option.username || '');
+    this.gender = option.gender || '';
+    this.jobId = option.jobId || ''; // 添加默认值
+
+    if (option.options) {
+      try {
+        this.selectedOptions = JSON.parse(decodeURIComponent(option.options));
+      } catch (e) {
+        console.error('Error parsing options:', e);
+        this.selectedOptions = [];
+      }
+    }
+
+    if (option.birthday) {
+      try {
+        this.birthday = JSON.parse(decodeURIComponent(option.birthday));
+      } catch (e) {
+        console.error('Error parsing birthday:', e);
+        this.birthday = null;
+      }
+    }
+
+    console.log('Parsed data:', {
+      userId: this.userId,
+      username: this.username,
+      gender: this.gender,
+      selectedOptions: this.selectedOptions,
+      birthday: this.birthday
+    });
+
+    // 发送数据到后端
+    this.getScenarioData();
+  },
+  methods: {
+    updateUserInfoPosition(x, y) {
+      this.userInfoStyle.left = `${x}px`;
+      this.userInfoStyle.bottom = `${y}px`;
+      this.userInfoStyle.marginLeft = '0px'; // 移除居中效果
+    },
+    navigateToTest1() {
+      // const testPageUrl = `/pages/test/test5?jobId=${this.jobId}&userId=${this.userId}&username=${encodeURIComponent(this.username)}&gender=${this.gender}&birthday=${encodeURIComponent(JSON.stringify(this.birthday))}&options=${encodeURIComponent(JSON.stringify(this.selectedOptions))}`;
+      const testPageUrl = `/pages/test/test2?jobId=${this.jobId}&userId=${this.userId}&username=${encodeURIComponent(this.username)}&gender=${this.gender}&birthday=${encodeURIComponent(JSON.stringify(this.birthday))}&options=${encodeURIComponent(JSON.stringify(this.selectedOptions))}`;
+      
+	  uni.navigateTo({
+        url: testPageUrl
+      });
+    },
+    getScenarioData() {
+      uni.request({
+        url: 'https://eqmaster.azurewebsites.net/start_scenario',
+        method: 'POST',
+        success: (res) => {
+          console.log('Scenario data:', res.data);
+          this.scenarioData = res.data; // 修改为直接获取 res.data
+          this.handleScenarioData();
+        },
+        fail: (err) => {
+          console.error('Error getting scenario data:', err);
+        }
+      });
+    },
+    handleScenarioData() {
+      if (this.scenarioData) {
+        // 假设 scenarioData 包含一个 description 字段
+        this.description = this.scenarioData.scenes.description || '无法获取背景信息';
+      } else {
+        console.warn('Background information not found in scenario data');
+        this.description = '无法获取背景信息';
+      }
+    }
+  }
+}
+</script>
+<style scoped>
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.room-info {
+  position: absolute;
+  top: 80rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(55, 55, 66, 0.4);
+  border-radius: 40rpx;
+  padding: 24rpx 20rpx;
+  width: 280rpx;
+  box-sizing: border-box;
+}
+
+.room-text {
+  color: #ffffff;
+  font-size: 32rpx;
+  text-align: center;
+  /* padding-right: 20rpx; */
+  top:10.5%;
+  
+}
+
+/* .gray-circle {
+  position: absolute;
+  width: 70rpx;
+  height: 70rpx;
+  background-color: #373742;
+  border-radius: 50%;
+  top: 122rpx;
+  left: 260rpx;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
+
+.logo {
+  width: 300rpx; 
+  height: 300rpx;
+  position: absolute;
+  top: 11%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* 同时水平和垂直居中 */
+}
+
+.text-box {
+  position: absolute;
+  bottom: 80rpx;
+  left: 40rpx;
+  right: 40rpx;
+  background-color: rgba(55, 55, 66, 0.8);
+  border-radius: 50rpx;
+  padding-top: 50rpx;
+  padding-bottom: 50rpx;
+  padding-left: 50rpx;
+  padding-right: 50rpx;
+  z-index: 1;
+  min-height: 100rpx;
+  max-height: 400rpx;
+  overflow: auto;
+  border: 6rpx solid #F2BC74; /* 示例边框颜色 */
+}
+
+.text-content {
+  color: white;
+  font-size: 28rpx;
+  line-height: 1.4;
+}
+
+.expand-icon {
+  text-align: center;
+  color: white;
+  font-size: 24rpx;
+  margin-top: 10rpx;
+
+}
+
+.icon-image {
+  width: 20px; /* 使图片适应容器宽度 */
+  height: 20px; /* 使图片适应容器高度 */
+}
+
+.debug-info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 10rpx;
+  font-size: 20rpx;
+  z-index: 100;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.debug-info text {
+  display: block;
+  margin-bottom: 4rpx;
+}
+
+
+.user-avatar {
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  bottom: 185px; /* 根据需要调整位置 */
+  left: 90%;
+  top:73%;
+  margin-left: -63px; /* 替换 left 值和 transform */
+  border-radius: 50%;
+  margin-right: 10px;
+  z-index: 2;
+  border: 6rpx solid #F2BC74; /* 示例边框颜色 */
+}
+
+.user-info {
+  position: absolute;
+  left: 70%;
+  margin-left: -65px; /* 替换 transform */
+  background-color: #F2BC74;
+  /* border-radius: 20px; */
+  padding: 5px 15px;
+  display: flex;
+  align-items: center;
+  width: 130px;
+  clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%); /* 创建梯形 */
+  z-index: 1; /* 确保用户信息框在文字框之上 */
+}
+
+
+.user-name {
+  color: white;
+  font-size: 16px;
+  padding: 5px 5px 5px 25px ;
+}
+
+</style>

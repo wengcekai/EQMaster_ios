@@ -1,109 +1,109 @@
-
-
 {
   "pages": [
     {
       "path": "pages/landing/landing",
       "style": {
+        // "navigationBarTitleText": "Scroll Test",
         "navigationStyle": "custom"
       }
     },
-	{
-	  "path": "pages/preference/preference",
-	  "style": {
+    {
+      "path": "pages/preference/preference",
+      "style": {
         "navigationStyle": "custom"
-	  }
-	},	
-	{
-	  "path": "pages/preference/preference1",
-	  "style": {
+      }
+    },
+    {
+      "path": "pages/preference/preference1",
+      "style": {
         "navigationStyle": "custom"
-	  }
-	},
-	{
-	  "path": "pages/preference/preference2",
-	  "style": {
+      }
+    },
+    {
+      "path": "pages/preference/preference2",
+      "style": {
         "navigationStyle": "custom"
-	  }
-	},
-	{
-	  "path": "pages/preference/preference3",
-	  "style": {
+      }
+    },
+    {
+      "path": "pages/preference/preference3",
+      "style": {
         "navigationStyle": "custom"
-	  }
-	},
-	{
-	  "path": "pages/test/test",
-	  "style": {
+      }
+    },
+    {
+      "path": "pages/test/test",
+      "style": {
         "navigationStyle": "custom"
-	  }
-	},
-	{
-	  "path": "pages/test/test1",
-	  "style": {
+      }
+    },
+    {
+      "path": "pages/test/test1",
+      "style": {
         "navigationStyle": "custom"
-	  }
-	},
-	{
-	  "path": "pages/test/test2",
-	  "style": {
+      }
+    },
+    {
+      "path": "pages/test/test2",
+      "style": {
         "navigationStyle": "custom"
-	  }
-	},
-	{
-	  "path": "pages/test/test3",
-	  "style": {
+      }
+    },
+    {
+      "path": "pages/test/test3",
+      "style": {
         "navigationStyle": "custom"
-	  }
-	},
-	{
-	  "path": "pages/test/test4",
-	  "style": {
+      }
+    },
+    {
+      "path": "pages/test/test4",
+      "style": {
         "navigationStyle": "custom"
-	  }
-	},
-	{
-	  "path": "pages/test/test5",
-	  "style": {
+      }
+    },
+    {
+      "path": "pages/test/test5",
+      "style": {
         "navigationStyle": "custom"
-	  }
-	},
-	{
-	  "path": "pages/dashboard/dashboard",
-	  "style": {
-	    "navigationBarTitleText": ""
-	  }
-	},
-	{
-	  "path": "pages/dashboard/dashboar1d",
-	  "style": {
-	    "navigationBarTitleText": ""
-	  }
-	},
-	{
-	  "path": "pages/details/details",
-	  "style": {
-	    "navigationBarTitleText": ""
-	  }
-	},
-	{
-	  "path": "pages/login/login",
-	  "style": {
-	    "navigationBarTitleText": ""
-	  }
-	},
-	{
-	  "path": "pages/cta/cta",
-	  "style": {
+      }
+    },
+    {
+      "path": "pages/dashboard/dashboard",
+      "style": {
+        "navigationBarTitleText": ""
+      }
+    },
+    {
+      "path": "pages/dashboard/dashboar1d",
+      "style": {
+        "navigationBarTitleText": ""
+      }
+    },
+    {
+      "path": "pages/details/details",
+      "style": {
+        "navigationBarTitleText": ""
+      }
+    },
+    {
+      "path": "pages/login/login",
+      "style": {
+        "navigationBarTitleText": ""
+      }
+    },
+    {
+      "path": "pages/cta/cta",
+      "style": {
         "navigationStyle": "custom"
-	  }
-	},
-	{
-	  "path": "pages/result/result",
-	  "style": {
-	    "navigationBarTitleText": ""
-	  }
-	},
+      }
+    },
+    {
+      "path": "pages/result/result",
+      "style": {
+        // "navigationStyle": "custom",
+		"navigationStyle": "custom"
+      }
+    },
     {
       "path": "pages/experience/experience",
       "style": {

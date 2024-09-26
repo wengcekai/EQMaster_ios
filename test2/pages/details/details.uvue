@@ -148,7 +148,8 @@ export default {
 
 .card-description {
   font-size: 14px;
-  margin-top: 4px;
+  margin-top: 0px;
+  margin-bottom: 40px;
 }
 
 .card-body {

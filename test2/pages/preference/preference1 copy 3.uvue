@@ -1,0 +1,191 @@
+<template>
+  <view class="container">
+    <view class="content">
+      <view class="text-content">
+        <text class="question">🎂 你的生日是什么时候？</text>
+        <text class="subtitle">完善个人信息</text>
+      </view>
+
+      <view class="date-picker-container">
+        <!-- <view class="mask top"></view> -->
+        <picker-view
+          class="picker-view"
+          :indicator-style="indicatorStyle"
+          :value="value"
+          @change="bindChange"
+        >
+          <picker-view-column class="picker-view-column">
+            <view
+              class="item"
+              v-for="(item, index) in years"
+              :key="index"
+            >
+              <text class="text">{{ item }}年</text>
+            </view>
+          </picker-view-column>
+          <picker-view-column class="picker-view-column">
+            <view
+              class="item"
+              v-for="(item, index) in months"
+              :key="index"
+            >
+              <text class="text">{{ item }}月</text>
+            </view>
+          </picker-view-column>
+          <picker-view-column class="picker-view-column">
+            <view
+              class="item"
+              v-for="(item, index) in days"
+              :key="index"
+            >
+              <text class="text">{{ item }}日</text>
+            </view>
+          </picker-view-column>
+        </picker-view>
+        <!-- <view class="mask bottom"></view> -->
+      </view>
+
+      <view class="continue-button">
+        <text class="arrow">→</text>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script lang="uts">
+export default {
+  data() {
+    const date = new Date();
+    const _years: number[] = [];
+    const _year = date.getFullYear();
+    const _months: number[] = [];
+    const _month: number = date.getMonth() + 1;
+    const _days: number[] = [];
+    const _day = date.getDate();
+    for (let i = 2000; i <= _year; i++) {
+      _years.push(i);
+    }
+    for (let i = 1; i <= 12; i++) {
+      _months.push(i);
+    }
+    for (let i = 1; i <= 31; i++) {
+      _days.push(i);
+    }
+    return {
+      title: 'picker-view',
+      years: _years as number[],
+      year: _year as number,
+      months: _months as number[],
+      month: _month as number,
+      days: _days as number[],
+      day: _day as number,
+      value: [_year - 2000, _month - 1, _day - 1] as number[],
+      result: [] as number[],
+      indicatorStyle: 'height: 50px;',
+    };
+  },
+  methods: {
+    bindChange(e: PickerViewChangeEvent) {
+      const val = e.detail.value;
+      this.result = val;
+      this.year = this.years[val[0]];
+      this.month = this.months[val[1]];
+      this.day = this.days[val[2]];
+    },
+  },
+};
+</script>
+
+<style>
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: #1c1c1e;
+  padding: 40px 20px;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.text-content {
+  margin-top: 60px;
+  margin-bottom: 40px;
+}
+
+.question {
+  font-size: 24px;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #8e8e93;
+}
+
+.date-picker-container {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  margin-top: 10px;
+background-color: #1c1c1e; /* 设置为您想要的颜色 */
+
+}
+
+
+.picker-view {
+  width: 100%;
+  height: 250px;
+  position: relative;
+  z-index: 1;
+  background-color: #1c1c1e; /* 设置为您想要的颜色 */
+}
+
+.item {
+  height: 50px;
+}
+
+.text {
+  line-height: 50px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.mask {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 75px; /* 根据设计需要调整 */
+  background-color: rgba(28, 28, 30, 0.6); /* 调整透明度 */
+  z-index: 2;
+}
+
+.mask.top {
+  top: 0;
+}
+
+.mask.bottom {
+  bottom: 0;
+}
+
+.continue-button {
+  width: 50px;
+  height: 50px;
+  background-color: #8bc34a;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  margin-bottom: 480px;
+}
+
+.arrow {
+  color: #242424;
+  font-size: 20px;
+}
+</style>
