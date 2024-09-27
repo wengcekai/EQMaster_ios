@@ -1,0 +1,147 @@
+<template>
+	<view class="container">
+		<image class="background-image" src="/static/battlefield/background.png" mode="aspectFill" />
+		<view class="overlay"></view>
+
+		<view class="navbar">
+			<view class="back-button"></view>
+			<view class="progress-bar">
+				    <progress-bar :isActive="true"></progress-bar>
+				    <progress-bar :isActive="false"></progress-bar>
+			</view>
+		</view>
+
+		<!-- Content -->
+		<view class="content">
+			<text class="title">第一关</text>
+			<text class="subtitle">老板肚子里的蛔虫</text>
+			<text class="time-info">3-4分钟</text>
+			<text class="description">
+				在一个精致的会所包厢里，你与一位高层领导和两名同事共进晚餐。看似轻松的聚会，实际上领导在暗中观察你们，准备决定谁将参与重要项目。你必须讨好领导，同时平衡同事关系，因为一个小小的失误可能改变你的未来。
+			</text>
+		</view>
+
+		<!-- Bottom Button -->
+		<view class="bottom-button">
+			<button class="continue-btn" @click="navigateToNextPage">继续</button>
+		</view>
+	</view>
+</template>
+
+<script>
+	import ProgressBar from '/components/ProgressBar.vue'; // 引入组件
+	export default {
+		  components: {
+		    ProgressBar, // 注册组件
+		  },
+		methods: {
+			navigateToNextPage() {
+				uni.navigateTo({
+					url: '/pages/battlefield/battlefield-task'  // Replace this with the actual path to your next page
+				});
+				console.log("Clicked");
+			}
+		}
+	}
+</script>
+
+<style scoped>
+	@import "./common.css";
+	.background-image {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+		/* 背景图片在最底层 */
+	}
+
+	.overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(46, 46, 47, 0.75);
+		z-index: 2;
+		/* 叠加层在背景图片之上 */
+	}
+
+	.container {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		color: #fff;
+		/* 全局设置文字颜色为白色 */
+	}
+
+	.navbar {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 20px;
+		position: relative;
+		z-index: 3;
+		/* 确保导航栏在叠加层之上 */
+	}
+
+	.back-button {
+		width: 24px;
+		height: 24px;
+		background: url('static/battlefield/back-icon.svg') no-repeat center;
+		background-size: contain;
+	}
+
+	.progress-bar {
+		flex: 1;
+		height: 4px;
+		background: #ccc;
+		margin: 0 10px;
+		width: 100%;
+		height: 20px;
+	}
+
+	.content {
+		padding: 20px;
+		text-align: center;
+		position: relative;
+		z-index: 3;
+		/* 确保页面内容在叠加层之上 */
+	}
+
+	.title {
+		font-size: 24px;
+		font-weight: bold;
+		color: #fff;
+		/* 具体设置白色 */
+	}
+
+	.subtitle {
+		font-size: 20px;
+		margin: 10px 0;
+		color: #fff;
+		/* 具体设置白色 */
+	}
+
+	.time-info {
+		font-size: 16px;
+		color: #bbb;
+		margin-bottom: 20px;
+	}
+
+	.description {
+		font-size: 16px;
+		line-height: 1.6;
+		color: #fff;
+		/* 具体设置白色 */
+	}
+
+	.bottom-button {
+		padding: 20px;
+		text-align: center;
+		position: relative;
+		z-index: 3;
+		/* 确保底部按钮在叠加层之上 */
+	}
+</style>

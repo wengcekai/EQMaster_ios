@@ -1,0 +1,97 @@
+<template>
+	<view class="container">
+		<!-- 背景图片 -->
+		<image src="/static/battlefield/background.png" class="background-image"></image>
+
+		<!-- 标题 -->
+		<view class="task-header">
+			<text class="main-title">老板肚子里的蛔虫</text>
+			<text class="sub-title">本关任务</text>
+		</view>
+
+		<!-- 任务列表 -->
+		<view class="task-list">
+			<view class="task-item">
+				<text class="task-word">1. 得到领导的夸赞</text>
+			</view>
+			<view class="task-item">
+				<text class="task-word">2. 点出让众人满意的菜品</text>
+			</view>
+		</view>
+
+		<!-- 按钮 -->
+		<button class="continue-btn">我知道了</button>
+	</view>
+</template>
+
+<style scoped>
+	.container {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		color: #fff;
+		/* 全局设置文字颜色为白色 */
+	}
+
+	.background-image {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: -1;
+	}
+
+	.task-word{
+		color: #fff;
+	}
+	
+	.task-header {
+		margin-top: 30rpx;
+		text-align: center;
+		color: #fff;
+	}
+
+	.main-title {
+		font-size: 40rpx;
+		font-weight: bold;
+		color: #fff;
+	}
+
+	.sub-title {
+		font-size: 32rpx;
+		margin-top: 10rpx;
+		color: #fff;
+	}
+
+	.task-list {
+		margin-top: 50rpx;
+	}
+
+	.task-item {
+		font-size: 28rpx;
+		margin-bottom: 20rpx;
+	}
+
+	.continue-btn {
+		width: 100%;
+		padding: 10px 0;
+		background-color: #ffcc66;
+		border: none;
+		border-radius: 25px;
+		font-size: 18px;
+		color: #333;
+		/* 按钮文字的颜色 */
+	}
+
+	/* 确保内容区域占满屏幕高度 */
+	.task-header,
+	.task-list,
+	.confirm-button {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+</style>

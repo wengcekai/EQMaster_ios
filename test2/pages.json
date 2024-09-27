@@ -1,120 +1,152 @@
 {
-  "pages": [
-    {
-      "path": "pages/landing/landing",
-      "style": {
-        // "navigationBarTitleText": "Scroll Test",
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/preference/preference",
-      "style": {
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/preference/preference1",
-      "style": {
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/preference/preference2",
-      "style": {
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/preference/preference3",
-      "style": {
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/test/test",
-      "style": {
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/test/test1",
-      "style": {
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/test/test2",
-      "style": {
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/test/test3",
-      "style": {
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/test/test4",
-      "style": {
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/test/test5",
-      "style": {
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/dashboard/dashboard",
-      "style": {
-        "navigationBarTitleText": ""
-      }
-    },
-    {
-      "path": "pages/dashboard/dashboar1d",
-      "style": {
-        "navigationBarTitleText": ""
-      }
-    },
-    {
-      "path": "pages/details/details",
-      "style": {
-        "navigationBarTitleText": ""
-      }
-    },
-    {
-      "path": "pages/login/login",
-      "style": {
-        "navigationBarTitleText": ""
-      }
-    },
-    {
-      "path": "pages/cta/cta",
-      "style": {
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/result/result",
-      "style": {
-        // "navigationStyle": "custom",
-		"navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/experience/experience",
-      "style": {
-        "navigationStyle": "custom"
-      }
-    }
-  ],
-  "globalStyle": {
-    "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "应用名称",
-    "navigationBarBackgroundColor": "#FFFFFF",
-    "backgroundColor": "#F8F8F8"
-  }
+	"pages": [
+		{
+			"path": "pages/battlefield/battlefield-intro",
+			"style": {
+				// "navigationBarTitleText": "Scroll Test",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/battlefield/battlefield-task",
+			"style": {
+				// "navigationBarTitleText": "Scroll Test",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/battlefield/battlefield-playground",
+			"style": {
+				// "navigationBarTitleText": "Scroll Test",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/landing/landing",
+			"style": {
+				// "navigationBarTitleText": "Scroll Test",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/preference/preference",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/preference/preference1",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/preference/preference2",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/preference/preference3",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/test/test",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/test/test1",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/test/test2",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/test/test3",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/test/test4",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/test/test5",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/dashboard/dashboard",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/dashboard/dashboar1d",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/details/details",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+			"path": "pages/cta/cta",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/result/result",
+			"style": {
+				// "navigationStyle": "custom",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/experience/experience",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "应用名称",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"backgroundColor": "#F8F8F8"
+	},
+	"condition" : {//Mode configuration, effective only during development period.
+		"current": 0,//Current active mode (index entry of list)
+		"list": [
+			{
+				"name": "",//mode name
+				// "path": "pages/battlefield/battlefield-intro",//startup page, can not be empty
+				"path": "pages/battlefield/battlefield-intro",//startup page, can not be empty
+				"query": ""//The startup parameters are obtained in the onLoad function of the page.
+			}	
+		]
+	}
 }

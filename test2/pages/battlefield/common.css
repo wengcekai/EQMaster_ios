@@ -1,0 +1,9 @@
+.continue-btn {
+	width: 100%;
+	padding: 10px 0;
+	background-color: #ffcc66;
+	border: none;
+	border-radius: 25px;
+	font-size: 18px;
+	color: #333;
+}

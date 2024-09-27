@@ -1,6 +1,134 @@
 (function (vue) {
   'use strict';
 
+  const _sfc_main$l = vue.defineComponent({
+      props: {
+          isActive: {
+              type: Boolean,
+              default: false, // 默认是非active状态
+          },
+      },
+  });
+
+  const _style_0$k = {"progress-bar":{"":{"width":"90%","height":"100%","backgroundColor":"rgba(128,128,128,0.5)","borderRadius":20}},"active":{"":{"backgroundColor":"rgba(255,255,255,1)"}}};
+
+  const _export_sfc = (sfc, props) => {
+    const target = sfc.__vccOpts || sfc;
+    for (const [key, val] of props) {
+      target[key] = val;
+    }
+    return target;
+  };
+
+  function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock(
+      "view",
+      {
+        class: vue.normalizeClass(["progress-bar", { active: $props.isActive }])
+      },
+      null,
+      2
+      /* CLASS */
+    );
+  }
+  const ProgressBar = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["styles", [_style_0$k]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/components/ProgressBar.vue"]]);
+
+  const _sfc_main$k = vue.defineComponent({
+      components: {
+          ProgressBar, // 注册组件
+      },
+      methods: {
+          navigateToNextPage() {
+              uni.navigateTo({
+                  url: '/pages/battlefield/battlefield-task' // Replace this with the actual path to your next page
+              });
+              uni.__log__('log', 'at pages/battlefield/battlefield-intro.uvue:42', "Clicked");
+          }
+      }
+  });
+
+  const _imports_0$8 = "/static/battlefield/background.png";
+
+  const _style_0$j = {"continue-btn":{"":{"width":"100%","paddingTop":10,"paddingRight":0,"paddingBottom":10,"paddingLeft":0,"backgroundColor":"#ffcc66","borderWidth":"medium","borderStyle":"none","borderColor":"#000000","borderRadius":25,"fontSize":18,"color":"#333333"}},"background-image":{"":{"position":"absolute","top":0,"left":0,"width":"100%","height":"100%","zIndex":1}},"overlay":{"":{"position":"absolute","top":0,"left":0,"width":"100%","height":"100%","backgroundColor":"rgba(46,46,47,0.75)","zIndex":2}},"container":{"":{"position":"relative","width":"100%","height":"100%","color":"#ffffff"}},"navbar":{"":{"display":"flex","justifyContent":"space-between","alignItems":"center","paddingTop":20,"paddingRight":20,"paddingBottom":20,"paddingLeft":20,"position":"relative","zIndex":3}},"back-button":{"":{"width":24,"height":24,"backgroundSize":"contain"}},"progress-bar":{"":{"flex":1,"height":20,"backgroundColor":"#cccccc","marginTop":0,"marginRight":10,"marginBottom":0,"marginLeft":10,"width":"100%"}},"content":{"":{"paddingTop":20,"paddingRight":20,"paddingBottom":20,"paddingLeft":20,"textAlign":"center","position":"relative","zIndex":3}},"title":{"":{"fontSize":24,"fontWeight":"bold","color":"#ffffff"}},"subtitle":{"":{"fontSize":20,"marginTop":10,"marginRight":0,"marginBottom":10,"marginLeft":0,"color":"#ffffff"}},"time-info":{"":{"fontSize":16,"color":"#bbbbbb","marginBottom":20}},"description":{"":{"fontSize":16,"lineHeight":1.6,"color":"#ffffff"}},"bottom-button":{"":{"paddingTop":20,"paddingRight":20,"paddingBottom":20,"paddingLeft":20,"textAlign":"center","position":"relative","zIndex":3}}};
+
+  function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_progress_bar = vue.resolveComponent("progress-bar");
+    return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, [
+      vue.createElementVNode("image", {
+        class: "background-image",
+        src: _imports_0$8,
+        mode: "aspectFill"
+      }),
+      vue.createElementVNode("view", { class: "overlay" }),
+      vue.createElementVNode("view", { class: "navbar" }, [
+        vue.createElementVNode("view", { class: "back-button" }),
+        vue.createElementVNode("view", { class: "progress-bar" }, [
+          vue.createVNode(_component_progress_bar, { isActive: true }),
+          vue.createVNode(_component_progress_bar, { isActive: false })
+        ])
+      ]),
+      vue.createCommentVNode(" Content "),
+      vue.createElementVNode("view", { class: "content" }, [
+        vue.createElementVNode("text", { class: "title" }, "\u7B2C\u4E00\u5173"),
+        vue.createElementVNode("text", { class: "subtitle" }, "\u8001\u677F\u809A\u5B50\u91CC\u7684\u86D4\u866B"),
+        vue.createElementVNode("text", { class: "time-info" }, "3-4\u5206\u949F"),
+        vue.createElementVNode("text", { class: "description" }, " \u5728\u4E00\u4E2A\u7CBE\u81F4\u7684\u4F1A\u6240\u5305\u53A2\u91CC\uFF0C\u4F60\u4E0E\u4E00\u4F4D\u9AD8\u5C42\u9886\u5BFC\u548C\u4E24\u540D\u540C\u4E8B\u5171\u8FDB\u665A\u9910\u3002\u770B\u4F3C\u8F7B\u677E\u7684\u805A\u4F1A\uFF0C\u5B9E\u9645\u4E0A\u9886\u5BFC\u5728\u6697\u4E2D\u89C2\u5BDF\u4F60\u4EEC\uFF0C\u51C6\u5907\u51B3\u5B9A\u8C01\u5C06\u53C2\u4E0E\u91CD\u8981\u9879\u76EE\u3002\u4F60\u5FC5\u987B\u8BA8\u597D\u9886\u5BFC\uFF0C\u540C\u65F6\u5E73\u8861\u540C\u4E8B\u5173\u7CFB\uFF0C\u56E0\u4E3A\u4E00\u4E2A\u5C0F\u5C0F\u7684\u5931\u8BEF\u53EF\u80FD\u6539\u53D8\u4F60\u7684\u672A\u6765\u3002 ")
+      ]),
+      vue.createCommentVNode(" Bottom Button "),
+      vue.createElementVNode("view", { class: "bottom-button" }, [
+        vue.createElementVNode("button", {
+          class: "continue-btn",
+          onClick: _cache[0] || (_cache[0] = (...args) => $options.navigateToNextPage && $options.navigateToNextPage(...args))
+        }, "\u7EE7\u7EED")
+      ])
+    ]);
+  }
+  const PagesBattlefieldBattlefieldIntro = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["styles", [_style_0$j]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/pages/battlefield/battlefield-intro.uvue"]]);
+
+  const _style_0$i = {"container":{"":{"position":"relative","width":"100%","height":"100%","color":"#ffffff"}},"background-image":{"":{"position":"absolute","top":0,"left":0,"width":"100%","height":"100%","zIndex":-1}},"task-word":{"":{"color":"#ffffff"}},"task-header":{"":{"marginTop":"30rpx","textAlign":"center","color":"#ffffff","flex":1,"display":"flex","flexDirection":"column","justifyContent":"center","alignItems":"center"}},"main-title":{"":{"fontSize":"40rpx","fontWeight":"bold","color":"#ffffff"}},"sub-title":{"":{"fontSize":"32rpx","marginTop":"10rpx","color":"#ffffff"}},"task-list":{"":{"marginTop":"50rpx","flex":1,"display":"flex","flexDirection":"column","justifyContent":"center","alignItems":"center"}},"task-item":{"":{"fontSize":"28rpx","marginBottom":"20rpx"}},"continue-btn":{"":{"width":"100%","paddingTop":10,"paddingRight":0,"paddingBottom":10,"paddingLeft":0,"backgroundColor":"#ffcc66","borderWidth":"medium","borderStyle":"none","borderColor":"#000000","borderRadius":25,"fontSize":18,"color":"#333333"}},"confirm-button":{"":{"flex":1,"display":"flex","flexDirection":"column","justifyContent":"center","alignItems":"center"}}};
+
+  const _sfc_main$j = {};
+
+
+  function _sfc_render$i(_ctx, _cache) {
+    return (vue.openBlock(), vue.createElementBlock("view", { class: "container" }, [
+      vue.createCommentVNode(" 背景图片 "),
+      vue.createElementVNode("image", {
+        src: _imports_0$8,
+        class: "background-image"
+      }),
+      vue.createCommentVNode(" 标题 "),
+      vue.createElementVNode("view", { class: "task-header" }, [
+        vue.createElementVNode("text", { class: "main-title" }, "老板肚子里的蛔虫"),
+        vue.createElementVNode("text", { class: "sub-title" }, "本关任务")
+      ]),
+      vue.createCommentVNode(" 任务列表 "),
+      vue.createElementVNode("view", { class: "task-list" }, [
+        vue.createElementVNode("view", { class: "task-item" }, [
+          vue.createElementVNode("text", { class: "task-word" }, "1. 得到领导的夸赞")
+        ]),
+        vue.createElementVNode("view", { class: "task-item" }, [
+          vue.createElementVNode("text", { class: "task-word" }, "2. 点出让众人满意的菜品")
+        ])
+      ]),
+      vue.createCommentVNode(" 按钮 "),
+      vue.createElementVNode("button", { class: "continue-btn" }, "我知道了")
+    ]))
+  }
+  const PagesBattlefieldBattlefieldTask = /*#__PURE__*/_export_sfc(_sfc_main$j, [['render',_sfc_render$i],['styles',[_style_0$i]],['__file',"/Users/taokai/codes/EQMaster_ios/test2/pages/battlefield/battlefield-task.uvue"]]);
+
+  const _sfc_main$i = vue.defineComponent({
+      data() {
+          return {};
+      },
+      methods: {}
+  });
+
+  function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view");
+  }
+  const PagesBattlefieldBattlefieldPlayground = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/pages/battlefield/battlefield-playground.uvue"]]);
+
   const _sfc_main$h = vue.defineComponent({
       data() {
           return {
@@ -51,14 +179,6 @@
 
   const _style_0$h = {"container":{"":{"width":"100%","height":"100%","overflow":"hidden"}},"splash-screen":{"":{"position":"absolute","top":0,"left":0,"width":"100%","height":"100%","backgroundColor":"#ffffff","display":"flex","alignItems":"center","justifyContent":"center","zIndex":1000}},"splash-image":{"":{"width":"100%","height":"100%","objectFit":"cover"}},"welcome-box":{"":{"position":"relative","width":"100%","height":"100%"}},"background-image":{"":{"position":"absolute","width":"100%","height":"100%"}},"button":{"":{"width":"600rpx","height":"80rpx","borderWidth":"medium","borderStyle":"none","borderColor":"#ffffff","position":"absolute","left":"50%","transform":"translateX(-50%)","transitionProperty":"transform","transitionDuration":"0.2s","backgroundColor":"#ffffff"}},"button1":{"":{"backgroundColor":"#9EE44D","borderRadius":"45rpx","display":"flex","alignItems":"center","justifyContent":"center","bottom":"265rpx","transform":"translateX(-50%)"}},"login-text":{"":{"color":"#9EE44D","fontSize":"32rpx","textDecoration":"underline","position":"absolute","bottom":"190rpx","left":"50%","transform":"translateX(-50%)"}},"button-text":{"":{"color":"#252529","fontSize":"32rpx","fontWeight":"bold"}},"@TRANSITION":{"button":{"property":"transform","duration":"0.2s"}}};
 
-  const _export_sfc = (sfc, props) => {
-    const target = sfc.__vccOpts || sfc;
-    for (const [key, val] of props) {
-      target[key] = val;
-    }
-    return target;
-  };
-
   function _sfc_render$g(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, [
       $data.showSplash ? (vue.openBlock(), vue.createElementBlock("view", {
@@ -91,7 +211,7 @@
       ])
     ]);
   }
-  const PagesLandingLanding = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["styles", [_style_0$h]], ["__file", "/Users/wengcekai/Downloads/EQMaster_ios/test2/pages/landing/landing.uvue"]]);
+  const PagesLandingLanding = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["styles", [_style_0$h]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/pages/landing/landing.uvue"]]);
 
   const _sfc_main$g = vue.defineComponent({
       data() {
@@ -220,7 +340,7 @@
       /* STABLE_FRAGMENT */
     );
   }
-  const PagesPreferencePreference = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["styles", [_style_0$g]], ["__file", "/Users/wengcekai/Downloads/EQMaster_ios/test2/pages/preference/preference.uvue"]]);
+  const PagesPreferencePreference = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["styles", [_style_0$g]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/pages/preference/preference.uvue"]]);
 
   const _sfc_main$f = vue.defineComponent({
       data() {
@@ -405,7 +525,7 @@
       /* STABLE_FRAGMENT */
     );
   }
-  const PagesPreferencePreference1 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["styles", [_style_0$f]], ["__file", "/Users/wengcekai/Downloads/EQMaster_ios/test2/pages/preference/preference1.uvue"]]);
+  const PagesPreferencePreference1 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["styles", [_style_0$f]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/pages/preference/preference1.uvue"]]);
 
   const _sfc_main$e = vue.defineComponent({
       data() {
@@ -535,7 +655,7 @@
       ])
     ]);
   }
-  const PagesPreferencePreference2 = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["styles", [_style_0$e]], ["__file", "/Users/wengcekai/Downloads/EQMaster_ios/test2/pages/preference/preference2.uvue"]]);
+  const PagesPreferencePreference2 = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["styles", [_style_0$e]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/pages/preference/preference2.uvue"]]);
 
   const _sfc_main$d = vue.defineComponent({
       data() {
@@ -661,7 +781,7 @@
     </view> `)
     ]);
   }
-  const PagesPreferencePreference3 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["styles", [_style_0$d]], ["__file", "/Users/wengcekai/Downloads/EQMaster_ios/test2/pages/preference/preference3.uvue"]]);
+  const PagesPreferencePreference3 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["styles", [_style_0$d]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/pages/preference/preference3.uvue"]]);
 
   const _sfc_main$c = vue.defineComponent({
       data() {
@@ -824,7 +944,7 @@
       ])
     ]);
   }
-  const PagesTestTest = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["styles", [_style_0$c]], ["__file", "/Users/wengcekai/Downloads/EQMaster_ios/test2/pages/test/test.uvue"]]);
+  const PagesTestTest = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["styles", [_style_0$c]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/pages/test/test.uvue"]]);
 
   const _sfc_main$b = vue.defineComponent({
       data() {
@@ -986,7 +1106,7 @@
       ])
     ]);
   }
-  const PagesTestTest1 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["styles", [_style_0$b]], ["__file", "/Users/wengcekai/Downloads/EQMaster_ios/test2/pages/test/test1.uvue"]]);
+  const PagesTestTest1 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["styles", [_style_0$b]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/pages/test/test1.uvue"]]);
 
   const _sfc_main$a = vue.defineComponent({
       data() {
@@ -1208,7 +1328,7 @@
       ])
     ]);
   }
-  const PagesTestTest2 = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["styles", [_style_0$a]], ["__file", "/Users/wengcekai/Downloads/EQMaster_ios/test2/pages/test/test2.uvue"]]);
+  const PagesTestTest2 = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["styles", [_style_0$a]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/pages/test/test2.uvue"]]);
 
   const _sfc_main$9 = vue.defineComponent({
       data() {
@@ -1351,7 +1471,7 @@
       ])
     ]);
   }
-  const PagesTestTest3 = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["styles", [_style_0$9]], ["__file", "/Users/wengcekai/Downloads/EQMaster_ios/test2/pages/test/test3.uvue"]]);
+  const PagesTestTest3 = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["styles", [_style_0$9]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/pages/test/test3.uvue"]]);
 
   const _sfc_main$8 = vue.defineComponent({
       data() {
@@ -1505,7 +1625,7 @@
       ])
     ]);
   }
-  const PagesTestTest4 = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["styles", [_style_0$8]], ["__file", "/Users/wengcekai/Downloads/EQMaster_ios/test2/pages/test/test4.uvue"]]);
+  const PagesTestTest4 = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["styles", [_style_0$8]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/pages/test/test4.uvue"]]);
 
   const _sfc_main$7 = vue.defineComponent({
       data() {
@@ -1725,7 +1845,7 @@
       ])
     ]);
   }
-  const PagesTestTest5 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["styles", [_style_0$7]], ["__file", "/Users/wengcekai/Downloads/EQMaster_ios/test2/pages/test/test5.uvue"]]);
+  const PagesTestTest5 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["styles", [_style_0$7]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/pages/test/test5.uvue"]]);
 
   const _sfc_main$6 = vue.defineComponent({
       data() {
@@ -1840,7 +1960,7 @@
       ])
     ]);
   }
-  const PagesDashboardDashboard = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["styles", [_style_0$6]], ["__file", "/Users/wengcekai/Downloads/EQMaster_ios/test2/pages/dashboard/dashboard.uvue"]]);
+  const PagesDashboardDashboard = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["styles", [_style_0$6]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/pages/dashboard/dashboard.uvue"]]);
 
   const _sfc_main$5 = vue.defineComponent({
       data() {
@@ -2171,7 +2291,7 @@
       }, "\u67E5\u770B\u6211\u7684\u4FEE\u70BC\u6307\u5357")
     ]);
   }
-  const PagesDashboardDashboar1d = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["styles", [_style_0$5]], ["__file", "/Users/wengcekai/Downloads/EQMaster_ios/test2/pages/dashboard/dashboar1d.uvue"]]);
+  const PagesDashboardDashboar1d = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["styles", [_style_0$5]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/pages/dashboard/dashboar1d.uvue"]]);
 
   const _sfc_main$4 = vue.defineComponent({
       data() {
@@ -2279,7 +2399,7 @@
       ])
     ]);
   }
-  const PagesDetailsDetails = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["styles", [_style_0$4]], ["__file", "/Users/wengcekai/Downloads/EQMaster_ios/test2/pages/details/details.uvue"]]);
+  const PagesDetailsDetails = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["styles", [_style_0$4]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/pages/details/details.uvue"]]);
 
   const _sfc_main$3 = vue.defineComponent({
       data() {
@@ -2367,7 +2487,7 @@
       ])
     ]);
   }
-  const PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["styles", [_style_0$3]], ["__file", "/Users/wengcekai/Downloads/EQMaster_ios/test2/pages/login/login.uvue"]]);
+  const PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["styles", [_style_0$3]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/pages/login/login.uvue"]]);
 
   const _sfc_main$2 = vue.defineComponent({
       data() {
@@ -2922,7 +3042,7 @@
       ])
     ]);
   }
-  const PagesResultResult = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["styles", [_style_0$2]], ["__file", "/Users/wengcekai/Downloads/EQMaster_ios/test2/pages/result/result.uvue"]]);
+  const PagesResultResult = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["styles", [_style_0$2]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/pages/result/result.uvue"]]);
 
   const _sfc_main$1 = vue.defineComponent({
       data() {
@@ -2995,8 +3115,11 @@
       ])
     ]);
   }
-  const PagesExperienceExperience = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["styles", [_style_0$1]], ["__file", "/Users/wengcekai/Downloads/EQMaster_ios/test2/pages/experience/experience.uvue"]]);
+  const PagesExperienceExperience = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["styles", [_style_0$1]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/pages/experience/experience.uvue"]]);
 
+  __definePage('pages/battlefield/battlefield-intro',PagesBattlefieldBattlefieldIntro);
+  __definePage('pages/battlefield/battlefield-task',PagesBattlefieldBattlefieldTask);
+  __definePage('pages/battlefield/battlefield-playground',PagesBattlefieldBattlefieldPlayground);
   __definePage('pages/landing/landing',PagesLandingLanding);
   __definePage('pages/preference/preference',PagesPreferencePreference);
   __definePage('pages/preference/preference1',PagesPreferencePreference1);
@@ -3032,7 +3155,7 @@
 
   const _style_0 = {"uni-row":{"":{"flexDirection":"row"}},"uni-column":{"":{"flexDirection":"column"}}};
 
-  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["styles", [_style_0]], ["__file", "/Users/wengcekai/Downloads/EQMaster_ios/test2/App.uvue"]]);
+  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["styles", [_style_0]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/App.uvue"]]);
 
   const __global__ = typeof globalThis === 'undefined' ? Function('return this')() : globalThis;
   __global__.__uniX = true;
@@ -3045,4 +3168,3 @@
   createApp().app.mount("#app");
 
 })(Vue);
-//# sourceMappingURL=../../../cache/.app-ios/sourcemap/app-service.js.map
