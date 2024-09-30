@@ -34,7 +34,7 @@
 		<!-- 添加白色卡片1 -->
         <view class="card1">
           <text class="card-title14">添加微信助手，获取深度职场分析！</text>
-		  <image class="illustration33" src="/static/add.png" mode="widthFix"></image>
+		  <image class="illustration33" src="/static/add.png" mode="widthFix" @click="openNewPopup"></image>
 		  <image class="illustration34" src="/static/x.png" mode="widthFix"></image>
         </view>
 		
@@ -136,6 +136,21 @@
 		  <image class="illustration37" src="/static/Frame2.png" mode="widthFix"></image>
 		  <image class="illustration38" src="/static/Frame3.png" mode="widthFix"></image>
 		</view>
+		
+		<!-- New Popup -->
+		<view v-if="showNewPopup" class="popup-overlay">
+		  <view class="popup-content" @click.stop>
+		    <view class="popup-header">
+		      <text class="popup-title"> </text>
+		      <text class="popup-close" @click="closeNewPopup">×</text>
+		    </view>
+		    <!-- Add your new popup content here -->
+		    <!-- <text>这是新弹窗的内容</text> -->
+			<image class="illustration-qr" src="/static/QRcode.jpg" mode="widthFix"></image>
+			
+		    <!-- Add more elements as needed -->
+		  </view>
+		</view>
      
 	  </view>
     </scroll-view>
@@ -203,7 +218,8 @@ export default {
         { title: '角色卡4' },
 		{ title: '角色卡5' },
         // 可以根据需要添加更多卡片
-      ]
+      ],
+      showNewPopup: false,
     };
   },
   computed: {
@@ -299,7 +315,7 @@ export default {
 	circleLeftPosition(value) {
 	  // 获取进度条实际宽度
 	  const percentage1 = (value / this.maxScore) * 100;
-	  const progressBarWidth = uni.getSystemInfoSync().windowWidth * 0.8; // 80%的屏幕宽度作为进度条的��际宽度
+	  const progressBarWidth = uni.getSystemInfoSync().windowWidth * 0.8; // 80%的屏幕宽度作为进度条的际宽度
 	  console.log(percentage1)
 	  return (percentage1 / 100) * progressBarWidth;
 	},
@@ -406,6 +422,13 @@ export default {
         url: `/pages/result/result?jobId=${this.jobId}`
       });
     },
+    openNewPopup() {
+      this.showNewPopup = true;
+    },
+    
+    closeNewPopup() {
+      this.showNewPopup = false;
+    },
   },
   mounted() {
     this.startProgress(); // 开始进度条
@@ -456,7 +479,16 @@ export default {
   margin-top: 30rpx;
   margin-bottom: 50rpx;
 }
-
+.illustration-qr {
+  width: 570rpx;
+  height: auto;
+  position: relative;
+  z-index: 10;
+  top: -5px;
+  left: 0px;
+  margin-top: 30rpx;
+  margin-bottom: 50rpx;
+}
 .illustration2 {
   width: 130rpx;
   height: auto;

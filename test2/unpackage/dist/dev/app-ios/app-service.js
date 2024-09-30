@@ -1801,7 +1801,8 @@
                   { title: '角色卡4' },
                   { title: '角色卡5' },
                   // 可以根据需要添加更多卡片
-              ]
+              ],
+              showNewPopup: false,
           };
       },
       computed: {
@@ -1835,7 +1836,7 @@
           }
       },
       onLoad(option = null) {
-          uni.__log__('log', 'at pages/dashboard/dashboard.uvue:238', 'Received options:', option);
+          uni.__log__('log', 'at pages/dashboard/dashboard.uvue:254', 'Received options:', option);
           // 接收上一个页面传递的数据
           this.userId = option.userId || '';
           this.username = decodeURIComponent(option.username || '');
@@ -1847,7 +1848,7 @@
                   this.selectedOptions = UTS.JSON.parse(decodeURIComponent(option.options));
               }
               catch (e) {
-                  uni.__log__('error', 'at pages/dashboard/dashboard.uvue:251', 'Error parsing options:', e);
+                  uni.__log__('error', 'at pages/dashboard/dashboard.uvue:267', 'Error parsing options:', e);
                   this.selectedOptions = [];
               }
           }
@@ -1856,11 +1857,11 @@
                   this.birthday = UTS.JSON.parse(decodeURIComponent(option.birthday));
               }
               catch (e) {
-                  uni.__log__('error', 'at pages/dashboard/dashboard.uvue:260', 'Error parsing birthday:', e);
+                  uni.__log__('error', 'at pages/dashboard/dashboard.uvue:276', 'Error parsing birthday:', e);
                   this.birthday = null;
               }
           }
-          uni.__log__('log', 'at pages/dashboard/dashboard.uvue:265', 'Parsed data:', {
+          uni.__log__('log', 'at pages/dashboard/dashboard.uvue:281', 'Parsed data:', {
               userId: this.userId,
               username: this.username,
               gender: this.gender,
@@ -1889,14 +1890,14 @@
           progressWidth(value = null) {
               // 算进度条宽度百分比
               const percentage = (value / this.maxScore) * 100;
-              // uni.__log__('log','at pages/dashboard/dashboard.uvue:296','${percentage}%：', `${percentage}%`)
+              // uni.__log__('log','at pages/dashboard/dashboard.uvue:312','${percentage}%：', `${percentage}%`)
               return `${percentage}%`;
           },
           circleLeftPosition(value = null) {
               // 获取进度条实际宽度
               const percentage1 = (value / this.maxScore) * 100;
-              const progressBarWidth = uni.getSystemInfoSync().windowWidth * 0.8; // 80%的屏幕宽度作为进度条的��际宽度
-              uni.__log__('log', 'at pages/dashboard/dashboard.uvue:303', percentage1);
+              const progressBarWidth = uni.getSystemInfoSync().windowWidth * 0.8; // 80%的屏幕宽度作为进度条的际宽度
+              uni.__log__('log', 'at pages/dashboard/dashboard.uvue:319', percentage1);
               return (percentage1 / 100) * progressBarWidth;
           },
           navigateToGuide() {
@@ -1912,17 +1913,17 @@
                   success(response) {
                       if (response.statusCode === 200) {
                           that.homepageData = response.data;
-                          // uni.__log__('log','at pages/dashboard/dashboard.uvue:319','Homepage data received:', that.homepageData);
+                          // uni.__log__('log','at pages/dashboard/dashboard.uvue:335','Homepage data received:', that.homepageData);
                           that.$nextTick(() => {
                               that.drawRadar();
                           });
                       }
                       else {
-                          uni.__log__('error', 'at pages/dashboard/dashboard.uvue:324', 'Failed to fetch homepage data:', response.statusCode);
+                          uni.__log__('error', 'at pages/dashboard/dashboard.uvue:340', 'Failed to fetch homepage data:', response.statusCode);
                       }
                   },
                   fail(error) {
-                      uni.__log__('error', 'at pages/dashboard/dashboard.uvue:328', 'Error fetching homepage data:', error);
+                      uni.__log__('error', 'at pages/dashboard/dashboard.uvue:344', 'Error fetching homepage data:', error);
                   }
               });
           },
@@ -1949,7 +1950,7 @@
               }
           },
           createProfile() {
-              uni.__log__('log', 'at pages/dashboard/dashboard.uvue:354', '创建档案', {
+              uni.__log__('log', 'at pages/dashboard/dashboard.uvue:370', '创建档案', {
                   name: this.profileName,
                   option: this.selectedOption,
                   tags: this.selectedTags
@@ -1966,7 +1967,7 @@
                       contact_relationship: this.selectedOption
                   });
                   // 在发送请求之前打印数据
-                  uni.__log__('log', 'at pages/dashboard/dashboard.uvue:372', 'Sending data to create contact profile:', requestData);
+                  uni.__log__('log', 'at pages/dashboard/dashboard.uvue:388', 'Sending data to create contact profile:', requestData);
                   // 发送请求创建联系人档案
                   uni.request({
                       url: 'https://eqmaster.azurewebsites.net/create_contact_profile',
@@ -1974,14 +1975,14 @@
                       data: requestData,
                       success: (res) => {
                           if (res.statusCode === 200) {
-                              uni.__log__('log', 'at pages/dashboard/dashboard.uvue:381', 'Contact profile created successfully:', res.data);
+                              uni.__log__('log', 'at pages/dashboard/dashboard.uvue:397', 'Contact profile created successfully:', res.data);
                               // 创建成功后，导航到档案页面
                               uni.navigateTo({
                                   url: `/pages/profile/profile?personal_name=${encodeURIComponent(this.username)}&name=${encodeURIComponent(this.profileName)}&jobId=${this.jobId}&relation=${encodeURIComponent(this.selectedOption)}&tags=${encodeURIComponent(UTS.JSON.stringify(this.selectedTags))}&contactId=${res.data.contact_id}`
                               });
                           }
                           else {
-                              uni.__log__('error', 'at pages/dashboard/dashboard.uvue:387', 'Failed to create contact profile:', res.statusCode, res.data);
+                              uni.__log__('error', 'at pages/dashboard/dashboard.uvue:403', 'Failed to create contact profile:', res.statusCode, res.data);
                               uni.showToast({
                                   title: `创建档案失败: ${res.statusCode}`,
                                   icon: 'none'
@@ -1989,7 +1990,7 @@
                           }
                       },
                       fail: (err) => {
-                          uni.__log__('error', 'at pages/dashboard/dashboard.uvue:395', 'Error creating contact profile:', err);
+                          uni.__log__('error', 'at pages/dashboard/dashboard.uvue:411', 'Error creating contact profile:', err);
                           uni.showToast({
                               title: '网络错误，请稍后重试',
                               icon: 'none'
@@ -2002,6 +2003,12 @@
               uni.navigateTo({
                   url: `/pages/result/result?jobId=${this.jobId}`
               });
+          },
+          openNewPopup() {
+              this.showNewPopup = true;
+          },
+          closeNewPopup() {
+              this.showNewPopup = false;
           },
       },
       mounted() {
@@ -2045,7 +2052,9 @@
 
   const _imports_11 = "/static/Frame3.png";
 
-  const _style_0$5 = {"container":{"":{"position":"relative","backgroundColor":"#2F2F38","flexDirection":"column","alignItems":"center","paddingTop":"100rpx","width":"100%","height":"100%","overflowY":"auto","WebkitOverflowScrolling":"touch"}},"content":{"":{"flexDirection":"column"}},"illustration1":{"":{"width":"300rpx","height":"auto","position":"relative","zIndex":10,"top":-5,"left":0,"marginTop":"30rpx","marginBottom":"50rpx"}},"illustration2":{"":{"width":"130rpx","height":"auto","position":"absolute","top":"1030rpx","left":"290rpx"}},"illustration3":{"":{"width":"100rpx","height":"auto","position":"relative","top":"0rpx","left":"0rpx"}},"illustration31":{"":{"width":"250rpx","height":"auto","position":"absolute","top":"340rpx","left":"60rpx","marginTop":3}},"illustration32":{"":{"width":"690rpx","height":"auto","position":"relative","top":"0rpx","left":"0rpx","marginBottom":10}},"illustration33":{"":{"width":"130rpx","height":"auto","position":"absolute","top":"0rpx","left":"500rpx","marginBottom":10}},"illustration34":{"":{"width":"60rpx","height":"auto","position":"absolute","top":"15rpx","left":"620rpx","marginBottom":10}},"illustration35":{"":{"width":"320rpx","height":"auto","position":"absolute","top":"1200rpx","left":"350rpx","marginBottom":10,"zIndex":40}},"illustration36":{"":{"width":"60rpx","height":"auto","position":"absolute","top":"30rpx","left":"100rpx"}},"illustration37":{"":{"width":"60rpx","height":"auto","position":"absolute","top":"30rpx","left":"340rpx"}},"illustration38":{"":{"width":"60rpx","height":"auto","position":"absolute","top":"30rpx","left":"570rpx"}},"illustration39":{"":{"width":300,"height":"auto","position":"absolute","top":"30rpx"}},"illustration4":{"":{"width":"70rpx","height":"auto","position":"absolute","marginTop":"-20rpx","left":"390rpx"}},"illustration5":{"":{"width":"150rpx","height":"auto","position":"absolute","marginTop":"-20rpx","left":"520rpx"}},"illustration6":{"":{"width":"400rpx","height":"auto","position":"absolute","bottom":"-20rpx","left":"250rpx"}},"illustrationhead":{"":{"width":"100rpx","height":"auto","position":"relative","zIndex":10,"left":0,"marginTop":"30rpx","marginBottom":"0rpx"}},"card":{"":{"width":190,"height":225,"backgroundColor":"#373742","borderRadius":"20rpx","boxShadow":"0 4rpx 8rpx rgba(0, 0, 0, 0.1)","position":"absolute","top":58,"left":170,"textAlign":"left","display":"flex","flexDirection":"column","paddingTop":"30rpx","paddingRight":"30rpx","paddingBottom":"0rpx","paddingLeft":"30rpx","marginBottom":"10rpx"}},"card1":{"":{"width":360,"backgroundColor":"#373742","borderRadius":"50rpx","boxShadow":"0 4rpx 8rpx rgba(0, 0, 0, 0.1)","position":"relative","zIndex":20,"textAlign":"center","display":"flex","flexDirection":"column","paddingTop":"20rpx","paddingRight":"30rpx","paddingBottom":"20rpx","paddingLeft":"30rpx","marginBottom":"30rpx"}},"cardjuese":{"":{"width":170,"height":"auto","backgroundColor":"#373742","borderRadius":"50rpx","boxShadow":"0 4rpx 8rpx rgba(0, 0, 0, 0.1)","position":"relative","zIndex":20,"textAlign":"center","display":"flex","flexDirection":"column","paddingTop":"20rpx","paddingRight":"30rpx","paddingBottom":"20rpx","paddingLeft":"30rpx"}},"cardjuese1":{"":{"width":170,"height":60,"backgroundColor":"#373742","borderRadius":"50rpx","boxShadow":"0 4rpx 8rpx rgba(0, 0, 0, 0.1)","position":"relative","zIndex":20,"textAlign":"center","display":"flex","flexDirection":"column","paddingTop":"20rpx","paddingRight":"30rpx","paddingBottom":"20rpx","paddingLeft":"30rpx"}},"card3":{"":{"width":"100%","height":"150rpx","backgroundColor":"#252529","color":"#252529","fontSize":"36rpx","textAlign":"center","lineHeight":"100rpx","display":"flex","justifyContent":"center","alignItems":"center","zIndex":1000,"position":"fixed","bottom":0,"transform":"translateX(-50%)","left":"50%"}},"peoplecontain":{"":{"width":360,"backgroundColor":"#2F2F38","position":"relative","zIndex":20,"textAlign":"center","display":"flex","flexDirection":"row","flexWrap":"wrap","justifyContent":"space-between","alignItems":"flex-start","paddingTop":"0rpx","paddingRight":"0rpx","paddingBottom":"0rpx","paddingLeft":"0rpx","marginBottom":"200rpx"}},"lower-card":{"":{"top":70,"marginLeft":10,"marginRight":10,"marginTop":5,"marginBottom":5}},"score-title-head":{"":{"fontSize":"50rpx","fontWeight":"bold","color":"#FFFFFF","marginTop":"30rpx","position":"relative","zIndex":30}},"score-title":{"":{"fontSize":"40rpx","fontWeight":"bold","color":"#9EE44D","marginBottom":"5rpx"}},"score-title1":{"":{"fontSize":"36rpx","color":"#FFFFFF","marginBottom":"5rpx"}},"score-title2":{"":{"fontSize":"30rpx","color":"#FFFFFF","left":300,"top":-23,"fontWeight":"bold"}},"score-container":{"":{"width":"100%","display":"flex","flexDirection":"column","alignItems":"flex-start","marginBottom":"80rpx"}},"score-container1":{"":{"width":"100%","display":"flex","flexDirection":"column","alignItems":"flex-start","marginBottom":"80rpx"}},"score-details":{"":{"display":"flex","marginBottom":"20rpx","marginTop":"20rpx","width":"100%"}},"score-value-large":{"":{"fontSize":"50rpx","fontWeight":"bold","color":"#FFFFFF","marginLeft":"60rpx","left":30,"top":26,"position":"absolute"}},"score-value-small":{"":{"fontSize":"40rpx","fontWeight":"normal","color":"#9EE44D","position":"absolute","top":"40rpx","left":"120rpx"}},"progress-bar":{"":{"width":"95%","height":"10rpx","backgroundColor":"rgba(125,123,126,0.5)","borderRadius":"25rpx","overflow":"hidden","marginTop":"5rpx","marginBottom":"15rpx"}},"status-text":{"":{"top":190,"fontSize":"40rpx","color":"#9EE44D","marginTop":"20rpx"}},"progress-bar1":{"":{"width":"85%","height":"15rpx","backgroundColor":"#7d7b7e","borderRadius":"15rpx","overflow":"hidden","marginTop":"15rpx","marginBottom":"15rpx"}},"progress":{"":{"height":"100%","backgroundColor":"#9EE44D"}},"radar-canvas":{"":{"width":"700rpx","height":"500rpx","marginTop":50,"top":-50,"backgroundColor":"rgba(0,0,0,0)"}},"card-content":{"":{"display":"flex","alignItems":"center","justifyContent":"flex-start","marginBottom":"40rpx"}},"emoji":{"":{"width":"60rpx","height":"auto","marginRight":"10rpx"}},"card-text-container":{"":{"display":"flex","flexDirection":"column","alignItems":"flex-start","marginBottom":30}},"icon-text-box":{"":{"display":"flex","alignItems":"center"}},"text-box":{"":{"alignItems":"center","borderWidth":"1rpx","borderStyle":"solid","borderColor":"#373742","paddingTop":"5rpx","paddingRight":"10rpx","paddingBottom":"5rpx","paddingLeft":"10rpx","borderRadius":"10rpx","backgroundColor":"#373742","boxShadow":"0 0 12rpx 0rpx rgba(0, 0, 0, 0.3)"}},"text-box1":{"":{"alignItems":"center","borderWidth":"1rpx","borderStyle":"solid","borderColor":"#373742","paddingTop":"10rpx","paddingRight":"10rpx","paddingBottom":"10rpx","paddingLeft":"10rpx","borderRadius":"10rpx","backgroundColor":"#373742","boxShadow":"none","marginTop":"0rpx","marginRight":"10rpx","marginBottom":"10rpx","marginLeft":"10rpx"}},"card-title":{"":{"fontSize":"28rpx","backgroundColor":"#EDFB8B","marginBottom":"10rpx","paddingTop":10,"paddingRight":10,"paddingBottom":10,"paddingLeft":10,"borderTopLeftRadius":"20rpx","borderTopRightRadius":"20rpx","borderBottomRightRadius":"20rpx","borderBottomLeftRadius":"0rpx"}},"card-title2":{"":{"fontSize":"28rpx","backgroundColor":"#9EE44D","marginBottom":"10rpx","marginTop":"20rpx","paddingTop":10,"paddingRight":10,"paddingBottom":10,"paddingLeft":10,"borderTopLeftRadius":"20rpx","borderTopRightRadius":"20rpx","borderBottomRightRadius":"20rpx","borderBottomLeftRadius":"0rpx"}},"card-title1":{"":{"fontSize":"45rpx","color":"#FFFFFF","fontWeight":"bold","marginBottom":"10rpx"}},"card-title12":{"":{"position":"absolute","top":400,"left":32,"fontSize":"26rpx","color":"#FFFFFF","fontWeight":"bold","marginBottom":"10rpx"}},"card-title13":{"":{"position":"absolute","top":415,"left":30,"fontSize":"50rpx","color":"#FFFFFF","fontWeight":"bold","marginBottom":"10rpx"}},"card-title14":{"":{"fontSize":"25rpx","color":"#FFFFFF","marginBottom":"10rpx","marginTop":"10rpx","marginLeft":"20rpx"}},"card-title15":{"":{"fontSize":"25rpx","color":"#bbbbbb","marginBottom":"10rpx","marginTop":"10rpx"}},"logo":{"":{"width":"300rpx","height":"300rpx","position":"absolute","top":"11%","left":"50%","transform":"translate(-50%, -50%)"}},"card-description":{"":{"fontSize":"20rpx","color":"#FFFFFF","lineHeight":1.5,"marginTop":"0rpx"}},"card-description1":{"":{"fontSize":"24rpx","color":"#FFFFFF","lineHeight":1.5,"marginTop":"10rpx"}},"guide-button":{"":{"width":"100%","height":"150rpx","backgroundColor":"#252529","color":"#252529","fontSize":"36rpx","textAlign":"center","lineHeight":"100rpx","display":"flex","justifyContent":"center","alignItems":"center","zIndex":1000,"position":"fixed","bottom":0,"transform":"translateX(-50%)","left":"50%"}},"debug-info":{"":{"position":"absolute","top":0,"left":0,"right":0,"backgroundColor":"rgba(0,0,0,0.5)","color":"#FFFFFF","paddingTop":5,"paddingRight":5,"paddingBottom":5,"paddingLeft":5,"fontSize":10,"zIndex":100,"overflowY":"auto"}},"emotion-detection-box1":{"":{"width":"100%","display":"flex","justifyContent":"center","alignItems":"center","position":"absolute","top":"350rpx"}},"emotion-detection-box2":{"":{"width":"100%","display":"flex","justifyContent":"center","alignItems":"center","position":"absolute","top":"450rpx","left":"35%"}},"emotion-detection-box3":{"":{"width":"100%","display":"flex","justifyContent":"center","alignItems":"center","position":"absolute","top":"450rpx","right":"35%"}},"emotion-detection-box4":{"":{"width":"100%","display":"flex","justifyContent":"center","alignItems":"center","position":"absolute","top":"800rpx","right":"35%"}},"emotion-detection-box5":{"":{"width":"100%","display":"flex","justifyContent":"center","alignItems":"center","position":"absolute","top":"800rpx","left":"35%"}},"emotion-detection-title":{"":{"fontSize":"22rpx","color":"#FFFFFF","fontWeight":"bold","backgroundColor":"#4A4A57","paddingTop":"10rpx","paddingRight":"20rpx","paddingBottom":"10rpx","paddingLeft":"20rpx","borderRadius":"10rpx"}},"green-circle":{"":{"position":"absolute","width":"45rpx","height":"45rpx","backgroundColor":"#9EE44D","borderRadius":50,"top":95,"zIndex":30,"borderWidth":"3rpx","borderStyle":"solid","borderColor":"#FFFFFF"}},"green-circle1":{"":{"position":"absolute","width":"22rpx","height":"22rpx","backgroundColor":"#b3bec1","borderRadius":50,"top":102}},"expand-button":{"":{"color":"#9EE44D","borderWidth":"medium","borderStyle":"none","borderColor":"#000000","paddingTop":0,"paddingRight":0,"paddingBottom":0,"paddingLeft":0,"textAlign":"center","textDecoration":"underline","fontSize":16,"marginTop":0,"marginRight":0,"marginBottom":0,"marginLeft":0,"cursor":"pointer","backgroundColor":"#373742","color:hover":"#9EE44D","textDecoration:hover":"underline"}},"expand-image":{"":{"width":"150rpx","height":"55rpx","cursor":"pointer","marginTop":0,"marginRight":"auto","marginBottom":0,"marginLeft":"auto"}},"popup-overlay":{"":{"position":"fixed","top":0,"left":0,"width":"100%","height":"100%","backgroundColor":"rgba(0,0,0,0.5)","display":"flex","justifyContent":"center","alignItems":"center","zIndex":1000}},"popup-content":{"":{"width":"90%","backgroundColor":"#3C3C47","borderRadius":"50rpx","paddingTop":"50rpx","paddingRight":"50rpx","paddingBottom":"50rpx","paddingLeft":"50rpx"}},"popup-header":{"":{"display":"flex","justifyContent":"space-between","marginBottom":"20rpx"}},"popup-title":{"":{"color":"#FFFFFF","fontSize":"40rpx","fontWeight":"bold","marginBottom":20}},"popup-close":{"":{"color":"#FFFFFF","fontSize":"40rpx","position":"absolute","right":5}},"popup-input":{"":{"backgroundColor":"#2F2F38","color":"#FFFFFF","paddingTop":"20rpx","paddingRight":"20rpx","paddingBottom":"20rpx","paddingLeft":"20rpx","borderRadius":"30rpx","marginBottom":"20rpx","width":"80%"}},"popup-section":{"":{"marginBottom":"20rpx"}},"popup-question":{"":{"color":"#FFFFFF","fontSize":"30rpx","fontWeight":"bold","marginTop":10,"marginBottom":10}},"popup-options":{"":{"display":"flex","flexDirection":"row","flexWrap":"wrap","alignItems":"flex-start"}},"popup-option":{"":{"backgroundColor":"#2F2F38","color":"#FFFFFF","borderTopLeftRadius":"50rpx","borderTopRightRadius":"0rpx","borderBottomRightRadius":"0rpx","borderBottomLeftRadius":"50rpx","paddingTop":"20rpx","paddingRight":"60rpx","paddingBottom":"20rpx","paddingLeft":"60rpx","marginRight":"10rpx","marginBottom":"10rpx","width":"auto","fontSize":14},".active":{"backgroundColor":"#9EE44D","color":"#2F2F38"}},"popup-option1":{"":{"backgroundColor":"#2F2F38","color":"#FFFFFF","borderRadius":"0rpx","paddingTop":"20rpx","paddingRight":"60rpx","paddingBottom":"20rpx","paddingLeft":"60rpx","marginRight":"10rpx","marginBottom":"10rpx","width":"auto","fontSize":14},".active":{"backgroundColor":"#9EE44D","color":"#2F2F38"}},"popup-option2":{"":{"backgroundColor":"#2F2F38","color":"#FFFFFF","borderTopLeftRadius":"0rpx","borderTopRightRadius":"30rpx","borderBottomRightRadius":"30rpx","borderBottomLeftRadius":"0rpx","paddingTop":"20rpx","paddingRight":"60rpx","paddingBottom":"20rpx","paddingLeft":"60rpx","marginRight":"10rpx","marginBottom":"10rpx","width":"auto","fontSize":14},".active":{"backgroundColor":"#9EE44D","color":"#2F2F38"}},"popup-tags":{"":{"display":"flex","flexDirection":"row","flexWrap":"wrap","alignItems":"flex-start","width":"100%","marginBottom":10}},"popup-tag":{"":{"backgroundColor":"#2F2F38","color":"#FFFFFF","paddingTop":"20rpx","paddingRight":"40rpx","paddingBottom":"20rpx","paddingLeft":"40rpx","borderRadius":"30rpx","marginTop":5,"marginRight":5,"marginBottom":5,"marginLeft":5,"whiteSpace":"nowrap","cursor":"pointer","fontSize":14},".active":{"backgroundColor":"#9EE44D","color":"#2F2F38"}},"custom-tag":{"":{"borderWidth":"1rpx","borderStyle":"dashed","borderColor":"#FFFFFF"}},"popup-button":{"":{"backgroundImage":"linear-gradient(-30deg, #EDFB8B -20%, #9EE44D 120%)","color":"#2F2F38","width":"100%","paddingTop":"5rpx","paddingRight":"5rpx","paddingBottom":"5rpx","paddingLeft":"5rpx","borderRadius":"50rpx","textAlign":"center","marginTop":10}},"new-profile-button":{"":{"backgroundImage":"linear-gradient(-30deg, #8BE1FB -20%, #4D9EE4 120%)","marginTop":20}},"card1inner":{"":{"flexDirection":"row","marginLeft":"20rpx"}},"card2inner":{"":{"flexDirection":"column","marginLeft":"20rpx","top":20}},"white-line":{"":{"width":"100%","height":"1rpx","backgroundColor":"#acacac","marginTop":"30rpx","marginRight":0,"marginBottom":"30rpx","marginLeft":0}},"usercard-title1":{"":{"fontSize":"26rpx","color":"#FFFFFF"}},"usercard-title2":{"":{"fontSize":"32rpx","color":"#FFFFFF","fontWeight":"bold"}},"usercard-title3":{"":{"fontSize":"26rpx","color":"#FFFFFF","marginBottom":"10rpx"}}};
+  const _imports_12 = "/static/QRcode.jpg";
+
+  const _style_0$5 = {"container":{"":{"position":"relative","backgroundColor":"#2F2F38","flexDirection":"column","alignItems":"center","paddingTop":"100rpx","width":"100%","height":"100%","overflowY":"auto","WebkitOverflowScrolling":"touch"}},"content":{"":{"flexDirection":"column"}},"illustration1":{"":{"width":"300rpx","height":"auto","position":"relative","zIndex":10,"top":-5,"left":0,"marginTop":"30rpx","marginBottom":"50rpx"}},"illustration-qr":{"":{"width":"570rpx","height":"auto","position":"relative","zIndex":10,"top":-5,"left":0,"marginTop":"30rpx","marginBottom":"50rpx"}},"illustration2":{"":{"width":"130rpx","height":"auto","position":"absolute","top":"1030rpx","left":"290rpx"}},"illustration3":{"":{"width":"100rpx","height":"auto","position":"relative","top":"0rpx","left":"0rpx"}},"illustration31":{"":{"width":"250rpx","height":"auto","position":"absolute","top":"340rpx","left":"60rpx","marginTop":3}},"illustration32":{"":{"width":"690rpx","height":"auto","position":"relative","top":"0rpx","left":"0rpx","marginBottom":10}},"illustration33":{"":{"width":"130rpx","height":"auto","position":"absolute","top":"0rpx","left":"500rpx","marginBottom":10}},"illustration34":{"":{"width":"60rpx","height":"auto","position":"absolute","top":"15rpx","left":"620rpx","marginBottom":10}},"illustration35":{"":{"width":"320rpx","height":"auto","position":"absolute","top":"1200rpx","left":"350rpx","marginBottom":10,"zIndex":40}},"illustration36":{"":{"width":"60rpx","height":"auto","position":"absolute","top":"30rpx","left":"100rpx"}},"illustration37":{"":{"width":"60rpx","height":"auto","position":"absolute","top":"30rpx","left":"340rpx"}},"illustration38":{"":{"width":"60rpx","height":"auto","position":"absolute","top":"30rpx","left":"570rpx"}},"illustration39":{"":{"width":300,"height":"auto","position":"absolute","top":"30rpx"}},"illustration4":{"":{"width":"70rpx","height":"auto","position":"absolute","marginTop":"-20rpx","left":"390rpx"}},"illustration5":{"":{"width":"150rpx","height":"auto","position":"absolute","marginTop":"-20rpx","left":"520rpx"}},"illustration6":{"":{"width":"400rpx","height":"auto","position":"absolute","bottom":"-20rpx","left":"250rpx"}},"illustrationhead":{"":{"width":"100rpx","height":"auto","position":"relative","zIndex":10,"left":0,"marginTop":"30rpx","marginBottom":"0rpx"}},"card":{"":{"width":190,"height":225,"backgroundColor":"#373742","borderRadius":"20rpx","boxShadow":"0 4rpx 8rpx rgba(0, 0, 0, 0.1)","position":"absolute","top":58,"left":170,"textAlign":"left","display":"flex","flexDirection":"column","paddingTop":"30rpx","paddingRight":"30rpx","paddingBottom":"0rpx","paddingLeft":"30rpx","marginBottom":"10rpx"}},"card1":{"":{"width":360,"backgroundColor":"#373742","borderRadius":"50rpx","boxShadow":"0 4rpx 8rpx rgba(0, 0, 0, 0.1)","position":"relative","zIndex":20,"textAlign":"center","display":"flex","flexDirection":"column","paddingTop":"20rpx","paddingRight":"30rpx","paddingBottom":"20rpx","paddingLeft":"30rpx","marginBottom":"30rpx"}},"cardjuese":{"":{"width":170,"height":"auto","backgroundColor":"#373742","borderRadius":"50rpx","boxShadow":"0 4rpx 8rpx rgba(0, 0, 0, 0.1)","position":"relative","zIndex":20,"textAlign":"center","display":"flex","flexDirection":"column","paddingTop":"20rpx","paddingRight":"30rpx","paddingBottom":"20rpx","paddingLeft":"30rpx"}},"cardjuese1":{"":{"width":170,"height":60,"backgroundColor":"#373742","borderRadius":"50rpx","boxShadow":"0 4rpx 8rpx rgba(0, 0, 0, 0.1)","position":"relative","zIndex":20,"textAlign":"center","display":"flex","flexDirection":"column","paddingTop":"20rpx","paddingRight":"30rpx","paddingBottom":"20rpx","paddingLeft":"30rpx"}},"card3":{"":{"width":"100%","height":"150rpx","backgroundColor":"#252529","color":"#252529","fontSize":"36rpx","textAlign":"center","lineHeight":"100rpx","display":"flex","justifyContent":"center","alignItems":"center","zIndex":1000,"position":"fixed","bottom":0,"transform":"translateX(-50%)","left":"50%"}},"peoplecontain":{"":{"width":360,"backgroundColor":"#2F2F38","position":"relative","zIndex":20,"textAlign":"center","display":"flex","flexDirection":"row","flexWrap":"wrap","justifyContent":"space-between","alignItems":"flex-start","paddingTop":"0rpx","paddingRight":"0rpx","paddingBottom":"0rpx","paddingLeft":"0rpx","marginBottom":"200rpx"}},"lower-card":{"":{"top":70,"marginLeft":10,"marginRight":10,"marginTop":5,"marginBottom":5}},"score-title-head":{"":{"fontSize":"50rpx","fontWeight":"bold","color":"#FFFFFF","marginTop":"30rpx","position":"relative","zIndex":30}},"score-title":{"":{"fontSize":"40rpx","fontWeight":"bold","color":"#9EE44D","marginBottom":"5rpx"}},"score-title1":{"":{"fontSize":"36rpx","color":"#FFFFFF","marginBottom":"5rpx"}},"score-title2":{"":{"fontSize":"30rpx","color":"#FFFFFF","left":300,"top":-23,"fontWeight":"bold"}},"score-container":{"":{"width":"100%","display":"flex","flexDirection":"column","alignItems":"flex-start","marginBottom":"80rpx"}},"score-container1":{"":{"width":"100%","display":"flex","flexDirection":"column","alignItems":"flex-start","marginBottom":"80rpx"}},"score-details":{"":{"display":"flex","marginBottom":"20rpx","marginTop":"20rpx","width":"100%"}},"score-value-large":{"":{"fontSize":"50rpx","fontWeight":"bold","color":"#FFFFFF","marginLeft":"60rpx","left":30,"top":26,"position":"absolute"}},"score-value-small":{"":{"fontSize":"40rpx","fontWeight":"normal","color":"#9EE44D","position":"absolute","top":"40rpx","left":"120rpx"}},"progress-bar":{"":{"width":"95%","height":"10rpx","backgroundColor":"rgba(125,123,126,0.5)","borderRadius":"25rpx","overflow":"hidden","marginTop":"5rpx","marginBottom":"15rpx"}},"status-text":{"":{"top":190,"fontSize":"40rpx","color":"#9EE44D","marginTop":"20rpx"}},"progress-bar1":{"":{"width":"85%","height":"15rpx","backgroundColor":"#7d7b7e","borderRadius":"15rpx","overflow":"hidden","marginTop":"15rpx","marginBottom":"15rpx"}},"progress":{"":{"height":"100%","backgroundColor":"#9EE44D"}},"radar-canvas":{"":{"width":"700rpx","height":"500rpx","marginTop":50,"top":-50,"backgroundColor":"rgba(0,0,0,0)"}},"card-content":{"":{"display":"flex","alignItems":"center","justifyContent":"flex-start","marginBottom":"40rpx"}},"emoji":{"":{"width":"60rpx","height":"auto","marginRight":"10rpx"}},"card-text-container":{"":{"display":"flex","flexDirection":"column","alignItems":"flex-start","marginBottom":30}},"icon-text-box":{"":{"display":"flex","alignItems":"center"}},"text-box":{"":{"alignItems":"center","borderWidth":"1rpx","borderStyle":"solid","borderColor":"#373742","paddingTop":"5rpx","paddingRight":"10rpx","paddingBottom":"5rpx","paddingLeft":"10rpx","borderRadius":"10rpx","backgroundColor":"#373742","boxShadow":"0 0 12rpx 0rpx rgba(0, 0, 0, 0.3)"}},"text-box1":{"":{"alignItems":"center","borderWidth":"1rpx","borderStyle":"solid","borderColor":"#373742","paddingTop":"10rpx","paddingRight":"10rpx","paddingBottom":"10rpx","paddingLeft":"10rpx","borderRadius":"10rpx","backgroundColor":"#373742","boxShadow":"none","marginTop":"0rpx","marginRight":"10rpx","marginBottom":"10rpx","marginLeft":"10rpx"}},"card-title":{"":{"fontSize":"28rpx","backgroundColor":"#EDFB8B","marginBottom":"10rpx","paddingTop":10,"paddingRight":10,"paddingBottom":10,"paddingLeft":10,"borderTopLeftRadius":"20rpx","borderTopRightRadius":"20rpx","borderBottomRightRadius":"20rpx","borderBottomLeftRadius":"0rpx"}},"card-title2":{"":{"fontSize":"28rpx","backgroundColor":"#9EE44D","marginBottom":"10rpx","marginTop":"20rpx","paddingTop":10,"paddingRight":10,"paddingBottom":10,"paddingLeft":10,"borderTopLeftRadius":"20rpx","borderTopRightRadius":"20rpx","borderBottomRightRadius":"20rpx","borderBottomLeftRadius":"0rpx"}},"card-title1":{"":{"fontSize":"45rpx","color":"#FFFFFF","fontWeight":"bold","marginBottom":"10rpx"}},"card-title12":{"":{"position":"absolute","top":400,"left":32,"fontSize":"26rpx","color":"#FFFFFF","fontWeight":"bold","marginBottom":"10rpx"}},"card-title13":{"":{"position":"absolute","top":415,"left":30,"fontSize":"50rpx","color":"#FFFFFF","fontWeight":"bold","marginBottom":"10rpx"}},"card-title14":{"":{"fontSize":"25rpx","color":"#FFFFFF","marginBottom":"10rpx","marginTop":"10rpx","marginLeft":"20rpx"}},"card-title15":{"":{"fontSize":"25rpx","color":"#bbbbbb","marginBottom":"10rpx","marginTop":"10rpx"}},"logo":{"":{"width":"300rpx","height":"300rpx","position":"absolute","top":"11%","left":"50%","transform":"translate(-50%, -50%)"}},"card-description":{"":{"fontSize":"20rpx","color":"#FFFFFF","lineHeight":1.5,"marginTop":"0rpx"}},"card-description1":{"":{"fontSize":"24rpx","color":"#FFFFFF","lineHeight":1.5,"marginTop":"10rpx"}},"guide-button":{"":{"width":"100%","height":"150rpx","backgroundColor":"#252529","color":"#252529","fontSize":"36rpx","textAlign":"center","lineHeight":"100rpx","display":"flex","justifyContent":"center","alignItems":"center","zIndex":1000,"position":"fixed","bottom":0,"transform":"translateX(-50%)","left":"50%"}},"debug-info":{"":{"position":"absolute","top":0,"left":0,"right":0,"backgroundColor":"rgba(0,0,0,0.5)","color":"#FFFFFF","paddingTop":5,"paddingRight":5,"paddingBottom":5,"paddingLeft":5,"fontSize":10,"zIndex":100,"overflowY":"auto"}},"emotion-detection-box1":{"":{"width":"100%","display":"flex","justifyContent":"center","alignItems":"center","position":"absolute","top":"350rpx"}},"emotion-detection-box2":{"":{"width":"100%","display":"flex","justifyContent":"center","alignItems":"center","position":"absolute","top":"450rpx","left":"35%"}},"emotion-detection-box3":{"":{"width":"100%","display":"flex","justifyContent":"center","alignItems":"center","position":"absolute","top":"450rpx","right":"35%"}},"emotion-detection-box4":{"":{"width":"100%","display":"flex","justifyContent":"center","alignItems":"center","position":"absolute","top":"800rpx","right":"35%"}},"emotion-detection-box5":{"":{"width":"100%","display":"flex","justifyContent":"center","alignItems":"center","position":"absolute","top":"800rpx","left":"35%"}},"emotion-detection-title":{"":{"fontSize":"22rpx","color":"#FFFFFF","fontWeight":"bold","backgroundColor":"#4A4A57","paddingTop":"10rpx","paddingRight":"20rpx","paddingBottom":"10rpx","paddingLeft":"20rpx","borderRadius":"10rpx"}},"green-circle":{"":{"position":"absolute","width":"45rpx","height":"45rpx","backgroundColor":"#9EE44D","borderRadius":50,"top":95,"zIndex":30,"borderWidth":"3rpx","borderStyle":"solid","borderColor":"#FFFFFF"}},"green-circle1":{"":{"position":"absolute","width":"22rpx","height":"22rpx","backgroundColor":"#b3bec1","borderRadius":50,"top":102}},"expand-button":{"":{"color":"#9EE44D","borderWidth":"medium","borderStyle":"none","borderColor":"#000000","paddingTop":0,"paddingRight":0,"paddingBottom":0,"paddingLeft":0,"textAlign":"center","textDecoration":"underline","fontSize":16,"marginTop":0,"marginRight":0,"marginBottom":0,"marginLeft":0,"cursor":"pointer","backgroundColor":"#373742","color:hover":"#9EE44D","textDecoration:hover":"underline"}},"expand-image":{"":{"width":"150rpx","height":"55rpx","cursor":"pointer","marginTop":0,"marginRight":"auto","marginBottom":0,"marginLeft":"auto"}},"popup-overlay":{"":{"position":"fixed","top":0,"left":0,"width":"100%","height":"100%","backgroundColor":"rgba(0,0,0,0.5)","display":"flex","justifyContent":"center","alignItems":"center","zIndex":1000}},"popup-content":{"":{"width":"90%","backgroundColor":"#3C3C47","borderRadius":"50rpx","paddingTop":"50rpx","paddingRight":"50rpx","paddingBottom":"50rpx","paddingLeft":"50rpx"}},"popup-header":{"":{"display":"flex","justifyContent":"space-between","marginBottom":"20rpx"}},"popup-title":{"":{"color":"#FFFFFF","fontSize":"40rpx","fontWeight":"bold","marginBottom":20}},"popup-close":{"":{"color":"#FFFFFF","fontSize":"40rpx","position":"absolute","right":5}},"popup-input":{"":{"backgroundColor":"#2F2F38","color":"#FFFFFF","paddingTop":"20rpx","paddingRight":"20rpx","paddingBottom":"20rpx","paddingLeft":"20rpx","borderRadius":"30rpx","marginBottom":"20rpx","width":"80%"}},"popup-section":{"":{"marginBottom":"20rpx"}},"popup-question":{"":{"color":"#FFFFFF","fontSize":"30rpx","fontWeight":"bold","marginTop":10,"marginBottom":10}},"popup-options":{"":{"display":"flex","flexDirection":"row","flexWrap":"wrap","alignItems":"flex-start"}},"popup-option":{"":{"backgroundColor":"#2F2F38","color":"#FFFFFF","borderTopLeftRadius":"50rpx","borderTopRightRadius":"0rpx","borderBottomRightRadius":"0rpx","borderBottomLeftRadius":"50rpx","paddingTop":"20rpx","paddingRight":"60rpx","paddingBottom":"20rpx","paddingLeft":"60rpx","marginRight":"10rpx","marginBottom":"10rpx","width":"auto","fontSize":14},".active":{"backgroundColor":"#9EE44D","color":"#2F2F38"}},"popup-option1":{"":{"backgroundColor":"#2F2F38","color":"#FFFFFF","borderRadius":"0rpx","paddingTop":"20rpx","paddingRight":"60rpx","paddingBottom":"20rpx","paddingLeft":"60rpx","marginRight":"10rpx","marginBottom":"10rpx","width":"auto","fontSize":14},".active":{"backgroundColor":"#9EE44D","color":"#2F2F38"}},"popup-option2":{"":{"backgroundColor":"#2F2F38","color":"#FFFFFF","borderTopLeftRadius":"0rpx","borderTopRightRadius":"30rpx","borderBottomRightRadius":"30rpx","borderBottomLeftRadius":"0rpx","paddingTop":"20rpx","paddingRight":"60rpx","paddingBottom":"20rpx","paddingLeft":"60rpx","marginRight":"10rpx","marginBottom":"10rpx","width":"auto","fontSize":14},".active":{"backgroundColor":"#9EE44D","color":"#2F2F38"}},"popup-tags":{"":{"display":"flex","flexDirection":"row","flexWrap":"wrap","alignItems":"flex-start","width":"100%","marginBottom":10}},"popup-tag":{"":{"backgroundColor":"#2F2F38","color":"#FFFFFF","paddingTop":"20rpx","paddingRight":"40rpx","paddingBottom":"20rpx","paddingLeft":"40rpx","borderRadius":"30rpx","marginTop":5,"marginRight":5,"marginBottom":5,"marginLeft":5,"whiteSpace":"nowrap","cursor":"pointer","fontSize":14},".active":{"backgroundColor":"#9EE44D","color":"#2F2F38"}},"custom-tag":{"":{"borderWidth":"1rpx","borderStyle":"dashed","borderColor":"#FFFFFF"}},"popup-button":{"":{"backgroundImage":"linear-gradient(-30deg, #EDFB8B -20%, #9EE44D 120%)","color":"#2F2F38","width":"100%","paddingTop":"5rpx","paddingRight":"5rpx","paddingBottom":"5rpx","paddingLeft":"5rpx","borderRadius":"50rpx","textAlign":"center","marginTop":10}},"new-profile-button":{"":{"backgroundImage":"linear-gradient(-30deg, #8BE1FB -20%, #4D9EE4 120%)","marginTop":20}},"card1inner":{"":{"flexDirection":"row","marginLeft":"20rpx"}},"card2inner":{"":{"flexDirection":"column","marginLeft":"20rpx","top":20}},"white-line":{"":{"width":"100%","height":"1rpx","backgroundColor":"#acacac","marginTop":"30rpx","marginRight":0,"marginBottom":"30rpx","marginLeft":0}},"usercard-title1":{"":{"fontSize":"26rpx","color":"#FFFFFF"}},"usercard-title2":{"":{"fontSize":"32rpx","color":"#FFFFFF","fontWeight":"bold"}},"usercard-title3":{"":{"fontSize":"26rpx","color":"#FFFFFF","marginBottom":"10rpx"}}};
 
   function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, [
@@ -2124,7 +2133,8 @@
             vue.createElementVNode("image", {
               class: "illustration33",
               src: _imports_4$2,
-              mode: "widthFix"
+              mode: "widthFix",
+              onClick: _cache[1] || (_cache[1] = (...args) => $options.openNewPopup && $options.openNewPopup(...args))
             }),
             vue.createElementVNode("image", {
               class: "illustration34",
@@ -2136,7 +2146,7 @@
             class: "illustration35",
             src: _imports_6$2,
             mode: "widthFix",
-            onClick: _cache[1] || (_cache[1] = (...args) => $options.openPopup && $options.openPopup(...args))
+            onClick: _cache[2] || (_cache[2] = (...args) => $options.openPopup && $options.openPopup(...args))
           }),
           vue.createElementVNode("view", { class: "peoplecontain" }, [
             (vue.openBlock(true), vue.createElementBlock(
@@ -2201,21 +2211,21 @@
           }, [
             vue.createElementVNode("view", {
               class: "popup-content",
-              onClick: _cache[9] || (_cache[9] = vue.withModifiers(() => {
+              onClick: _cache[10] || (_cache[10] = vue.withModifiers(() => {
               }, ["stop"]))
             }, [
               vue.createElementVNode("view", { class: "popup-header" }, [
                 vue.createElementVNode("text", { class: "popup-title" }, "\u521B\u5EFA\u4EBA\u8109\u6863\u6848"),
                 vue.createElementVNode("text", {
                   class: "popup-close",
-                  onClick: _cache[2] || (_cache[2] = (...args) => $options.closePopup && $options.closePopup(...args))
+                  onClick: _cache[3] || (_cache[3] = (...args) => $options.closePopup && $options.closePopup(...args))
                 }, "\xD7")
               ]),
               vue.withDirectives(vue.createElementVNode(
                 "input",
                 {
                   class: "popup-input",
-                  "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => $data.profileName = $event),
+                  "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => $data.profileName = $event),
                   placeholder: "\u8BF7\u8F93\u5165\u540D\u5B57"
                 },
                 null,
@@ -2232,7 +2242,7 @@
                   "text",
                   {
                     class: vue.normalizeClass(["popup-option", { active: $data.selectedOption === "subordinate" }]),
-                    onClick: _cache[4] || (_cache[4] = ($event) => $options.selectOption("subordinate"))
+                    onClick: _cache[5] || (_cache[5] = ($event) => $options.selectOption("subordinate"))
                   },
                   "\u540C\u4E8B",
                   2
@@ -2242,7 +2252,7 @@
                   "text",
                   {
                     class: vue.normalizeClass(["popup-option1", { active: $data.selectedOption === "supervisor" }]),
-                    onClick: _cache[5] || (_cache[5] = ($event) => $options.selectOption("supervisor"))
+                    onClick: _cache[6] || (_cache[6] = ($event) => $options.selectOption("supervisor"))
                   },
                   "\u8001\u677F",
                   2
@@ -2252,7 +2262,7 @@
                   "text",
                   {
                     class: vue.normalizeClass(["popup-option2", { active: $data.selectedOption === "\u4E0B\u5C5E" }]),
-                    onClick: _cache[6] || (_cache[6] = ($event) => $options.selectOption("\u4E0B\u5C5E"))
+                    onClick: _cache[7] || (_cache[7] = ($event) => $options.selectOption("\u4E0B\u5C5E"))
                   },
                   "\u4E0B\u5C5E",
                   2
@@ -2280,7 +2290,7 @@
               ]),
               !$data.isExpanded ? (vue.openBlock(), vue.createElementBlock("image", {
                 key: 0,
-                onClick: _cache[7] || (_cache[7] = (...args) => $options.expand && $options.expand(...args)),
+                onClick: _cache[8] || (_cache[8] = (...args) => $options.expand && $options.expand(...args)),
                 src: _imports_6$1,
                 class: "expand-image"
               })) : vue.createCommentVNode("v-if", true),
@@ -2290,7 +2300,7 @@
                 "button",
                 {
                   class: "popup-button",
-                  onClick: _cache[8] || (_cache[8] = (...args) => $options.toProfilePage && $options.toProfilePage(...args)),
+                  onClick: _cache[9] || (_cache[9] = (...args) => $options.toProfilePage && $options.toProfilePage(...args)),
                   style: vue.normalizeStyle({ opacity: $options.canNavigateToProfile ? 1 : 0.5 })
                 },
                 " \u521B\u5EFA\u6863\u6848 ",
@@ -2320,7 +2330,34 @@
               src: _imports_11,
               mode: "widthFix"
             })
-          ])
+          ]),
+          vue.createCommentVNode(" New Popup "),
+          $data.showNewPopup ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 1,
+            class: "popup-overlay"
+          }, [
+            vue.createElementVNode("view", {
+              class: "popup-content",
+              onClick: _cache[12] || (_cache[12] = vue.withModifiers(() => {
+              }, ["stop"]))
+            }, [
+              vue.createElementVNode("view", { class: "popup-header" }, [
+                vue.createElementVNode("text", { class: "popup-title" }),
+                vue.createElementVNode("text", {
+                  class: "popup-close",
+                  onClick: _cache[11] || (_cache[11] = (...args) => $options.closeNewPopup && $options.closeNewPopup(...args))
+                }, "\xD7")
+              ]),
+              vue.createCommentVNode(" Add your new popup content here "),
+              vue.createCommentVNode(" <text>\u8FD9\u662F\u65B0\u5F39\u7A97\u7684\u5185\u5BB9</text> "),
+              vue.createElementVNode("image", {
+                class: "illustration-qr",
+                src: _imports_12,
+                mode: "widthFix"
+              }),
+              vue.createCommentVNode(" Add more elements as needed ")
+            ])
+          ])) : vue.createCommentVNode("v-if", true)
         ])
       ])
     ]);
