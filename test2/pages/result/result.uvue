@@ -1,179 +1,203 @@
 <template>
   <view class="container">
-    <!-- 使用 scroll-view 实现页面滚动 -->
+    <view v-if="showSplash" class="splash-screen">
+      <!-- Text on the splash screen -->
+      <text class="splash-text">接下来，\n一起来看看你的职场人格类型吧！</text>
+      
+      <!-- Display two images for continuous scrolling -->
+      <image 
+        class="splash-image" 
+        src="/static/cta.png" 
+        mode="widthFix" 
+        :style="{ left: splashImageLeft1 + 'rpx' }"
+      ></image>
+      <image 
+        class="splash-image" 
+        src="/static/cta.png" 
+        mode="widthFix" 
+        :style="{ left: splashImageLeft2 + 'rpx' }"
+      ></image>
+
+      <!-- Progress percentage -->
+      <text class="splash-progress-text">{{ progress }}%</text>
+
+      <!-- Progress bar container -->
+      <view class="splash-progress-bar">
+        <!-- Dynamic progress bar fill -->
+        <view class="splash-progress-fill" :style="{ width: progress + '%' }"></view>
+      </view>
+      
+      <!-- 状态文字 -->
+      <text class="status-text">合成中...</text>
+    </view>
+
+    <!-- 主内容在 showSplash 为 false 时才渲染 -->
     <scroll-view
+      v-else
       scroll-y
       style="height: 100%;"
     >
       <view class="content">
-        <!-- 模拟多段长文本 -->
-        <!-- <view class="text-block" v-for="n in 20" :key="n"> -->
-          <!-- 这是第 {{ n }} 段内容。这是一个非常长的文本段落，用于测试页面是否可以正常滚动。 -->
-        <!-- </view> -->
-		<text class="score-title-head">我的检测结果</text>
-		<!-- 背景和弧线 -->
-		<view class="background-curve"></view>
-		<!-- 添加插图 -->
-		<image class="illustration1" src="/static/img1.png" mode="widthFix"></image>
-		
-		<!-- 添加白色卡片 -->
-		<view class="card">
-		  <!-- 标题和分数显示 -->
-		  <view class="score-container">
-		    <text class="score-title">情商小白</text>
-		    <view class="score-details">
-		      <text class="score-value-large">{{ homepageData.response.eq_scores.score }}</text>
-		      <text class="score-value-small">分</text>
-		    </view>
-		    <!-- 进度条 -->
-		    <view class="progress-bar">
-		      <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.score) }"></view>
-		    </view>
-		  </view>
-		
-		  <!-- 五维雷达图 -->
-		  <canvas id="radarCanvas" class="radar-canvas" width="500" height="500"></canvas>
-		  <!-- <canvas canvas-id="radarCanvas" class="radar-canvas" style="width: 700rpx; height: 500rpx;"></canvas> -->
-		
-		  <!-- 情绪侦查力等标签 -->
-		  <view class="emotion-detection-box1">
-		    <text class="emotion-detection-title">情绪侦查力</text>
-		  </view>
-		  <view class="emotion-detection-box2">
-		    <text class="emotion-detection-title">社交得体度</text>
-		  </view>
-		  <view class="emotion-detection-box3">
-		    <text class="emotion-detection-title">情绪掌控力</text>
-		  </view>
-		  <view class="emotion-detection-box4">
-		    <text class="emotion-detection-title">沟通表达力</text>
-		  </view>
-		  <view class="emotion-detection-box5">
-		    <text class="emotion-detection-title">人际平衡力</text>
-		  </view>
-		
-		  <view class="text-box1">
-		    <text class="card-title1">问题诊断</text>
-		  </view>
-		
-		  <view class="card-content">
+        <!-- 保持原有的主内容 -->
+        <text class="score-title-head">我的检测结果</text>
+        <!-- 背景和弧线 -->
+        <view class="background-curve"></view>
+        <!-- 添加插图 -->
+        <image class="illustration1" src="/static/img1.png" mode="widthFix"></image>
 
-		    <!-- 插图或图标 -->
-		    <!-- <image class="emoji" src="/static/emoji.png" mode="widthFix"></image> -->
-		    <!-- 文字内容 -->
-		    <view class="card-text-container">
-		      <!-- 文字内容框和插图在同一行 -->
-		      <view class="icon-text-box">
-		        <!-- 文字内容框 -->
-		        <view class="text-box">
-		          <text class="card-title">{{ homepageData.response.eq_scores.summary }}</text>
-		        </view>
-		      </view>
-		
-		      <text class="card-description">{{ homepageData.response.eq_scores.overall_suggestion }}</text>
-		    </view>
-		  </view>
-		</view>
-		
-		<!-- 添加白色卡片1 -->
-		<view class="card1">
-		  <view class="text-box1">
-		    <text class="card-title1">提升秘诀</text>
-		  </view>
-		
-		  <view class="card-content">
-		    <!-- 插图或图标 -->
-		    <!-- <image class="emoji" src="/static/emoji.png" mode="widthFix"></image> -->
-		    <!-- 文字内容 -->
-		    <view class="card-text-container">
-		      <!-- 文字内容框和插图在同一行 -->
-		      <view class="icon-text-box">
-		        <!-- 文字内容框 -->
-		        <view class="text-box">
-		          <text class="card-title">{{ homepageData.response.eq_scores.summary }}</text>
-		        </view>
-		      </view>
-		
-		      <text class="card-description">{{ homepageData.response.eq_scores.detail }}</text>
-		    </view>
-		  </view>
-		</view>
-		
-		<!-- 添加白色卡片2 -->
-		<view class="card2">
-		  <view class="text-box1">
-		    <text class="card-title1">详细报告</text>
-		  </view>
-		
-		  <!-- 维度一 -->
-		  <view class="score-container1">
-		    <text class="score-title1">情绪侦查力</text>
-		    <!-- 进度条 -->
-		    <view class="progress-bar1">
-		      <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension1_score) }"></view>
-		    </view>
-		    <text class="score-title1">{{ homepageData.response.eq_scores.dimension1_score }}%</text>
-			<text class="card-description">{{ homepageData.response.eq_scores.dimension1_detail }}</text>
-		  </view>
-		
+        <!-- 添加白色卡片 -->
+        <view class="card">
+          <!-- 标题和分数显示 -->
 		  
-		
-		  <!-- 维度二 -->
-		  <view class="score-container1">
-		    <text class="score-title1">社交得体度</text>
-		    <!-- 进度条 -->
-		    <view class="progress-bar1">
-		      <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension2_score) }"></view>
-		    </view>
-		    <text class="score-title1">{{ homepageData.response.eq_scores.dimension2_score }}%</text>
-			<text class="card-description">{{ homepageData.response.eq_scores.dimension2_detail }}</text>
-		  </view>
-		
-		   <!-- <text class="card-description">{{ homepageData.response.eq_scores.dimension2_detail }}</text> -->
-		
-		  <!-- 维度三 -->
-		  <view class="score-container1">
-		    <text class="score-title1">情绪掌控力</text>
-		    <!-- 进度条 -->
-		    <view class="progress-bar1">
-		      <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension3_score) }"></view>
-		    </view>
-		    <text class="score-title1">{{ homepageData.response.eq_scores.dimension3_score }}%</text>
-			<text class="card-description">{{ homepageData.response.eq_scores.dimension3_detail }}</text>
-		  </view>
-		
-		  <!-- <text class="card-description">{{ homepageData.response.eq_scores.dimension3_detail }}</text> -->
-		
-		  <!-- 维度四 -->
-		  <view class="score-container1">
-		    <text class="score-title1">沟通表达力</text>
-		    <!-- 进度条 -->
-		    <view class="progress-bar1">
-		      <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension4_score) }"></view>
-		    </view>
-		    <text class="score-title1">{{ homepageData.response.eq_scores.dimension4_score }}%</text>
-			<text class="card-description">{{ homepageData.response.eq_scores.dimension4_detail }}</text>
-		  </view>
-		
+          <view class="score-container">
+            <text class="score-title">情商小白</text>
+            <view class="score-details">
+              <text class="score-value-large">{{ Math.round(homepageData.response.eq_scores.score) }}</text>
+              <text class="score-value-small">分</text>
+            </view>
+            <!-- 进度条 -->
+            
+			<view class="green-circle1" :style="{ left: circleLeftPosition(25) + 'px' }" ></view>
+			<view class="green-circle1" :style="{ left: circleLeftPosition(50) + 'px' }" ></view>
+			<view class="green-circle1" :style="{ left: circleLeftPosition(75) + 'px' }" ></view>
+			<view class="progress-bar">
+			  <!-- <view class="progress" :style="{ width: progressWidth(42) }"></view> -->
+			  
+			  <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.score) }"></view>
+			</view>
+			. <view class="green-circle" :style="{ left: circleLeftPosition(homepageData.response.eq_scores.score) + 'px' }" ></view>
+          </view>
+
+          <!-- 五维雷达图 -->
+          <canvas id="radarCanvas" class="radar-canvas" width="500" height="500"></canvas>
+		  <!-- <view class="green-circle1" :style="{ left: circleLeftPosition(100) + 'px' }" ></view> -->
 		  
-		
-		  <!-- 维度五 -->
-		  <view class="score-container1">
-		    <text class="score-title1">人际平衡力</text>
-		    <!-- 进度条 -->
-		    <view class="progress-bar1">
-		      <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension5_score) }"></view>
-		    </view>
-		    <text class="score-title1">{{ homepageData.response.eq_scores.dimension5_score }}%</text>
-			<text class="card-description">{{ homepageData.response.eq_scores.dimension5_detail }}</text>
-		  </view>
-		
+
+          <!-- 情绪侦查力等标签 -->
+          <!-- 保持原有的标签和布局 -->
+          <view class="emotion-detection-box1">
+            <text class="emotion-detection-title">情绪侦查力</text>
+          </view>
+          <view class="emotion-detection-box2">
+            <text class="emotion-detection-title">社交得体度</text>
+          </view>
+          <view class="emotion-detection-box3">
+            <text class="emotion-detection-title">情绪掌控力</text>
+          </view>
+          <view class="emotion-detection-box4">
+            <text class="emotion-detection-title">沟通表达力</text>
+          </view>
+          <view class="emotion-detection-box5">
+            <text class="emotion-detection-title">人际平衡力</text>
+          </view>
+
+          <view class="text-box1">
+            <text class="card-title1">问题诊断</text>	
+          </view>
+		  <image class="illustration2" src="/static/green.png" mode="widthFix"></image>
 		  
-		</view>
-		
-		<!-- 添加蓝色按钮 -->
-		<button class="guide-button" @click="navigateToGuide">开启高情商之旅</button>
-		
+		  <view class="card-text-container">
+		    <!-- 文字内容框和插图在同一行 -->
+		    <text class="card-title">{{ homepageData.response.eq_scores.summary }}</text>
+		    <text class="card-description">{{ homepageData.response.eq_scores.overall_suggestion }}</text>
+		  </view>
+		  
+        </view>
+
+        <!-- 添加白色卡片1 -->
+        <view class="card1">
+			
+          <view class="text-box1">
+            <text class="card-title1">提升秘诀</text>
+          </view>
+		  <image class="illustration3" src="/static/green.png" mode="widthFix"></image>
+		  <image class="illustration4" src="/static/star.png" mode="widthFix"></image>
+		  <image class="illustration5" src="/static/up.png" mode="widthFix"></image>
+		  <image class="illustration6" src="/static/up3.png" mode="widthFix"></image>
+		  
+          <view class="card-text-container">
+            <!-- 文字内容框和插图在同一行 -->
+            
+			<text class="card-title2">{{ homepageData.response.eq_scores.detail_summary }}</text>
+            <text class="card-description">{{ homepageData.response.eq_scores.detail }}</text>
+			
+          </view>
+        </view>
+
+        <!-- 添加白色卡片2 -->
+        <view class="card2">
+          <view class="text-box1">
+            <text class="card-title1">详细报告</text>
+          </view>
+		  <image class="illustration3" src="/static/green.png" mode="widthFix"></image>
+		  
+
+          <!-- 维度一 -->
+          <view class="score-container1">
+            <text class="score-title1">情绪侦查力</text>
+            <!-- 进度条 -->
+            <view class="progress-bar1">
+              <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension1_score) }"></view>
+            </view>
+            <text class="score-title2">{{ homepageData.response.eq_scores.dimension1_score }}%</text>
+            <text class="card-description">{{ homepageData.response.eq_scores.dimension1_detail }}</text>
+          </view>
+
+          <!-- 维度二 -->
+          <view class="score-container1">
+            <text class="score-title1">社交得体度</text>
+            <!-- 进度条 -->
+            <view class="progress-bar1">
+              <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension2_score) }"></view>
+            </view>
+            <text class="score-title2">{{ homepageData.response.eq_scores.dimension2_score }}%</text>
+            <text class="card-description">{{ homepageData.response.eq_scores.dimension2_detail }}</text>
+          </view>
+
+          <!-- 新增的展开按钮 -->
+          <image 
+            v-if="!isExpanded" 
+            @click="expand" 
+            src="/static/expand.png" 
+            class="expand-image">
+          </image>
+
+          <!-- 维度三到五 -->
+          <template v-if="isExpanded">
+            <view class="score-container1">
+              <text class="score-title1">情绪掌控力</text>
+              <!-- 进度条 -->
+              <view class="progress-bar1">
+                <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension3_score) }"></view>
+              </view>
+              <text class="score-title2">{{ homepageData.response.eq_scores.dimension3_score }}%</text>
+              <text class="card-description">{{ homepageData.response.eq_scores.dimension3_detail }}</text>
+            </view>
+
+            <view class="score-container1">
+              <text class="score-title1">沟通表达力</text>
+              <!-- 进度条 -->
+              <view class="progress-bar1">
+                <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension4_score) }"></view>
+              </view>
+              <text class="score-title2">{{ homepageData.response.eq_scores.dimension4_score }}%</text>
+              <text class="card-description">{{ homepageData.response.eq_scores.dimension4_detail }}</text>
+            </view>
+
+            <view class="score-container1">
+              <text class="score-title1">人际平衡力</text>
+              <!-- 进度条 -->
+              <view class="progress-bar1">
+                <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension5_score) }"></view>
+              </view>
+              <text class="score-title2">{{ homepageData.response.eq_scores.dimension5_score }}%</text>
+              <text class="card-description">{{ homepageData.response.eq_scores.dimension5_detail }}</text>
+            </view>
+          </template>
+        </view>
+
+        <!-- 添加蓝色按钮 -->
+        <button class="guide-button" @click="navigateToGuide">开启高情商之旅</button>
       </view>
     </scroll-view>
   </view>
@@ -193,31 +217,43 @@ export default {
       jobId: null,
       num: null,
       homepageData: {
-        personal_info: {
-          name: '',
-          tag: '',
-          tag_description: '',
-          job_id: ''
-        },
-        eq_scores: {
-          score: null,
-          dimension1_score: null,
-          dimension1_detail: '',
-          dimension2_score: null,
-          dimension2_detail: '',
-          dimension3_score: null,
-          dimension3_detail: '',
-          dimension4_score: null,
-          dimension4_detail: '',
-          dimension5_score: null,
-          dimension5_detail: '',
-          summary: '',
-          detail: '',
-          overall_suggestion: ''
-        },
-        contacts: []
+        response: {
+          personal_info: {
+            name: '',
+            tag: '',
+            tag_description: '',
+            job_id: ''
+          },
+          eq_scores: {
+            score: 0,
+            dimension1_score: 0,
+            dimension1_detail: '',
+            dimension2_score: 0,
+            dimension2_detail: '',
+            dimension3_score: 0,
+            dimension3_detail: '',
+            dimension4_score: 0,
+            dimension4_detail: '',
+            dimension5_score: 0,
+            dimension5_detail: '',
+            summary: '',
+            detail: '',
+            overall_suggestion: '',
+            detail_summary: ''
+          },
+          contacts: []
+        }
       },
       intervalId: null,
+      showSplash: true,
+      progress: 0,
+      progressInterval: null,
+      // 新增的闪屏相关数据
+      splashImageLeft1: 0,
+      splashImageLeft2: 2000,
+      imageWidth: 2000,
+      interval: null,
+      isExpanded: false, // 默认收起状态
     };
   },
   computed: {
@@ -227,7 +263,7 @@ export default {
         return date.toLocaleDateString();
       }
       return '未设置';
-    },
+    }
   },
   onLoad(option) {
     console.log('Received options:', option);
@@ -280,74 +316,93 @@ export default {
     if (this.intervalId) {
       clearInterval(this.intervalId);
     }
+    if (this.progressInterval) {
+      clearInterval(this.progressInterval);
+    }
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
   },
   methods: {
     progressWidth(value) {
       // 计算进度条宽度百分比
       const percentage = (value / this.maxScore) * 100;
+	  // console.log('${percentage}%：', `${percentage}%`)
       return `${percentage}%`;
     },
-	drawRadar() {
-	  const query = uni.createSelectorQuery().in(this);
-	  query.select('#radarCanvas')
-	    .fields({ node: true, size: true, context: true })
-	    .exec((res) => {
-	      if (!res[0]) {
-	        console.error('Canvas element not found');
-	        return;
-	      }
-	      const canvas = res[0].node;
-	      const radarCtx = canvas.getContext('2d');
-	      if (!radarCtx) {
-	        console.error('Unable to get 2D context');
-	        return;
-	      }
-	
-	      // 确保每次都清除之前的缩放，重置 canvas 状态
-	      radarCtx.resetTransform();
-	
-	      // 设置 canvas 宽高，防止重复缩放
-	      const dpr = uni.getSystemInfoSync().pixelRatio;
-	      canvas.width = res[0].width * dpr;
-	      canvas.height = res[0].height * dpr;
-	      radarCtx.scale(dpr, dpr);
-	
-	      // 清除之前的绘制内容
-	      radarCtx.clearRect(0, 0, canvas.width, canvas.height);
-	
-	      // 控制中心点和半径
-	      const center = { x: res[0].width / 2, y: res[0].height / 2 };
-	      const radius = Math.min(res[0].width, res[0].height) / 2 - 20;
-	
-	      // 检查数据有效性
-	      if (!this.homepageData.response || !this.homepageData.response.eq_scores) {
-	        console.error('Invalid homepage data');
-	        return;
-	      }
-	
-	      const data = [
-	        { subject: '维度1', A: this.homepageData.response.eq_scores.dimension1_score || 0, fullMark: 100 },
-	        { subject: '维度2', A: this.homepageData.response.eq_scores.dimension2_score || 0, fullMark: 100 },
-	        { subject: '维度3', A: this.homepageData.response.eq_scores.dimension3_score || 0, fullMark: 100 },
-	        { subject: '维度4', A: this.homepageData.response.eq_scores.dimension4_score || 0, fullMark: 100 },
-	        { subject: '维度5', A: this.homepageData.response.eq_scores.dimension5_score || 0, fullMark: 100 },
-	      ];
-	
-	      // 绘制雷达图
-	      this.drawRadarChart(radarCtx, center, radius, data);
-	    });
+	circleLeftPosition(value) {
+	  // 获取进度条实际宽度
+	  const percentage1 = (value / this.maxScore) * 100;
+	  const progressBarWidth = uni.getSystemInfoSync().windowWidth * 0.8; // 80%的屏幕宽度作为进度条的实际宽度
+	  console.log(percentage1)
+	  return (percentage1 / 100) * progressBarWidth;
 	},
+    drawRadar() {
+      // 保持原有的雷达图绘制逻辑
+      const query = uni.createSelectorQuery().in(this);
+      query.select('#radarCanvas')
+        .fields({ node: true, size: true, context: true })
+        .exec((res) => {
+          if (!res[0]) {
+            console.error('Canvas element not found');
+            return;
+          }
+          const canvas = res[0].node;
+          const radarCtx = canvas.getContext('2d');
+          if (!radarCtx) {
+            console.error('Unable to get 2D context');
+            return;
+          }
+
+          // 确保每次都清除之前的缩放，重置 canvas 状态
+          radarCtx.resetTransform();
+
+          // 设置 canvas 宽高，防止重复缩放
+          const dpr = uni.getSystemInfoSync().pixelRatio;
+          canvas.width = res[0].width * dpr;
+          canvas.height = res[0].height * dpr;
+          radarCtx.scale(dpr, dpr);
+
+          // 清除之前的绘制内容
+          radarCtx.clearRect(0, 0, canvas.width, canvas.height);
+
+          // 控制中心点和半径
+          const center = { x: res[0].width / 2, y: res[0].height / 2 };
+          const radius = Math.min(res[0].width, res[0].height) / 2 - 20;
+
+          // 检查数据有效性
+          if (!this.homepageData.response || !this.homepageData.response.eq_scores) {
+            console.error('Invalid homepage data');
+            return;
+          }
+
+          const data = [
+            { subject: '维度1', A: this.homepageData.response.eq_scores.dimension1_score || 0, fullMark: 100 },
+            { subject: '维度2', A: this.homepageData.response.eq_scores.dimension2_score || 0, fullMark: 100 },
+            { subject: '维度3', A: this.homepageData.response.eq_scores.dimension3_score || 0, fullMark: 100 },
+            { subject: '维度4', A: this.homepageData.response.eq_scores.dimension4_score || 0, fullMark: 100 },
+            { subject: '维度5', A: this.homepageData.response.eq_scores.dimension5_score || 0, fullMark: 100 },
+          ];
+
+          // 绘制雷达图
+          this.drawRadarChart(radarCtx, center, radius, data);
+        });
+    },
     drawRadarChart(ctx, center, radius, data) {
+      // 保持原有的雷达图绘制逻辑
       const numSides = data.length;
       const angleSlice = (Math.PI * 2) / numSides;
 
+      // 设置起始角度为 -Math.PI / 2 确保第一个点从顶部开始绘制，这样整个图就会变成水平的
+      const startAngle = -Math.PI / 2;
+
       // 绘制网格
-      ctx.strokeStyle = '#E5E5E5';
+      ctx.strokeStyle = '#aaa8ac';
       ctx.lineWidth = 1;
       for (let i = 1; i <= 2; i++) {
         ctx.beginPath();
         for (let j = 0; j <= numSides; j++) {
-          const angle = j * angleSlice;
+          const angle = startAngle + j * angleSlice;
           const x = center.x + radius * (i / 2) * Math.cos(angle);
           const y = center.y + radius * (i / 2) * Math.sin(angle);
           if (j === 0) {
@@ -362,7 +417,7 @@ export default {
 
       // 绘制轴线
       for (let i = 0; i < numSides; i++) {
-        const angle = i * angleSlice;
+        const angle = startAngle + i * angleSlice;
         const x = center.x + radius * Math.cos(angle);
         const y = center.y + radius * Math.sin(angle);
 
@@ -374,10 +429,12 @@ export default {
 
       // 绘制数据区域
       ctx.beginPath();
-      ctx.fillStyle = 'rgba(158, 228, 77, 0.3)';
+      ctx.fillStyle = 'rgba(164, 163, 171, 0.3)';
       ctx.strokeStyle = 'rgba(158, 228, 77, 0.8)';
+      ctx.lineWidth = 4; // 设置绿线（数据区域）的粗细
+
       for (let i = 0; i <= numSides; i++) {
-        const angle = i * angleSlice;
+        const angle = startAngle + i * angleSlice;
         const value = data[i % numSides].A / data[i % numSides].fullMark;
         const x = center.x + radius * value * Math.cos(angle);
         const y = center.y + radius * value * Math.sin(angle);
@@ -394,7 +451,7 @@ export default {
       // 绘制数据点
       ctx.fillStyle = 'rgba(158, 228, 77, 0.8)';
       for (let i = 0; i < numSides; i++) {
-        const angle = i * angleSlice;
+        const angle = startAngle + i * angleSlice;
         const value = data[i].A / data[i].fullMark;
         const x = center.x + radius * value * Math.cos(angle);
         const y = center.y + radius * value * Math.sin(angle);
@@ -405,7 +462,7 @@ export default {
     },
     navigateToGuide() {
       uni.navigateTo({
-        url: '/pages/dashboard/dashboard' // 根据需要更新路径
+        url: `/pages/dashboard/dashboard?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.jobId}` // 添加查询参数
       });
     },
     getHomepageData() {
@@ -420,6 +477,15 @@ export default {
             that.$nextTick(() => {
               that.drawRadar();
             });
+    
+            // 当后端数据接收成功，立即结束闪屏
+            that.showSplash = false;
+            if (that.interval) {
+              clearInterval(that.interval);
+            }
+            if (that.progressInterval) {
+              clearInterval(that.progressInterval);
+            }
           } else {
             console.error('Failed to fetch homepage data:', response.statusCode);
           }
@@ -429,6 +495,61 @@ export default {
         }
       });
     },
+    startProgress() {
+      // 10秒内将进度增加到100%
+      const totalDuration = 30000; // 10秒
+      const intervalDuration = totalDuration / 100; // 每次更新的间隔时间
+
+      this.progressInterval = setInterval(() => {
+        if (this.progress < 100) {
+          this.progress += 1;
+        } else {
+          clearInterval(this.progressInterval);
+        }
+      }, intervalDuration);
+    },
+    animateImage() {
+      this.interval = setInterval(() => {
+        // 更新两张图片的位置
+        this.splashImageLeft1 -= 10; // 每次移动10rpx
+        this.splashImageLeft2 -= 10;
+        
+        // 如果第一张图片完全离开屏幕，则将它的位置重置到第二张图片的后面
+        if (this.splashImageLeft1 <= -this.imageWidth) {
+          this.splashImageLeft1 = this.splashImageLeft2 + this.imageWidth;
+        }
+        
+        // 如果第二张图片完全离开屏幕，则将它的位置重置到第一张图片的后面
+        if (this.splashImageLeft2 <= -this.imageWidth) {
+          this.splashImageLeft2 = this.splashImageLeft1 + this.imageWidth;
+        }
+      }, 30); // 每30毫秒更新一次位置
+    },
+    expand() {
+      this.isExpanded = true; // 只展开，不再收起
+    },
+  },
+  mounted() {
+    this.startProgress(); // 开始进度条
+    this.animateImage(); // 开始图片动画
+
+    // 在设定的持续时间后隐藏闪屏（例如，10秒）
+    setTimeout(() => {
+      this.showSplash = false;
+      clearInterval(this.interval); // 停止动画
+    }, 30000);
+  },
+  beforeDestroy() {
+    // 页面销毁前清除定时器
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+    if (this.progressInterval) {
+      clearInterval(this.progressInterval);
+    }
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
   }
 };
 </script>
@@ -447,11 +568,71 @@ export default {
   -webkit-overflow-scrolling: touch; /* 启用 iOS 惯性滚动 */
 }
 
+/* Splash screen styles */
+.splash-screen {
+  position: absolute; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000000; /* 黑色背景 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* 确保splash screen在最上层 */
+}
+
+.splash-text {
+  color: #FFFFFF;
+  font-size: 40rpx;
+  text-align: left;
+  top: 20%;
+  position: absolute;
+  margin-bottom: 20rpx; /* 添加文本和图像之间的空间 */
+  line-height: 40rpx; /* 调整高以提高可读性 */
+  white-space: pre-wrap; /* 确保文本正确换行 */
+  font-weight: bold;
+}
+
+.splash-progress-text {
+	top:200px;
+  font-size: 40rpx;
+  color: #9EE44D;
+  font-weight: bold;
+  margin-top: 100rpx;
+}
+
+.splash-progress-bar {
+  width: 20%;
+  height: 20rpx;
+  top:200px;
+  background-color: #3d3d3d; /* 背景颜色 */
+  border-radius: 15rpx;
+  margin: 20rpx 0;
+  overflow: hidden;
+}
+
+.splash-progress-fill {
+  height: 100%;
+  background-color: #9EE44D; /* 进度条颜色 */
+  border-radius: 15rpx;
+}
+
+.splash-image {
+  width: 2000rpx; /* 放大图片的宽度 */
+  height: auto; /* 保持纵横比 */
+  margin-top: 20rpx; /* 在图像上方添加一些空间 */
+  position: absolute; /* 绝对定位以便移动 */
+}
+
 
 .content {
   display: block; /* 避免 flex 布局干扰 */
   flex-direction: column;
   align-items: center;
+  /* width: 100%; */
+  /* margin-left: 20px; */
 }
 
 .background-curve {
@@ -467,7 +648,7 @@ export default {
 }
 
 .illustration1 {
-  width: 700rpx;
+  width: 800rpx;
   height: auto;
   position: relative;
   z-index: 10;
@@ -477,8 +658,48 @@ export default {
   margin-bottom: 0rpx;
 }
 
-.card, .card1, .card2 {
-  width: 95%;
+.illustration2 {
+  width: 130rpx;
+  height: auto;
+  position: absolute;
+  top:1030rpx;
+  left: 290rpx;
+}
+
+.illustration3 {
+  width: 130rpx;
+  height: auto;
+  position: absolute;
+  top:100rpx;
+  left: 290rpx;
+}
+
+.illustration4 {
+  width: 70rpx;
+  height: auto;
+  position: absolute;
+  margin-top:-20rpx;
+  left: 390rpx;
+}
+
+.illustration5 {
+  width: 150rpx;
+  height: auto;
+  position: absolute;
+  margin-top:-20rpx;
+  left: 520rpx;
+}
+
+.illustration6 {
+  width: 400rpx;
+  height: auto;
+  position: absolute;
+  bottom: -20rpx;
+  left: 250rpx;
+}
+
+.card, .card1 {
+  width: 370px;
   background-color: #373742;
   border-radius: 20rpx;
   box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
@@ -492,10 +713,26 @@ export default {
   margin-bottom: 30rpx;
 }
 
+.card2 {
+  width: 370px;
+  background-color: #373742;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 20;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60rpx 30rpx 0rpx 30rpx;
+  margin-bottom: 200rpx;
+}
+
 .score-title-head {
   font-size: 40rpx;
   font-weight: bold;
   color: #FFFFFF;
+  margin-top: 30rpx;
   margin-bottom: 5rpx;
   position: relative;
   z-index: 30;
@@ -514,6 +751,15 @@ export default {
   margin-bottom: 5rpx;
 }
 
+.score-title2 {
+  font-size: 30rpx;
+  color: #FFFFFF;
+  /* margin-bottom: 5rpx; */
+  left: 300px;
+  top: -23px;
+  font-weight: bold;
+}
+
 .score-container, .score-container1 {
   width: 100%;
   display: flex;
@@ -525,7 +771,8 @@ export default {
 .score-details {
   display: flex;
   align-items: baseline;
-  margin-bottom: 10rpx;
+  margin-bottom:20rpx;
+  margin-top:20rpx;
   width: 100%;
 }
 
@@ -542,16 +789,33 @@ export default {
   color: #9EE44D;
   position: absolute;
   top: 40rpx;
-  left: 180rpx;
+  left: 120rpx;
 }
 
-.progress-bar, .progress-bar1 {
+.progress-bar {
   width: 100%;
-  height: 10rpx;
-  background-color: #E5E5E5;
-  border-radius: 5rpx;
+  height: 25rpx;
+  background-color: rgba(125, 123, 126, 0.5); /* 设置透明度为50% */
+  border-radius: 25rpx;
   overflow: hidden;
   margin-top: 5rpx;
+}
+
+.status-text {
+	top:190px;
+  font-size: 40rpx;
+  color: #9EE44D;
+  margin-top: 20rpx;
+}
+
+.progress-bar1 {
+  width: 85%;
+  height: 15rpx;
+  background-color: #7d7b7e;
+  border-radius: 15rpx;
+  overflow: hidden;
+  margin-top: 15rpx;
+  margin-bottom: 15rpx;
 }
 
 .progress {
@@ -562,7 +826,8 @@ export default {
 .radar-canvas {
   width: 700rpx;
   height: 500rpx;
-  margin: 100rpx 0;
+  margin-top: 50px ;
+  top:-50px;
   background-color: transparent;
 }
 
@@ -583,6 +848,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  margin-bottom: 30px;
 }
 
 .icon-text-box {
@@ -598,7 +864,7 @@ export default {
   border-radius: 10rpx;
   background-color: #373742;
   box-shadow: 0 0 12rpx 0rpx rgba(0, 0, 0, 0.3);
-  margin: 10rpx;
+  /* margin: 10rpx; */
 }
 
 .text-box1 {
@@ -609,9 +875,22 @@ export default {
 
 .card-title {
   font-size: 28rpx;
-  color: #252529; 
+  /* color: #252529; */
   background-color: #EDFB8B;
   margin-bottom: 10rpx;
+  padding: 10px;
+  border-radius: 20rpx 20rpx 20rpx 0rpx; /* 左上角方角，其他三个角为圆角 */
+}
+
+
+.card-title2 {
+  font-size: 28rpx;
+  /* color: #252529; */
+  background-color: #9EE44D;
+  margin-bottom: 10rpx;
+  margin-top: 20rpx;
+  padding: 10px;
+  border-radius: 20rpx 20rpx 20rpx 0rpx; /* 左上角方角，其他三个角为圆角 */
 }
 
 .card-title1 {
@@ -619,6 +898,15 @@ export default {
   color: #FFFFFF;
   font-weight: bold;
   margin-bottom: 10rpx;
+}
+
+.logo {
+  width: 300rpx; 
+  height: 300rpx;
+  position: absolute;
+  top: 11%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* 同时水平和垂直居中 */
 }
 
 .card-description {
@@ -629,7 +917,7 @@ export default {
 }
 
 .guide-button {
-  width: 90%;
+  width: 80%;
   height: 100rpx;
   background-color: #9EE44D;
   color: #252529;
@@ -640,8 +928,15 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 30rpx;
+  /* margin-bottom: 30rpx; */
+  z-index: 1000; /* 确保按钮悬浮在其他内容之上 */
+  position: fixed; /* 固定定位 */
+  bottom:40px;
+  transform: translateX(-50%); /* 调整水平位置以居中 */
+  left: 50%; /* 水平居中 */
 }
+
+
 
 .debug-info {
   position: absolute;
@@ -675,35 +970,85 @@ export default {
 }
 
 .emotion-detection-box1 {
-  top: 320rpx;
+  top: 350rpx;
 }
 
 .emotion-detection-box2 {
-  top: 440rpx;
+  top: 450rpx;
   left: 35%;
 }
 
 .emotion-detection-box3 {
-  top: 440rpx;
+  top: 450rpx;
   right: 35%;
 }
 
 .emotion-detection-box4 {
-  top: 740rpx;
-  left: 35%;
-}
-
-.emotion-detection-box5 {
-  top: 740rpx;
+  top: 800rpx;
   right: 35%;
 }
 
+.emotion-detection-box5 {
+  top: 800rpx;
+  left: 35%;
+}
+
 .emotion-detection-title {
-  font-size: 24rpx;
+  font-size: 22rpx;
   color: #FFFFFF;
   font-weight: bold;
   background-color: #4A4A57;
   padding: 10rpx 20rpx;
   border-radius: 10rpx;
 }
+
+.green-circle {
+  position: absolute;
+  width: 45rpx;
+  height: 45rpx;
+  background-color: #9EE44D;
+  border-radius: 50px;
+  top:95px;
+  z-index: 30;
+  border: 3rpx solid #FFFFFF; /* 添加白色边框 */
+
+}
+
+.green-circle1 {
+  position: absolute;
+  width: 22rpx;
+  height: 22rpx;
+  background-color: #b3bec1;
+  border-radius: 50px;
+  top:102px;
+  /* z-index: 3; */
+}
+
+.expand-button {
+  color: #9EE44D; /* 按钮文字颜色 */
+  border: none; /* 去掉边框 */
+  padding: 0; /* 去掉内边距 */
+  text-align: center; /* 文字居中 */
+  text-decoration: underline; /* 添加下划线以突出显示 */
+  display: inline; /* 使按钮为行内元素 */
+  font-size: 16px; /* 字体大小 */
+  margin: 0; /* 掉外边距 */
+  cursor: pointer; /* 鼠标悬停时显示手型 */
+  background-color: #373742;
+}
+
+.expand-button:hover {
+  color: #9EE44D; /* 悬停时的文字颜色 */
+  text-decoration: underline; /* 悬停时保持下划线 */
+}
+
+.expand-image {
+  width: 150rpx; /* Adjust the width to your desired size */
+  height: 60rpx; /* Adjust the height to your desired size */
+  cursor: pointer; /* Make it clickable */
+  margin: 0 auto; /* Center it */
+  bottom:30px;
+}
+
+
 </style>

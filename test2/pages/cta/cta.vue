@@ -67,20 +67,26 @@ export default {
 }
 
 .progress-bar {
-  height: 100%;
-  background-color: #4CD964;
-  transition: width 0.3s ease;
+  width: 20%;
+  height: 20rpx;
+  top:200px;
+  background-color: #3d3d3d; /* 背景颜色 */
+  border-radius: 15rpx;
+  margin: 20rpx 0;
+  overflow: hidden;
 }
 
-.progress-text {
-  color: #4CD964;
-  font-size: 36rpx;
-  font-weight: bold;
-  margin-bottom: 10rpx;
+.progress-fill {
+  height: 100%;
+  background-color: #9EE44D; /* 进度条颜色 */
+  border-radius: 15rpx;
 }
 
 .status-text {
-  color: #8E8E93;
-  font-size: 28rpx;
+	top:190px;
+  font-size: 40rpx;
+  color: #9EE44D;
+  margin-top: 20rpx;
 }
+
 </style>

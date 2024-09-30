@@ -1,6 +1,18 @@
 {
   "pages": [
-    {
+ //    {
+ //      "path": "pages/dashboard/dashboard",
+ //      "style": {
+ //        "navigationStyle": "custom"
+ //      }
+ //    },
+	// {
+	//   "path": "pages/profile/profile",
+	//   "style": {
+	//     "navigationStyle": "custom"
+	//   }
+	// },
+	{
       "path": "pages/landing/landing",
       "style": {
         // "navigationBarTitleText": "Scroll Test",
@@ -70,32 +82,32 @@
     {
       "path": "pages/dashboard/dashboard",
       "style": {
-        "navigationBarTitleText": ""
+        "navigationStyle": "custom"
       }
     },
     {
-      "path": "pages/dashboard/dashboar1d",
+      "path": "pages/profile/profile",
       "style": {
-        "navigationBarTitleText": ""
+        "navigationStyle": "custom"
       }
     },
-    {
-      "path": "pages/details/details",
-      "style": {
-        "navigationBarTitleText": ""
-      }
-    },
+    // {
+    //   "path": "pages/details/details",
+    //   "style": {
+    //     "navigationBarTitleText": ""
+    //   }
+    // },
     {
       "path": "pages/login/login",
       "style": {
         "navigationBarTitleText": ""
       }
-    },
-    {
-      "path": "pages/cta/cta",
-      "style": {
-        "navigationStyle": "custom"
-      }
+    // },
+    // {
+    //   "path": "pages/cta/cta",
+    //   "style": {
+    //     "navigationStyle": "custom"
+    //   }
     },
     {
       "path": "pages/result/result",
@@ -110,7 +122,13 @@
         "navigationStyle": "custom"
       }
     }
-  ],
+  ,{
+    "path": "uni_modules/TC-scroll-view/components/TC-scroll-view/TC-scroll-view",
+    "style": {
+        "navigationBarTitleText": "scroll-view"
+    }
+}
+],
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "应用名称",
