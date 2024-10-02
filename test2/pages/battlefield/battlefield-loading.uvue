@@ -1,0 +1,49 @@
+<template>
+	<view class="background-image loading-container">
+		<image class="background-image" src="/static/battlefield/background.png" mode="aspectFill" />
+		<!-- Content -->
+		<view class="loading-text-container">
+			<text class="loading-text">聚餐中</text>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		mounted() {
+			// 设置一个3秒的计时器
+			setTimeout(() => {
+				// 3秒后跳转到 battlefield-playground 页面
+				uni.navigateTo({
+					url: '/pages/battlefield/battlefield-playground' // 确保这个路径是正确的
+				});
+			}, 3000); // 3秒 = 3000毫秒
+		}
+	}
+</script>
+
+<style scoped>
+	@import "./common.css";
+
+	.loading-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.loading-text-container {
+		width: 30%;
+		background-color: rgba(16, 16, 16, 0.4);
+		height: 40px;
+		border-radius: 40rpx;
+		z-index: 2;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.loading-text {
+		color: #fff;
+		font-size: 25rpx;
+	}
+</style>

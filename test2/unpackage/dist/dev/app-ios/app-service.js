@@ -1,7 +1,7 @@
 (function (vue) {
   'use strict';
 
-  const _sfc_main$l = vue.defineComponent({
+  const _sfc_main$q = vue.defineComponent({
       props: {
           isActive: {
               type: Boolean,
@@ -10,7 +10,7 @@
       },
   });
 
-  const _style_0$k = {"progress-bar":{"":{"width":"90%","height":"100%","backgroundColor":"rgba(128,128,128,0.5)","borderRadius":20}},"active":{"":{"backgroundColor":"rgba(255,255,255,1)"}}};
+  const _style_0$q = {"bar-item":{"":{"width":"40%","height":5,"backgroundColor":"rgba(255,255,255,0.3)","borderRadius":20,"marginLeft":10}},"active":{"":{"backgroundColor":"#D9D9D9"}}};
 
   const _export_sfc = (sfc, props) => {
     const target = sfc.__vccOpts || sfc;
@@ -20,20 +20,20 @@
     return target;
   };
 
-  function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$p(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
-        class: vue.normalizeClass(["progress-bar", { active: $props.isActive }])
+        class: vue.normalizeClass(["bar-item", { active: $props.isActive }])
       },
       null,
       2
       /* CLASS */
     );
   }
-  const ProgressBar = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["styles", [_style_0$k]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/components/ProgressBar.vue"]]);
+  const ProgressBar = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$p], ["styles", [_style_0$q]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/components/ProgressBar.vue"]]);
 
-  const _sfc_main$k = vue.defineComponent({
+  const _sfc_main$p = vue.defineComponent({
       components: {
           ProgressBar, // 注册组件
       },
@@ -42,26 +42,30 @@
               uni.navigateTo({
                   url: '/pages/battlefield/battlefield-task' // Replace this with the actual path to your next page
               });
-              uni.__log__('log', 'at pages/battlefield/battlefield-intro.uvue:42', "Clicked");
           }
       }
   });
 
-  const _imports_0$8 = "/static/battlefield/background.png";
+  const _imports_0$a = "/static/battlefield/background.png";
 
-  const _style_0$j = {"continue-btn":{"":{"width":"100%","paddingTop":10,"paddingRight":0,"paddingBottom":10,"paddingLeft":0,"backgroundColor":"#ffcc66","borderWidth":"medium","borderStyle":"none","borderColor":"#000000","borderRadius":25,"fontSize":18,"color":"#333333"}},"background-image":{"":{"position":"absolute","top":0,"left":0,"width":"100%","height":"100%","zIndex":1}},"overlay":{"":{"position":"absolute","top":0,"left":0,"width":"100%","height":"100%","backgroundColor":"rgba(46,46,47,0.75)","zIndex":2}},"container":{"":{"position":"relative","width":"100%","height":"100%","color":"#ffffff"}},"navbar":{"":{"display":"flex","justifyContent":"space-between","alignItems":"center","paddingTop":20,"paddingRight":20,"paddingBottom":20,"paddingLeft":20,"position":"relative","zIndex":3}},"back-button":{"":{"width":24,"height":24,"backgroundSize":"contain"}},"progress-bar":{"":{"flex":1,"height":20,"backgroundColor":"#cccccc","marginTop":0,"marginRight":10,"marginBottom":0,"marginLeft":10,"width":"100%"}},"content":{"":{"paddingTop":20,"paddingRight":20,"paddingBottom":20,"paddingLeft":20,"textAlign":"center","position":"relative","zIndex":3}},"title":{"":{"fontSize":24,"fontWeight":"bold","color":"#ffffff"}},"subtitle":{"":{"fontSize":20,"marginTop":10,"marginRight":0,"marginBottom":10,"marginLeft":0,"color":"#ffffff"}},"time-info":{"":{"fontSize":16,"color":"#bbbbbb","marginBottom":20}},"description":{"":{"fontSize":16,"lineHeight":1.6,"color":"#ffffff"}},"bottom-button":{"":{"paddingTop":20,"paddingRight":20,"paddingBottom":20,"paddingLeft":20,"textAlign":"center","position":"relative","zIndex":3}}};
+  const _imports_1$6 = "/static/battlefield/back-iconpng.png";
 
-  function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
+  const _style_0$p = {"continue-button-container":{"":{"width":"100%","height":50,"display":"flex","alignItems":"center","justifyContent":"center","position":"absolute","bottom":"50rpx","zIndex":3}},"background-image":{"":{"position":"absolute","top":0,"left":0,"width":"100%","height":"100%","zIndex":1}},"continue-btn":{"":{"width":"80%","backgroundColor":"#ffcc66","borderWidth":"medium","borderStyle":"none","borderColor":"#000000","borderRadius":25,"fontSize":15,"color":"#000000","zIndex":3}},"overlay":{"":{"position":"absolute","top":0,"left":0,"width":"100%","height":"100%","backgroundColor":"rgba(46,46,47,0.75)","zIndex":2}},"back-button":{"":{"width":24,"height":24}},"navbar":{"":{"display":"flex","flexDirection":"row","justifyContent":"center","alignItems":"center","paddingTop":"20rpx","paddingRight":"20rpx","paddingBottom":"20rpx","paddingLeft":"20rpx","position":"relative","zIndex":3,"marginTop":"80rpx","marginLeft":"20rpx"}},"progress-bar":{"":{"flex":1,"width":"100%","height":20,"display":"flex","flexDirection":"row","justifyContent":"center","alignItems":"center"}},"content":{"":{"paddingTop":20,"paddingRight":20,"paddingBottom":20,"paddingLeft":20,"textAlign":"center","position":"relative","zIndex":3,"display":"flex","justifyContent":"center","alignItems":"center","marginTop":"200rpx"}},"container":{"":{"position":"relative","width":"100%","height":"100%","color":"#ffffff"}},"title":{"":{"fontSize":24,"fontWeight":"bold","color":"#ffffff"}},"subtitle":{"":{"fontSize":20,"marginTop":10,"marginRight":0,"marginBottom":10,"marginLeft":0,"color":"#ffffff"}},"time-info":{"":{"fontSize":16,"color":"#bbbbbb","marginBottom":20}},"description":{"":{"fontSize":16,"lineHeight":1.6,"color":"#ffffff"}},"content-item":{"":{"marginTop":"30rpx"}}};
+
+  function _sfc_render$o(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_progress_bar = vue.resolveComponent("progress-bar");
     return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, [
       vue.createElementVNode("image", {
         class: "background-image",
-        src: _imports_0$8,
+        src: _imports_0$a,
         mode: "aspectFill"
       }),
       vue.createElementVNode("view", { class: "overlay" }),
       vue.createElementVNode("view", { class: "navbar" }, [
-        vue.createElementVNode("view", { class: "back-button" }),
+        vue.createElementVNode("image", {
+          class: "back-button",
+          src: _imports_1$6
+        }),
         vue.createElementVNode("view", { class: "progress-bar" }, [
           vue.createVNode(_component_progress_bar, { isActive: true }),
           vue.createVNode(_component_progress_bar, { isActive: false })
@@ -69,13 +73,12 @@
       ]),
       vue.createCommentVNode(" Content "),
       vue.createElementVNode("view", { class: "content" }, [
-        vue.createElementVNode("text", { class: "title" }, "\u7B2C\u4E00\u5173"),
-        vue.createElementVNode("text", { class: "subtitle" }, "\u8001\u677F\u809A\u5B50\u91CC\u7684\u86D4\u866B"),
-        vue.createElementVNode("text", { class: "time-info" }, "3-4\u5206\u949F"),
-        vue.createElementVNode("text", { class: "description" }, " \u5728\u4E00\u4E2A\u7CBE\u81F4\u7684\u4F1A\u6240\u5305\u53A2\u91CC\uFF0C\u4F60\u4E0E\u4E00\u4F4D\u9AD8\u5C42\u9886\u5BFC\u548C\u4E24\u540D\u540C\u4E8B\u5171\u8FDB\u665A\u9910\u3002\u770B\u4F3C\u8F7B\u677E\u7684\u805A\u4F1A\uFF0C\u5B9E\u9645\u4E0A\u9886\u5BFC\u5728\u6697\u4E2D\u89C2\u5BDF\u4F60\u4EEC\uFF0C\u51C6\u5907\u51B3\u5B9A\u8C01\u5C06\u53C2\u4E0E\u91CD\u8981\u9879\u76EE\u3002\u4F60\u5FC5\u987B\u8BA8\u597D\u9886\u5BFC\uFF0C\u540C\u65F6\u5E73\u8861\u540C\u4E8B\u5173\u7CFB\uFF0C\u56E0\u4E3A\u4E00\u4E2A\u5C0F\u5C0F\u7684\u5931\u8BEF\u53EF\u80FD\u6539\u53D8\u4F60\u7684\u672A\u6765\u3002 ")
+        vue.createElementVNode("text", { class: "title content-item" }, "\u7B2C\u4E00\u5173"),
+        vue.createElementVNode("text", { class: "subtitle content-item" }, "\u8001\u677F\u809A\u5B50\u91CC\u7684\u86D4\u866B"),
+        vue.createElementVNode("text", { class: "time-info content-item" }, "3-4\u5206\u949F"),
+        vue.createElementVNode("text", { class: "description content-item" }, " \u5728\u4E00\u4E2A\u7CBE\u81F4\u7684\u4F1A\u6240\u5305\u53A2\u91CC\uFF0C\u4F60\u4E0E\u4E00\u4F4D\u9AD8\u5C42\u9886\u5BFC\u548C\u4E24\u540D\u540C\u4E8B\u5171\u8FDB\u665A\u9910\u3002\u770B\u4F3C\u8F7B\u677E\u7684\u805A\u4F1A\uFF0C\u5B9E\u9645\u4E0A\u9886\u5BFC\u5728\u6697\u4E2D\u89C2\u5BDF\u4F60\u4EEC\uFF0C\u51C6\u5907\u51B3\u5B9A\u8C01\u5C06\u53C2\u4E0E\u91CD\u8981\u9879\u76EE\u3002\u4F60\u5FC5\u987B\u8BA8\u597D\u9886\u5BFC\uFF0C\u540C\u65F6\u5E73\u8861\u540C\u4E8B\u5173\u7CFB\uFF0C\u56E0\u4E3A\u4E00\u4E2A\u5C0F\u5C0F\u7684\u5931\u8BEF\u53EF\u80FD\u6539\u53D8\u4F60\u7684\u672A\u6765\u3002 ")
       ]),
-      vue.createCommentVNode(" Bottom Button "),
-      vue.createElementVNode("view", { class: "bottom-button" }, [
+      vue.createElementVNode("view", { class: "continue-button-container" }, [
         vue.createElementVNode("button", {
           class: "continue-btn",
           onClick: _cache[0] || (_cache[0] = (...args) => $options.navigateToNextPage && $options.navigateToNextPage(...args))
@@ -83,51 +86,529 @@
       ])
     ]);
   }
-  const PagesBattlefieldBattlefieldIntro = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["styles", [_style_0$j]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/pages/battlefield/battlefield-intro.uvue"]]);
+  const PagesBattlefieldBattlefieldIntro = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$o], ["styles", [_style_0$p]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/pages/battlefield/battlefield-intro.uvue"]]);
 
-  const _style_0$i = {"container":{"":{"position":"relative","width":"100%","height":"100%","color":"#ffffff"}},"background-image":{"":{"position":"absolute","top":0,"left":0,"width":"100%","height":"100%","zIndex":-1}},"task-word":{"":{"color":"#ffffff"}},"task-header":{"":{"marginTop":"30rpx","textAlign":"center","color":"#ffffff","flex":1,"display":"flex","flexDirection":"column","justifyContent":"center","alignItems":"center"}},"main-title":{"":{"fontSize":"40rpx","fontWeight":"bold","color":"#ffffff"}},"sub-title":{"":{"fontSize":"32rpx","marginTop":"10rpx","color":"#ffffff"}},"task-list":{"":{"marginTop":"50rpx","flex":1,"display":"flex","flexDirection":"column","justifyContent":"center","alignItems":"center"}},"task-item":{"":{"fontSize":"28rpx","marginBottom":"20rpx"}},"continue-btn":{"":{"width":"100%","paddingTop":10,"paddingRight":0,"paddingBottom":10,"paddingLeft":0,"backgroundColor":"#ffcc66","borderWidth":"medium","borderStyle":"none","borderColor":"#000000","borderRadius":25,"fontSize":18,"color":"#333333"}},"confirm-button":{"":{"flex":1,"display":"flex","flexDirection":"column","justifyContent":"center","alignItems":"center"}}};
-
-  const _sfc_main$j = {};
-
-
-  function _sfc_render$i(_ctx, _cache) {
-    return (vue.openBlock(), vue.createElementBlock("view", { class: "container" }, [
-      vue.createCommentVNode(" 背景图片 "),
-      vue.createElementVNode("image", {
-        src: _imports_0$8,
-        class: "background-image"
-      }),
-      vue.createCommentVNode(" 标题 "),
-      vue.createElementVNode("view", { class: "task-header" }, [
-        vue.createElementVNode("text", { class: "main-title" }, "老板肚子里的蛔虫"),
-        vue.createElementVNode("text", { class: "sub-title" }, "本关任务")
-      ]),
-      vue.createCommentVNode(" 任务列表 "),
-      vue.createElementVNode("view", { class: "task-list" }, [
-        vue.createElementVNode("view", { class: "task-item" }, [
-          vue.createElementVNode("text", { class: "task-word" }, "1. 得到领导的夸赞")
-        ]),
-        vue.createElementVNode("view", { class: "task-item" }, [
-          vue.createElementVNode("text", { class: "task-word" }, "2. 点出让众人满意的菜品")
-        ])
-      ]),
-      vue.createCommentVNode(" 按钮 "),
-      vue.createElementVNode("button", { class: "continue-btn" }, "我知道了")
-    ]))
-  }
-  const PagesBattlefieldBattlefieldTask = /*#__PURE__*/_export_sfc(_sfc_main$j, [['render',_sfc_render$i],['styles',[_style_0$i]],['__file',"/Users/taokai/codes/EQMaster_ios/test2/pages/battlefield/battlefield-task.uvue"]]);
-
-  const _sfc_main$i = vue.defineComponent({
-      data() {
-          return {};
-      },
-      methods: {}
+  const _sfc_main$o = vue.defineComponent({
+      mounted() {
+          // 设置一个3秒的计时器
+          setTimeout(() => {
+              // 3秒后跳转到 battlefield-playground 页面
+              uni.navigateTo({
+                  url: '/pages/battlefield/battlefield-playground' // 确保这个路径是正确的
+              });
+          }, 3000); // 3秒 = 3000毫秒
+      }
   });
 
-  function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock("view");
+  const _style_0$o = {"continue-button-container":{"":{"width":"100%","height":50,"display":"flex","alignItems":"center","justifyContent":"center","position":"absolute","bottom":"50rpx","zIndex":3}},"background-image":{"":{"position":"absolute","top":0,"left":0,"width":"100%","height":"100%","zIndex":1}},"continue-btn":{"":{"width":"80%","backgroundColor":"#ffcc66","borderWidth":"medium","borderStyle":"none","borderColor":"#000000","borderRadius":25,"fontSize":15,"color":"#000000","zIndex":3}},"overlay":{"":{"position":"absolute","top":0,"left":0,"width":"100%","height":"100%","backgroundColor":"rgba(46,46,47,0.75)","zIndex":2}},"back-button":{"":{"width":24,"height":24}},"navbar":{"":{"display":"flex","flexDirection":"row","justifyContent":"center","alignItems":"center","paddingTop":"20rpx","paddingRight":"20rpx","paddingBottom":"20rpx","paddingLeft":"20rpx","position":"relative","zIndex":3,"marginTop":"80rpx","marginLeft":"20rpx"}},"progress-bar":{"":{"flex":1,"width":"100%","height":20,"display":"flex","flexDirection":"row","justifyContent":"center","alignItems":"center"}},"content":{"":{"paddingTop":20,"paddingRight":20,"paddingBottom":20,"paddingLeft":20,"textAlign":"center","position":"relative","zIndex":3,"display":"flex","justifyContent":"center","alignItems":"center","marginTop":"200rpx"}},"container":{"":{"position":"relative","width":"100%","height":"100%","color":"#ffffff"}},"loading-container":{"":{"display":"flex","justifyContent":"center","alignItems":"center"}},"loading-text-container":{"":{"width":"30%","backgroundColor":"rgba(16,16,16,0.4)","height":40,"borderRadius":"40rpx","zIndex":2,"display":"flex","justifyContent":"center","alignItems":"center"}},"loading-text":{"":{"color":"#ffffff","fontSize":"25rpx"}}};
+
+  function _sfc_render$n(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "background-image loading-container" }, [
+      vue.createElementVNode("image", {
+        class: "background-image",
+        src: _imports_0$a,
+        mode: "aspectFill"
+      }),
+      vue.createCommentVNode(" Content "),
+      vue.createElementVNode("view", { class: "loading-text-container" }, [
+        vue.createElementVNode("text", { class: "loading-text" }, "\u805A\u9910\u4E2D")
+      ])
+    ]);
   }
-  const PagesBattlefieldBattlefieldPlayground = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/pages/battlefield/battlefield-playground.uvue"]]);
+  const PagesBattlefieldBattlefieldLoading = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["render", _sfc_render$n], ["styles", [_style_0$o]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/pages/battlefield/battlefield-loading.uvue"]]);
+
+  const _sfc_main$n = vue.defineComponent({
+      components: {
+          ProgressBar, // 注册组件
+      },
+      methods: {
+          navigateToNextPage() {
+              uni.navigateTo({
+                  url: '/pages/battlefield/battlefield-loading'
+              });
+          },
+          goback() {
+              uni.navigateTo({
+                  url: '/pages/battlefield/battlefield-intro'
+              });
+          }
+      }
+  });
+
+  const _style_0$n = {"continue-button-container":{"":{"width":"100%","height":50,"display":"flex","alignItems":"center","justifyContent":"center","position":"absolute","bottom":"50rpx","zIndex":3}},"background-image":{"":{"position":"absolute","top":0,"left":0,"width":"100%","height":"100%","zIndex":-1}},"continue-btn":{"":{"width":"80%","backgroundColor":"#ffcc66","borderWidth":"medium","borderStyle":"none","borderColor":"#000000","borderRadius":25,"fontSize":15,"color":"#000000","zIndex":3}},"overlay":{"":{"position":"absolute","top":0,"left":0,"width":"100%","height":"100%","backgroundColor":"rgba(46,46,47,0.75)","zIndex":2}},"back-button":{"":{"width":24,"height":24}},"navbar":{"":{"display":"flex","flexDirection":"row","justifyContent":"center","alignItems":"center","paddingTop":"20rpx","paddingRight":"20rpx","paddingBottom":"20rpx","paddingLeft":"20rpx","position":"relative","zIndex":3,"marginTop":"80rpx","marginLeft":"20rpx"}},"progress-bar":{"":{"flex":1,"width":"100%","height":20,"display":"flex","flexDirection":"row","justifyContent":"center","alignItems":"center"}},"content":{"":{"paddingTop":20,"paddingRight":20,"paddingBottom":20,"paddingLeft":20,"textAlign":"center","position":"relative","zIndex":3,"display":"flex","justifyContent":"center","alignItems":"center","marginTop":"200rpx"}},"container":{"":{"position":"relative","width":"100%","height":"100%","color":"#ffffff"}},"task-word":{"":{"color":"#ffffff","width":"100%"}},"task-header":{"":{"marginTop":"30rpx","textAlign":"center","color":"#ffffff","flex":1,"display":"flex","flexDirection":"column","justifyContent":"center","alignItems":"center"}},"main-title":{"":{"fontSize":"40rpx","fontWeight":"bold","color":"#ffffff"}},"sub-title":{"":{"fontSize":34,"marginTop":"30rpx","fontWeight":"700","color":"#ffffff"}},"task-list":{"":{"width":"100%","marginTop":"100rpx","display":"flex","minHeight":"40rpx","justifyContent":"center","flex":1,"flexDirection":"column","alignItems":"center"}},"task-item":{"":{"display":"flex","flexDirection":"row","justifyContent":"flex-start","alignItems":"center","fontSize":"28rpx","marginBottom":"20rpx","width":"100%","marginTop":"30rpx","marginLeft":"50rpx"}},"confirm-button":{"":{"flex":1,"display":"flex","flexDirection":"column","justifyContent":"center","alignItems":"center"}},"index-circle":{"":{"width":"60rpx","height":"60rpx","borderRadius":"30rpx","backgroundColor":"rgba(255,255,255,0.3)","color":"#ffffff","display":"flex","justifyContent":"center","alignItems":"center","marginRight":"30rpx","borderWidth":"1rpx","borderStyle":"solid","borderColor":"#ffffff"}},"index-word":{"":{"color":"#ffffff","fontSize":"25rpx","lineHeight":"40rpx"}}};
+
+  function _sfc_render$m(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_progress_bar = vue.resolveComponent("progress-bar");
+    return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, [
+      vue.createElementVNode("image", {
+        src: _imports_0$a,
+        class: "background-image"
+      }),
+      vue.createElementVNode("view", { class: "overlay" }),
+      vue.createElementVNode("view", { class: "navbar" }, [
+        vue.createElementVNode("image", {
+          onClick: _cache[0] || (_cache[0] = (...args) => $options.goback && $options.goback(...args)),
+          class: "back-button",
+          src: _imports_1$6
+        }),
+        vue.createElementVNode("view", { class: "progress-bar" }, [
+          vue.createVNode(_component_progress_bar, { isActive: true }),
+          vue.createVNode(_component_progress_bar, { isActive: true })
+        ])
+      ]),
+      vue.createElementVNode("view", { class: "content" }, [
+        vue.createElementVNode("view", { class: "task-header" }, [
+          vue.createElementVNode("text", { class: "main-title" }, "\u8001\u677F\u809A\u5B50\u91CC\u7684\u86D4\u866B"),
+          vue.createElementVNode("text", { class: "sub-title" }, "\u672C\u5173\u4EFB\u52A1")
+        ]),
+        vue.createCommentVNode(" \u4EFB\u52A1\u5217\u8868 "),
+        vue.createElementVNode("view", { class: "task-list" }, [
+          vue.createElementVNode("view", { class: "task-item" }, [
+            vue.createElementVNode("view", { class: "index-circle" }, [
+              vue.createElementVNode("text", { class: "index-word" }, " 1 ")
+            ]),
+            vue.createElementVNode("text", { class: "task-word" }, "\u5F97\u5230\u9886\u5BFC\u7684\u5938\u8D5E")
+          ]),
+          vue.createElementVNode("view", { class: "task-item" }, [
+            vue.createElementVNode("view", { class: "index-circle" }, [
+              vue.createElementVNode("text", { class: "index-word" }, " 2 ")
+            ]),
+            vue.createElementVNode("text", { class: "task-word" }, "\u70B9\u51FA\u8BA9\u4F17\u4EBA\u6EE1\u610F\u7684\u83DC\u54C1")
+          ])
+        ])
+      ]),
+      vue.createElementVNode("view", { class: "continue-button-container" }, [
+        vue.createElementVNode("button", {
+          class: "continue-btn",
+          onClick: _cache[1] || (_cache[1] = (...args) => $options.navigateToNextPage && $options.navigateToNextPage(...args))
+        }, "\u6211\u77E5\u9053\u4E86")
+      ])
+    ]);
+  }
+  const PagesBattlefieldBattlefieldTask = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$m], ["styles", [_style_0$n]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/pages/battlefield/battlefield-task.uvue"]]);
+
+  const _sfc_main$m = vue.defineComponent({
+      props: {
+          gemCount: {
+              type: Number,
+              default: 0
+          }
+      }
+  });
+
+  const _imports_0$9 = "/static/battlefield/diamond.png";
+
+  const _style_0$m = {"gem-container":{"":{"display":"flex","flexDirection":"row","justifyContent":"space-around","alignItems":"center","width":"250rpx","backgroundColor":"rgba(16,16,16,0.4)","borderRadius":"50rpx","paddingTop":10,"paddingRight":20,"paddingBottom":10,"paddingLeft":20}},"gem-icon":{"":{"width":28,"height":28,"marginRight":10}},"gem-count":{"":{"color":"#ffcc66","fontSize":24,"fontWeight":"bold"}}};
+
+  function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "gem-container" }, [
+      vue.createElementVNode("image", {
+        class: "gem-icon",
+        src: _imports_0$9,
+        mode: "aspectFit"
+      }),
+      vue.createElementVNode(
+        "text",
+        { class: "gem-count" },
+        vue.toDisplayString($props.gemCount),
+        1
+        /* TEXT */
+      )
+    ]);
+  }
+  const RewardBar = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$l], ["styles", [_style_0$m]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/components/RewardBar.vue"]]);
+
+  const _sfc_main$l = vue.defineComponent({
+      props: {
+          health: {
+              type: Number,
+              default: 100 // 初始健康值
+          },
+          avatar: {
+              type: String,
+              default: '/static/battlefield/boss.png' // 默认头像路径
+          },
+          characterName: {
+              type: String,
+              default: '老板' // 默认角色名字
+          }
+      },
+      computed: {
+          healthBarStyle() {
+              const color = this.health < 50 ? '#FF4D4F' : '#52C41A'; // 健康值小于50时为红色，大于50为绿色
+              const width = `${this.health}%`; // 健康条宽度动态绑定
+              return {
+                  width,
+                  backgroundColor: color,
+                  transition: 'width 0.5s ease, background-color 0.5s ease' // 动态变化的平滑效果
+              };
+          }
+      }
+  });
+
+  const _style_0$l = {"character-container":{"":{"display":"flex","flexDirection":"column","alignItems":"center"}},"blood-container":{"":{"height":20,"display":"flex","flexDirection":"column","alignItems":"center"}},"health-bar-container":{"":{"width":100,"height":10,"marginBottom":"10rpx","position":"relative","overflow":"visible"}},"health-bar-background":{"":{"width":"100%","height":"100%","backgroundColor":"rgba(0,0,0,0.3)","borderRadius":5,"position":"relative","overflow":"visible","zIndex":3}},"health-bar-foreground":{"":{"height":"100%","borderRadius":5,"position":"absolute","top":0,"left":0,"overflow":"visible","boxShadow":"0 -6px 6px -3px rgba(255, 255, 255, 0.3)"}},"health-bar-line":{"":{"position":"absolute","left":"50%","width":"2rpx","height":10,"backgroundColor":"#ffffff","zIndex":3}},"avatar-container":{"":{"display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center","height":100}},"avatar":{"":{"width":70,"height":70,"borderRadius":35,"backgroundColor":"#ffffff","objectFit":"cover","borderWidth":2,"borderStyle":"solid","borderColor":"rgba(0,0,0,0.1)"}},"character-name":{"":{"position":"absolute","bottom":8,"fontSize":16,"width":"90%","height":22,"color":"#ffffff","textAlign":"center","backgroundColor":"rgba(16,16,16,0.2)","paddingTop":2,"paddingRight":8,"paddingBottom":2,"paddingLeft":8,"borderRadius":10}}};
+
+  function _sfc_render$k(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "character-container" }, [
+      vue.createCommentVNode(" \u8840\u6761 "),
+      vue.createElementVNode("view", { class: "blood-container" }, [
+        vue.createElementVNode("view", { class: "health-bar-container" }, [
+          vue.createElementVNode("view", { class: "health-bar-line" }),
+          vue.createElementVNode("view", { class: "health-bar-background" }, [
+            vue.createElementVNode(
+              "view",
+              {
+                class: "health-bar-foreground",
+                style: vue.normalizeStyle($options.healthBarStyle)
+              },
+              null,
+              4
+              /* STYLE */
+            )
+          ])
+        ])
+      ]),
+      vue.createElementVNode("view", { class: "avatar-container" }, [
+        vue.createElementVNode("image", {
+          class: "avatar",
+          src: $props.avatar,
+          mode: "aspectFill"
+        }, null, 8, ["src"]),
+        vue.createElementVNode(
+          "text",
+          { class: "character-name" },
+          vue.toDisplayString($props.characterName),
+          1
+          /* TEXT */
+        )
+      ])
+    ]);
+  }
+  const NpcStatus = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["styles", [_style_0$l]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/components/NpcStatus.vue"]]);
+
+  const _sfc_main$k = vue.defineComponent({
+      props: {
+          avatar: {
+              type: String,
+              required: true
+          },
+          character: {
+              type: String,
+              required: true
+          },
+          wording: {
+              type: String,
+              required: true
+          }
+      }
+  });
+
+  const _imports_0$8 = "/static/battlefield/character_background.png";
+
+  const _style_0$k = {"container":{"":{"display":"flex","flexDirection":"column","alignItems":"center","paddingTop":10,"paddingRight":10,"paddingBottom":10,"paddingLeft":10,"backgroundColor":"rgba(0,0,0,0)","borderRadius":12}},"avatar":{"":{"width":"400rpx","height":"400rpx"}},"bubble-container":{"":{"backgroundColor":"#23232a","borderRadius":10,"paddingTop":12,"paddingRight":12,"paddingBottom":12,"paddingLeft":12,"color":"#FFFFFF","borderWidth":2,"borderStyle":"solid","borderColor":"#eeaf61","overflow":"visible"}},"character-background":{"":{"paddingTop":5,"paddingRight":10,"paddingBottom":5,"paddingLeft":10,"width":"20%","height":25,"position":"absolute"}},"background-parent":{"":{"position":"absolute","top":-20,"width":"100%","height":20,"overflow":"hidden"}},"character":{"":{"color":"#000000","paddingTop":5,"paddingRight":10,"paddingBottom":5,"paddingLeft":10,"top":-25,"height":25,"position":"absolute"}},"wording":{"":{"fontSize":16,"textAlign":"left","color":"#FFFFFF"}}};
+
+  function _sfc_render$j(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, [
+      vue.createElementVNode("image", {
+        class: "avatar",
+        src: $props.avatar,
+        mode: "aspectFill"
+      }, null, 8, ["src"]),
+      vue.createElementVNode("view", { class: "bubble-container" }, [
+        vue.createElementVNode("view", { class: "background-parent" }, [
+          vue.createElementVNode("image", {
+            class: "character-background",
+            src: _imports_0$8
+          })
+        ]),
+        vue.createElementVNode(
+          "view",
+          { class: "character" },
+          vue.toDisplayString($props.character),
+          1
+          /* TEXT */
+        ),
+        vue.createElementVNode(
+          "text",
+          { class: "wording" },
+          vue.toDisplayString($props.wording),
+          1
+          /* TEXT */
+        )
+      ])
+    ]);
+  }
+  const LargeAvatarBubble = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["styles", [_style_0$k]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/components/LargeAvatarBubble.vue"]]);
+
+  const _sfc_main$j = vue.defineComponent({
+      props: {
+          title: {
+              type: String,
+              required: true
+          },
+          wording: {
+              type: String,
+              required: true
+          }
+      },
+      methods: {
+          onContinue() {
+              // 按钮点击事件
+              this.$emit('continue');
+          }
+      }
+  });
+
+  const _style_0$j = {"feedback-container":{"":{"backgroundColor":"#E3F8C8","borderRadius":12,"paddingTop":16,"paddingRight":16,"paddingBottom":16,"paddingLeft":16,"boxShadow":"0px 4px 8px rgba(0, 0, 0, 0.1)","width":"100%","height":200,"position":"absolute","bottom":0}},"title":{"":{"fontWeight":"700","fontSize":17,"color":"rgba(49,91,0,1)","marginBottom":8}},"wording":{"":{"fontSize":16,"color":"#3E3E3E","marginBottom":16}},"button-container":{"":{"display":"flex","justifyContent":"center","marginBottom":20}},"action-button":{"":{"backgroundColor":"#A9E55B","color":"#3E3E3E","borderRadius":50,"fontSize":16,"height":50,"width":"100%","lineHeight":"50px","textAlign":"center","borderWidth":"medium","borderStyle":"none","borderColor":"#000000"}}};
+
+  function _sfc_render$i(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "feedback-container" }, [
+      vue.createElementVNode("view", { class: "title" }, [
+        vue.createElementVNode(
+          "text",
+          null,
+          vue.toDisplayString($props.title),
+          1
+          /* TEXT */
+        )
+      ]),
+      vue.createElementVNode(
+        "view",
+        { class: "wording" },
+        vue.toDisplayString($props.wording),
+        1
+        /* TEXT */
+      ),
+      vue.createElementVNode("view", { class: "button-container" }, [
+        vue.createElementVNode("button", {
+          class: "action-button",
+          onClick: _cache[0] || (_cache[0] = (...args) => $options.onContinue && $options.onContinue(...args))
+        }, "\u7EE7\u7EED")
+      ])
+    ]);
+  }
+  const Judge = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["styles", [_style_0$j]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/components/Judge.vue"]]);
+
+  const _sfc_main$i = vue.defineComponent({
+      components: {
+          RewardBar,
+          NpcStatus,
+          LargeAvatarBubble,
+          Judge
+      },
+      data() {
+          return {
+              someoneTalk: true,
+              state: 'NpcTalk',
+              chattingHistory: [],
+              talkingNpc: 0,
+              showInput: false,
+              focusInput: false,
+              npcs: [
+                  {
+                      characterName: '老板',
+                      health: 80,
+                      avatar: '/static/battlefield/boss.png',
+                  },
+                  {
+                      characterName: '同事A',
+                      health: 49,
+                      avatar: '/static/battlefield/xiaoA.png',
+                  },
+                  {
+                      characterName: '同事B',
+                      health: 90,
+                      avatar: '/static/battlefield/xiaoB.png',
+                  },
+              ],
+              isMiddleClicked: false // 控制左右图标显示的状态
+          };
+      },
+      methods: {
+          handleMiddleClick() {
+              this.isMiddleClicked = true; // 按下时隐藏两侧图标
+          },
+          handleMiddleRelease() {
+              uni.__log__('log', 'at pages/battlefield/battlefield-playground.uvue:93', "Released");
+              this.isMiddleClicked = false; // 松开时恢复显示两侧图标
+          },
+          dismissNpc() {
+              uni.__log__('log', 'at pages/battlefield/battlefield-playground.uvue:97', "Dismiss npc");
+              this.state = "";
+          },
+          getNextState() {
+              if (this.state === "NpcTalk" && this.chattingHistory.length === 0) {
+                  uni.__log__('log', 'at pages/battlefield/battlefield-playground.uvue:102', "Dismiss npc");
+                  this.state = "userTalk";
+              }
+          }
+      }
+  });
+
+  const _imports_2$3 = "/static/battlefield/copy.png";
+
+  const _imports_3$1 = "/static/battlefield/setting.png";
+
+  const _imports_4$1 = "/static/battlefield/keyboard.png";
+
+  const _imports_5 = "/static/battlefield/microphone.png";
+
+  const _imports_6 = "/static/battlefield/streamline.png";
+
+  const _style_0$i = {"continue-button-container":{"":{"width":"100%","height":50,"display":"flex","alignItems":"center","justifyContent":"center","position":"absolute","bottom":"50rpx","zIndex":3}},"background-image":{"":{"position":"absolute","top":0,"left":0,"width":"100%","height":"100%","zIndex":1}},"continue-btn":{"":{"width":"80%","backgroundColor":"#ffcc66","borderWidth":"medium","borderStyle":"none","borderColor":"#000000","borderRadius":25,"fontSize":15,"color":"#000000","zIndex":3}},"overlay":{"":{"position":"absolute","top":0,"left":0,"width":"100%","height":"100%","backgroundColor":"rgba(46,46,47,0.75)","zIndex":2}},"back-button":{"":{"width":24,"height":24,"marginLeft":"20rpx"}},"navbar":{"":{"display":"flex","flexDirection":"row","justifyContent":"space-between","alignItems":"center","paddingTop":"20rpx","paddingRight":"20rpx","paddingBottom":"20rpx","paddingLeft":"20rpx","position":"relative","zIndex":3,"marginTop":"80rpx","marginLeft":"20rpx"}},"progress-bar":{"":{"flex":1,"width":"100%","height":20,"display":"flex","flexDirection":"row","justifyContent":"center","alignItems":"center"}},"content":{"":{"paddingTop":20,"paddingRight":20,"paddingBottom":20,"paddingLeft":20,"textAlign":"center","position":"relative","zIndex":3,"display":"flex","justifyContent":"center","alignItems":"center","marginTop":"200rpx"}},"container":{"":{"position":"relative","width":"100%","height":"100%","color":"#ffffff"}},"time-info":{"":{"fontSize":16,"color":"#bbbbbb","marginBottom":20}},"description":{"":{"fontSize":16,"lineHeight":1.6,"color":"#ffffff"}},"content-item":{"":{"marginTop":"30rpx"}},"setting-group":{"":{"display":"flex","flexDirection":"row"}},"setting-item":{"":{"width":24,"marginRight":"20rpx","height":24}},"npc-group":{"":{"display":"flex","flexDirection":"row","zIndex":3,"justifyContent":"space-around","marginTop":"50rpx"}},"player-action-container":{"":{"display":"flex","flexDirection":"row","width":"100%","justifyContent":"space-around","zIndex":3,"overflow":"visible","position":"absolute","bottom":"50rpx"}},"action-icon":{"":{"width":30,"height":30}},"action-icon-middle":{"":{"width":40,"height":40}},"action-item":{"":{"width":40,"height":40,"borderRadius":20,"backgroundColor":"rgba(253,237,200,1)","display":"flex","justifyContent":"center","alignItems":"center"}},"action-item-middle":{"":{"width":50,"height":50,"borderRadius":25,"backgroundImage":"linear-gradient(180deg, rgba(253, 242, 211, 1) 0%, rgba(241, 188, 116, 1) 100%)"}},"middle-container":{"":{"width":56,"height":56,"borderRadius":28,"backgroundColor":"rgba(0,0,0,0)","borderWidth":"2rpx","borderStyle":"solid","borderColor":"rgba(253,242,211,1)","display":"flex","justifyContent":"center","alignItems":"center","boxShadow":"0px 0px 4px 0px rgba(254, 211, 151, 1)"}},"npc-talk-container":{"":{"width":"100%","zIndex":3,"backgroundColor":"rgba(0,0,0,0)"}},"shadowed":{"":{"zIndex":2}},"input-container":{"":{"position":"fixed","width":"80%","left":"10%","bottom":"200rpx","display":"flex","justifyContent":"center","paddingTop":10,"paddingRight":0,"paddingBottom":10,"paddingLeft":0,"backgroundColor":"rgba(255,255,255,0.9)"}},"keyboard-container":{"":{"width":"100%","display":"flex","flexDirection":"row","justifyContent":"center"}},"judge-container":{"":{"width":"100%","zIndex":3,"position":"absolute","height":300,"bottom":0}}};
+
+  function _sfc_render$h(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_reward_bar = vue.resolveComponent("reward-bar");
+    const _component_npc_status = vue.resolveComponent("npc-status");
+    const _component_large_avatar_bubble = vue.resolveComponent("large-avatar-bubble");
+    const _component_judge = vue.resolveComponent("judge");
+    return vue.openBlock(), vue.createElementBlock("view", {
+      class: "container",
+      onClick: _cache[4] || (_cache[4] = (...args) => $options.getNextState && $options.getNextState(...args))
+    }, [
+      vue.createElementVNode("image", {
+        class: "background-image",
+        src: _imports_0$a,
+        mode: "aspectFill"
+      }),
+      vue.createElementVNode("view", { class: "overlay" }),
+      vue.createElementVNode(
+        "view",
+        {
+          class: vue.normalizeClass(["navbar", $data.state === "NpcTalk" ? "shadowed" : ""])
+        },
+        [
+          vue.createElementVNode("image", {
+            class: "back-button",
+            src: _imports_1$6
+          }),
+          vue.createVNode(_component_reward_bar, { gemCount: 100 }),
+          vue.createElementVNode("view", { class: "setting-group" }, [
+            vue.createElementVNode("image", {
+              class: "setting-item",
+              src: _imports_2$3
+            }),
+            vue.createElementVNode("image", {
+              class: "setting-item",
+              src: _imports_3$1
+            })
+          ])
+        ],
+        2
+        /* CLASS */
+      ),
+      vue.createElementVNode(
+        "view",
+        {
+          class: vue.normalizeClass(["npc-group", $data.state === "NpcTalk" ? "shadowed" : ""])
+        },
+        [
+          (vue.openBlock(true), vue.createElementBlock(
+            vue.Fragment,
+            null,
+            vue.renderList($data.npcs, (npc) => {
+              return vue.openBlock(), vue.createBlock(_component_npc_status, {
+                key: npc.characterName,
+                health: npc.health,
+                avatar: npc.avatar,
+                characterName: npc.characterName
+              }, null, 8, ["health", "avatar", "characterName"]);
+            }),
+            128
+            /* KEYED_FRAGMENT */
+          ))
+        ],
+        2
+        /* CLASS */
+      ),
+      $data.state === "NpcTalk" ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 0,
+        class: "npc-talk-container"
+      }, [
+        vue.createVNode(_component_large_avatar_bubble, {
+          avatar: $data.npcs[$data.talkingNpc].avatar,
+          character: $data.npcs[$data.talkingNpc].characterName,
+          wording: "\u54CE,\u4E0A\u6B21\u5C0F\u674E\u70B9\u7684\u90A3\u4E2A\u9C7C, \u54B1\u9886\u5BFC\u53EF\u662F\u771F\u7684\u5361\u4F4F\u4E86,\u76F4\u63A5\u9001\u533B\u9662\u6025\u6551! \u8FD9\u6B21\u4F60\u53EF\u5F97\u5C0F\u5FC3,\u522B\u8BA9\u9886\u5BFC\u518D\u4F53\u9A8C\u4E00\u6B21\u751F\u6B7B\u8FB9\u7F18\u4E86"
+        }, null, 8, ["avatar", "character"])
+      ])) : vue.createCommentVNode("v-if", true),
+      vue.createElementVNode(
+        "view",
+        {
+          class: vue.normalizeClass(["player-action-container", $data.state === "NpcTalk" ? "shadowed" : ""])
+        },
+        [
+          !$data.isMiddleClicked ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 0,
+            class: "action-item",
+            onClick: _cache[0] || (_cache[0] = ($event) => {
+              $data.showInput = true;
+              $data.focusInput = true;
+            })
+          }, [
+            vue.createElementVNode("image", {
+              class: "action-icon",
+              src: _imports_4$1
+            })
+          ])) : vue.createCommentVNode("v-if", true),
+          vue.createElementVNode("view", { class: "middle-container" }, [
+            vue.createElementVNode(
+              "view",
+              {
+                class: "action-item action-item-middle",
+                onTouchstart: _cache[1] || (_cache[1] = (...args) => $options.handleMiddleClick && $options.handleMiddleClick(...args)),
+                onTouchend: _cache[2] || (_cache[2] = (...args) => $options.handleMiddleRelease && $options.handleMiddleRelease(...args))
+              },
+              [
+                vue.createElementVNode("image", {
+                  class: "action-icon action-icon-middle",
+                  src: _imports_5
+                })
+              ],
+              32
+              /* NEED_HYDRATION */
+            )
+          ]),
+          !$data.isMiddleClicked ? (vue.openBlock(), vue.createElementBlock("view", {
+            key: 1,
+            class: "action-item"
+          }, [
+            vue.createElementVNode("image", {
+              class: "action-icon",
+              src: _imports_6
+            })
+          ])) : vue.createCommentVNode("v-if", true)
+        ],
+        2
+        /* CLASS */
+      ),
+      vue.createElementVNode("view", { class: "keyboard-container" }, [
+        $data.showInput ? (vue.openBlock(), vue.createElementBlock("view", {
+          key: 0,
+          class: "input-container"
+        }, [
+          vue.createElementVNode(
+            "input",
+            {
+              type: "text",
+              focus: "{{focusInput}}",
+              placeholder: "\u8BF7\u8F93\u5165...",
+              onBlur: _cache[3] || (_cache[3] = ($event) => $data.showInput = false)
+            },
+            null,
+            32
+            /* NEED_HYDRATION */
+          )
+        ])) : vue.createCommentVNode("v-if", true)
+      ]),
+      vue.createElementVNode("view", { class: "judge-container" }, [
+        vue.createVNode(_component_judge, {
+          title: "well done",
+          wording: "\u505A\u7684\u5F88\u597D\uFF0C\u8003\u8651\u4E86\u5927\u5BB6\u7684\u611F\u53D7"
+        })
+      ])
+    ]);
+  }
+  const PagesBattlefieldBattlefieldPlayground = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["styles", [_style_0$i]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/pages/battlefield/battlefield-playground.uvue"]]);
 
   const _sfc_main$h = vue.defineComponent({
       data() {
@@ -3118,6 +3599,7 @@
   const PagesExperienceExperience = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["styles", [_style_0$1]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/pages/experience/experience.uvue"]]);
 
   __definePage('pages/battlefield/battlefield-intro',PagesBattlefieldBattlefieldIntro);
+  __definePage('pages/battlefield/battlefield-loading',PagesBattlefieldBattlefieldLoading);
   __definePage('pages/battlefield/battlefield-task',PagesBattlefieldBattlefieldTask);
   __definePage('pages/battlefield/battlefield-playground',PagesBattlefieldBattlefieldPlayground);
   __definePage('pages/landing/landing',PagesLandingLanding);

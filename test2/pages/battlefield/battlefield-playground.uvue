@@ -1,22 +1,286 @@
 <template>
-	<view>
-		
+	<view class="container" @click="getNextState">
+		<image class="background-image" src="/static/battlefield/background.png" mode="aspectFill" />
+		<view class="overlay"></view>
+		<view class="navbar" :class="state === 'NpcTalk' ? 'shadowed':''">
+			<image class="back-button" src="/static/battlefield/back-iconpng.png"></image>
+			<reward-bar :gemCount="100"></reward-bar>
+			<view class="setting-group">
+				<image class="setting-item" src="/static/battlefield/copy.png"></image>
+				<image class="setting-item" src="/static/battlefield/setting.png"></image>
+			</view>
+		</view>
+		<view class="npc-group" :class="state === 'NpcTalk' ? 'shadowed':''">
+			<npc-status v-for="npc in npcs" :key="npc.characterName" :health="npc.health" :avatar="npc.avatar"
+				:characterName="npc.characterName"></npc-status>
+		</view>
+
+		<view v-if="state === 'NpcTalk'" class="npc-talk-container">
+			<large-avatar-bubble :avatar="npcs[talkingNpc].avatar" :character="npcs[talkingNpc].characterName"
+				:wording="'哎,上次小李点的那个鱼, 咱领导可是真的卡住了,直接送医院急救! 这次你可得小心,别让领导再体验一次生死边缘了'">
+			</large-avatar-bubble>
+		</view>
+		<view class="player-action-container" :class="state === 'NpcTalk' ? 'shadowed':''">
+			<view class="action-item" v-if="!isMiddleClicked" @click="showInput = true; focusInput = true;">
+				<image class="action-icon" src="/static/battlefield/keyboard.png"></image>
+			</view>
+			<view class="middle-container">
+				<view class="action-item action-item-middle" @touchstart="handleMiddleClick"
+					@touchend="handleMiddleRelease">
+					<image class="action-icon action-icon-middle" src="/static/battlefield/microphone.png"></image>
+				</view>
+			</view>
+			<view class="action-item" v-if="!isMiddleClicked">
+				<image class="action-icon" src="/static/battlefield/streamline.png"></image>
+			</view>
+		</view>
+		<view class="keyboard-container">
+			<view v-if="showInput" class="input-container">
+				<input type="text" focus="{{focusInput}}" placeholder="请输入..." @blur="showInput = false" />
+			</view>
+		</view>
+		<view class="judge-container">
+			<judge :title="'well done'" :wording="'做的很好，考虑了大家的感受'"></judge>
+		</view>
 	</view>
 </template>
 
 <script>
+	import RewardBar from '/components/RewardBar.vue';
+	import NpcStatus from '../../components/NpcStatus.vue';
+	import LargeAvatarBubble from '../../components/LargeAvatarBubble.vue';
+	import Judge from '../../components/Judge.vue';
 	export default {
+		components: {
+			RewardBar,
+			NpcStatus,
+			LargeAvatarBubble,
+			Judge
+		},
 		data() {
 			return {
-				
+				someoneTalk: true,
+				state: 'NpcTalk', // 新增状态
+				chattingHistory: [],
+				talkingNpc: 0,
+				showInput: false,
+				focusInput: false,
+				npcs: [
+					{
+						characterName: '老板',
+						health: 80,
+						avatar: '/static/battlefield/boss.png',
+					},
+					{
+						characterName: '同事A',
+						health: 49,
+						avatar: '/static/battlefield/xiaoA.png',
+					},
+					{
+						characterName: '同事B',
+						health: 90,
+						avatar: '/static/battlefield/xiaoB.png',
+					},
+				],
+				isMiddleClicked: false // 控制左右图标显示的状态
 			}
 		},
 		methods: {
-			
+			handleMiddleClick() {
+				this.isMiddleClicked = true; // 按下时隐藏两侧图标
+			},
+			handleMiddleRelease() {
+				console.log("Released");
+				this.isMiddleClicked = false; // 松开时恢复显示两侧图标
+			},
+			dismissNpc() {
+				console.log("Dismiss npc");
+				this.state = "";
+			},
+			getNextState() {
+				if (this.state === "NpcTalk" && this.chattingHistory.length === 0) {
+					console.log("Dismiss npc")
+					this.state = "userTalk";
+				} else {
+
+				}
+			}
 		}
 	}
 </script>
 
-<style>
+<style scoped>
+	@import "./common.css";
 
+	.container {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		color: #fff;
+	}
+
+	.navbar {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		padding: 20rpx;
+		position: relative;
+		z-index: 3;
+		margin-top: 80rpx;
+		margin-left: 20rpx;
+	}
+
+	.back-button {
+		width: 24px;
+		height: 24px;
+		margin-left: 20rpx;
+	}
+
+	.content {
+		padding: 20px;
+		text-align: center;
+		position: relative;
+		z-index: 3;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-top: 200rpx;
+	}
+
+	.time-info {
+		font-size: 16px;
+		color: #bbb;
+		margin-bottom: 20px;
+	}
+
+	.description {
+		font-size: 16px;
+		line-height: 1.6;
+		color: #fff;
+	}
+
+	.content-item {
+		margin-top: 30rpx;
+	}
+
+	.setting-group {
+		display: flex;
+		flex-direction: row;
+	}
+
+	.setting-item {
+		width: 24px;
+		margin-right: 20rpx;
+		height: 24px;
+	}
+
+	.npc-group {
+		display: flex;
+		flex-direction: row;
+		z-index: 3;
+		justify-content: space-around;
+		margin-top: 50rpx;
+	}
+
+	.player-action-container {
+		display: flex;
+		flex-direction: row;
+		width: 100%;
+		justify-content: space-around;
+		z-index: 3;
+		overflow: visible;
+		position: absolute;
+		bottom: 50rpx;
+	}
+
+	.action-icon {
+		width: 30px;
+		height: 30px;
+	}
+
+	.action-icon-middle {
+		width: 40px;
+		height: 40px;
+	}
+
+	.action-item {
+		width: 40px;
+		height: 40px;
+		border-radius: 20px;
+		background: rgba(253, 237, 200, 1);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.action-item-middle {
+		width: 50px;
+		height: 50px;
+		border-radius: 25px;
+		background: linear-gradient(180deg, rgba(253, 242, 211, 1) 0%, rgba(241, 188, 116, 1) 100%);
+	}
+
+	.middle-container {
+		width: 56px;
+		height: 56px;
+		border-radius: 28px;
+		background-color: transparent;
+		border: 2rpx solid rgba(253, 242, 211, 1);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		box-shadow: 0px 0px 4px 0px rgba(254, 211, 151, 1);
+	}
+
+	.npc-talk-container {
+		width: 100%;
+		z-index: 3;
+		background-color: transparent;
+	}
+
+	.shadowed {
+		z-index: 2;
+	}
+
+	.input-container {
+		position: fixed;
+		width: 80%;
+		left: 10%;
+		bottom: 200rpx;
+		/* 将其固定在屏幕底部 */
+		display: flex;
+		justify-content: center;
+		padding: 10px 0;
+		/* 增加一些内边距 */
+		background-color: rgba(255, 255, 255, 0.9);
+		/* 可选的背景色，用于强调输入框 */
+
+	}
+
+	.keyboard-container {
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+	}
+
+	input {
+		width: 80%;
+		height: 40px;
+		/* 确保高度适当 */
+		padding: 10px;
+		font-size: 16px;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	}
+
+	.judge-container {
+		width: 100%;
+		z-index: 3;
+		position: absolute;
+		height: 300px;
+		bottom: 0px;
+	}
 </style>

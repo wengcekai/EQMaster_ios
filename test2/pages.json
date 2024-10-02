@@ -8,6 +8,13 @@
 			}
 		},
 		{
+			"path": "pages/battlefield/battlefield-loading",
+			"style": {
+				// "navigationBarTitleText": "Scroll Test",
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/battlefield/battlefield-task",
 			"style": {
 				// "navigationBarTitleText": "Scroll Test",
@@ -112,12 +119,12 @@
 				"navigationBarTitleText": ""
 			}
 		},
-		{
-			"path": "pages/cta/cta",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		},
+		// {
+		// 	"path": "pages/cta/cta",
+		// 	"style": {
+		// 		"navigationStyle": "custom"
+		// 	}
+		// },
 		{
 			"path": "pages/result/result",
 			"style": {

@@ -2,27 +2,24 @@
 	<view class="container">
 		<image class="background-image" src="/static/battlefield/background.png" mode="aspectFill" />
 		<view class="overlay"></view>
-
 		<view class="navbar">
-			<view class="back-button"></view>
+			<image class="back-button" src="/static/battlefield/back-iconpng.png"></image>
 			<view class="progress-bar">
-				    <progress-bar :isActive="true"></progress-bar>
-				    <progress-bar :isActive="false"></progress-bar>
+				<progress-bar :isActive="true"></progress-bar>
+				<progress-bar :isActive="false"></progress-bar>
 			</view>
 		</view>
 
 		<!-- Content -->
 		<view class="content">
-			<text class="title">第一关</text>
-			<text class="subtitle">老板肚子里的蛔虫</text>
-			<text class="time-info">3-4分钟</text>
-			<text class="description">
+			<text class="title content-item">第一关</text>
+			<text class="subtitle content-item">老板肚子里的蛔虫</text>
+			<text class="time-info content-item">3-4分钟</text>
+			<text class="description content-item">
 				在一个精致的会所包厢里，你与一位高层领导和两名同事共进晚餐。看似轻松的聚会，实际上领导在暗中观察你们，准备决定谁将参与重要项目。你必须讨好领导，同时平衡同事关系，因为一个小小的失误可能改变你的未来。
 			</text>
 		</view>
-
-		<!-- Bottom Button -->
-		<view class="bottom-button">
+		<view class="continue-button-container">
 			<button class="continue-btn" @click="navigateToNextPage">继续</button>
 		</view>
 	</view>
@@ -31,15 +28,14 @@
 <script>
 	import ProgressBar from '/components/ProgressBar.vue'; // 引入组件
 	export default {
-		  components: {
-		    ProgressBar, // 注册组件
-		  },
+		components: {
+			ProgressBar, // 注册组件
+		},
 		methods: {
 			navigateToNextPage() {
 				uni.navigateTo({
 					url: '/pages/battlefield/battlefield-task'  // Replace this with the actual path to your next page
 				});
-				console.log("Clicked");
 			}
 		}
 	}
@@ -47,59 +43,33 @@
 
 <style scoped>
 	@import "./common.css";
-	.background-image {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		z-index: 1;
-		/* 背景图片在最底层 */
-	}
-
-	.overlay {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-color: rgba(46, 46, 47, 0.75);
-		z-index: 2;
-		/* 叠加层在背景图片之上 */
-	}
-
-	.container {
-		position: relative;
-		width: 100%;
-		height: 100%;
-		color: #fff;
-		/* 全局设置文字颜色为白色 */
-	}
 
 	.navbar {
 		display: flex;
-		justify-content: space-between;
+		flex-direction: row;
+		justify-content: center;
 		align-items: center;
-		padding: 20px;
+		padding: 20rpx;
 		position: relative;
 		z-index: 3;
+		margin-top: 80rpx;
+		margin-left: 20rpx;
 		/* 确保导航栏在叠加层之上 */
 	}
 
 	.back-button {
 		width: 24px;
 		height: 24px;
-		background: url('static/battlefield/back-icon.svg') no-repeat center;
-		background-size: contain;
 	}
 
 	.progress-bar {
 		flex: 1;
-		height: 4px;
-		background: #ccc;
-		margin: 0 10px;
 		width: 100%;
 		height: 20px;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
 	}
 
 	.content {
@@ -107,6 +77,10 @@
 		text-align: center;
 		position: relative;
 		z-index: 3;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-top: 200rpx;
 		/* 确保页面内容在叠加层之上 */
 	}
 
@@ -137,11 +111,7 @@
 		/* 具体设置白色 */
 	}
 
-	.bottom-button {
-		padding: 20px;
-		text-align: center;
-		position: relative;
-		z-index: 3;
-		/* 确保底部按钮在叠加层之上 */
+	.content-item {
+		margin-top: 30rpx;
 	}
 </style>

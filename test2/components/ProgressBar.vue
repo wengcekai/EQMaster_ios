@@ -1,5 +1,5 @@
 <template>
-  <view class="progress-bar" :class="{ active: isActive }"></view>
+  <view class="bar-item" :class="{ active: isActive }"></view>
 </template>
 
 <script>
@@ -14,14 +14,16 @@ export default {
 </script>
 
 <style scoped>
-.progress-bar {
-  width: 90%; /* 这里你可以根据需要调整宽度 */
-  height: 100%;
-  background-color: rgba(128, 128, 128, 0.5); /* 默认灰色背景 */
+.bar-item {
+  width: 40%; /* 这里你可以根据需要调整宽度 */
+  height: 5px;
+  background-color: rgba(255, 255, 255, 0.3);
+  /* 默认灰色背景 */
   border-radius: 20px;
+  margin-left: 10px;
 }
 
 .active {
-  background-color: rgba(255, 255, 255, 1); /* active状态为白色背景 */
+  background-color: #D9D9D9; /* active状态为白色背景 */
 }
 </style>
