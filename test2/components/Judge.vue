@@ -1,9 +1,12 @@
 <template>
-	<view class="feedback-container">
-		<view class="title"><text>{{ title }}</text></view>
-		<view class="wording">{{ wording }}</view>
+	<view class="feedback-container" :style="{ backgroundColor: bgColor }">
+		<text class="title" :style="{color: fontColor}">{{ title }}
+		</text>
+		<text class="wording" :style="{color: fontColor}">{{ wording }}</text>
 		<view class="button-container">
-			<button class="action-button" @tap="onContinue">继续</button>
+			<button class="action-button" :style="{
+				backgroundColor: buttonBgColor
+			}" @tap="onContinue">继续</button>
 		</view>
 	</view>
 </template>
@@ -17,13 +20,30 @@
 			},
 			wording: {
 				type: String,
+				required: true,
+				fontColor: "#fff"
+			},
+			goodJudge: {
+				type: Boolean,
 				required: true
 			}
 		},
 		methods: {
 			onContinue() {
 				// 按钮点击事件
-				this.$emit('continue');
+				console.log("emitting event");
+				this.$emit('judge', this.goodJudge);
+			}
+		},
+		computed: {
+			bgColor() {
+				return this.goodJudge ? '#E8FFC4' : '#fff2b4';
+			},
+			fontColor() {
+				return this.goodJudge ? '#315B00' : '#936A15';
+			},
+			buttonBgColor() {
+				return this.goodJudge ? '#A9E55B' : '#FFD044';
 			}
 		}
 	}
@@ -31,7 +51,6 @@
 
 <style scoped>
 	.feedback-container {
-		background-color: #E3F8C8;
 		border-radius: 12px;
 		padding: 16px;
 		box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -44,7 +63,6 @@
 	.title {
 		font-weight: 700;
 		font-size: 17px;
-		color: rgba(49, 91, 0, 1);
 		margin-bottom: 8px;
 	}
 
@@ -61,7 +79,6 @@
 	}
 
 	.action-button {
-		background-color: #A9E55B;
 		color: #3E3E3E;
 		border-radius: 50px;
 		font-size: 16px;

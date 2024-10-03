@@ -20,7 +20,8 @@
 				:wording="'哎,上次小李点的那个鱼, 咱领导可是真的卡住了,直接送医院急救! 这次你可得小心,别让领导再体验一次生死边缘了'">
 			</large-avatar-bubble>
 		</view>
-		<view class="player-action-container" :class="state === 'NpcTalk' ? 'shadowed':''">
+		<view class="player-action-container" v-if="state==='NpcTalk' || state ===''"
+			:class="state === 'NpcTalk' ? 'shadowed':''">
 			<view class="action-item" v-if="!isMiddleClicked" @click="showInput = true; focusInput = true;">
 				<image class="action-icon" src="/static/battlefield/keyboard.png"></image>
 			</view>
@@ -39,8 +40,8 @@
 				<input type="text" focus="{{focusInput}}" placeholder="请输入..." @blur="showInput = false" />
 			</view>
 		</view>
-		<view class="judge-container">
-			<judge :title="'well done'" :wording="'做的很好，考虑了大家的感受'"></judge>
+		<view class="judge-container" v-if="state==='judge'">
+			<judge :title="'well done'" :wording="'做的很好，考虑了大家的感受'" @judge="handleJudgeContinue" good-judge=true></judge>
 		</view>
 	</view>
 </template>
@@ -60,7 +61,7 @@
 		data() {
 			return {
 				someoneTalk: true,
-				state: 'NpcTalk', // 新增状态
+				state: 'judge', // 新增状态
 				chattingHistory: [],
 				talkingNpc: 0,
 				showInput: false,
@@ -104,7 +105,15 @@
 				} else {
 
 				}
-			}
+			},
+			handleJudgeContinue(goodJudge) {
+				console.log("judge continue clicked.");
+				if (goodJudge) {
+					this.state = 'NpcTalk'
+				} else {
+					this.state = 'userTalk'
+				}
+			},
 		}
 	}
 </script>

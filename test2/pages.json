@@ -1,6 +1,13 @@
 {
 	"pages": [
 		{
+			"path": "pages/battlefield/battlefield-playground",
+			"style": {
+				// "navigationBarTitleText": "Scroll Test",
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/battlefield/battlefield-intro",
 			"style": {
 				// "navigationBarTitleText": "Scroll Test",
@@ -16,13 +23,6 @@
 		},
 		{
 			"path": "pages/battlefield/battlefield-task",
-			"style": {
-				// "navigationBarTitleText": "Scroll Test",
-				"navigationStyle": "custom"
-			}
-		},
-		{
-			"path": "pages/battlefield/battlefield-playground",
 			"style": {
 				// "navigationBarTitleText": "Scroll Test",
 				"navigationStyle": "custom"
