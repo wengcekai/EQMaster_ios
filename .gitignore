@@ -1,0 +1,9 @@
+test2/unpackage/
+test2/.DS_Store
+**/.DS_Store
+test2/.DS_Store
+test2/static/.DS_Store
+test2/unpackage/cache/.app-ios/sourcemap/app-service.js.map
+test2/unpackage/dist/dev/app-ios/app-config.js
+test2/unpackage/dist/dev/app-ios/app-service.js
+test2/unpackage/dist/dev/app-ios/static/.DS_Store

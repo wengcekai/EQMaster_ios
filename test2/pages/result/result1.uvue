@@ -1,147 +1,181 @@
 <template>
   <view class="container">
+    <!-- 使用 scroll-view 实现页面滚动 -->
+    <scroll-view
+      scroll-y
+      style="height: 100%;"
+    >
+      <view class="content">
+        <!-- 模拟多段长文本 -->
+        <!-- <view class="text-block" v-for="n in 20" :key="n"> -->
+          <!-- 这是第 {{ n }} 段内容。这是一个非常长的文本段落，用于测试页面是否可以正常滚动。 -->
+        <!-- </view> -->
+		<text class="score-title-head">我的检测结果</text>
+		<!-- 背景和弧线 -->
+		<view class="background-curve"></view>
+		<!-- 添加插图 -->
+		<image class="illustration1" src="/static/img1.png" mode="widthFix"></image>
+		
+		<!-- 添加白色卡片 -->
+		<view class="card">
+		  <!-- 标题和分数显示 -->
+		  <view class="score-container">
+		    <text class="score-title">情商小白</text>
+		    <view class="score-details">
+		      <text class="score-value-large">{{ homepageData.response.eq_scores.score }}</text>
+		      <text class="score-value-small">分</text>
+		    </view>
+		    <!-- 进度条 -->
+		    <view class="progress-bar">
+		      <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.score) }"></view>
+		    </view>
+		  </view>
+		
+		  <!-- 五维雷达图 -->
+		  <canvas id="radarCanvas" class="radar-canvas" width="500" height="500"></canvas>
+		  <!-- <canvas canvas-id="radarCanvas" class="radar-canvas" style="width: 700rpx; height: 500rpx;"></canvas> -->
+		
+		  <!-- 情绪侦查力等标签 -->
+		  <view class="emotion-detection-box1">
+		    <text class="emotion-detection-title">情绪侦查力</text>
+		  </view>
+		  <view class="emotion-detection-box2">
+		    <text class="emotion-detection-title">社交得体度</text>
+		  </view>
+		  <view class="emotion-detection-box3">
+		    <text class="emotion-detection-title">情绪掌控力</text>
+		  </view>
+		  <view class="emotion-detection-box4">
+		    <text class="emotion-detection-title">沟通表达力</text>
+		  </view>
+		  <view class="emotion-detection-box5">
+		    <text class="emotion-detection-title">人际平衡力</text>
+		  </view>
+		
+		  <view class="text-box1">
+		    <text class="card-title1">问题诊断</text>
+		  </view>
+		
+		  <view class="card-content">
 
-    
-    <text class="score-title-head">我的检测结果</text>
-    <!-- 背景和弧线 -->
-    <view class="background-curve"></view>
-    <!-- 添加插图 -->
-    <image class="illustration1" src="/static/img1.png" mode="widthFix"></image>
-
-
-
-      <!-- 情绪侦查力等标签 -->
-      <view class="emotion-detection-box1">
-        <text class="emotion-detection-title">情绪侦查力</text>
+		    <!-- 插图或图标 -->
+		    <!-- <image class="emoji" src="/static/emoji.png" mode="widthFix"></image> -->
+		    <!-- 文字内容 -->
+		    <view class="card-text-container">
+		      <!-- 文字内容框和插图在同一行 -->
+		      <view class="icon-text-box">
+		        <!-- 文字内容框 -->
+		        <view class="text-box">
+		          <text class="card-title">{{ homepageData.response.eq_scores.summary }}</text>
+		        </view>
+		      </view>
+		
+		      <text class="card-description">{{ homepageData.response.eq_scores.overall_suggestion }}</text>
+		    </view>
+		  </view>
+		</view>
+		
+		<!-- 添加白色卡片1 -->
+		<view class="card1">
+		  <view class="text-box1">
+		    <text class="card-title1">提升秘诀</text>
+		  </view>
+		
+		  <view class="card-content">
+		    <!-- 插图或图标 -->
+		    <!-- <image class="emoji" src="/static/emoji.png" mode="widthFix"></image> -->
+		    <!-- 文字内容 -->
+		    <view class="card-text-container">
+		      <!-- 文字内容框和插图在同一行 -->
+		      <view class="icon-text-box">
+		        <!-- 文字内容框 -->
+		        <view class="text-box">
+		          <text class="card-title">{{ homepageData.response.eq_scores.detail_summary }}</text>
+		        </view>
+		      </view>
+		
+		      <text class="card-description">{{ homepageData.response.eq_scores.detail }}</text>
+		    </view>
+		  </view>
+		</view>
+		
+		<!-- 添加白色卡片2 -->
+		<view class="card2">
+		  <view class="text-box1">
+		    <text class="card-title1">详细报告</text>
+		  </view>
+		
+		  <!-- 维度一 -->
+		  <view class="score-container1">
+		    <text class="score-title1">情绪侦查力</text>
+		    <!-- 进度条 -->
+		    <view class="progress-bar1">
+		      <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension1_score) }"></view>
+		    </view>
+		    <text class="score-title1">{{ homepageData.response.eq_scores.dimension1_score }}%</text>
+			<text class="card-description">{{ homepageData.response.eq_scores.dimension1_detail }}</text>
+		  </view>
+		
+		  
+		
+		  <!-- 维度二 -->
+		  <view class="score-container1">
+		    <text class="score-title1">社交得体度</text>
+		    <!-- 进度条 -->
+		    <view class="progress-bar1">
+		      <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension2_score) }"></view>
+		    </view>
+		    <text class="score-title1">{{ homepageData.response.eq_scores.dimension2_score }}%</text>
+			<text class="card-description">{{ homepageData.response.eq_scores.dimension2_detail }}</text>
+		  </view>
+		
+		   <!-- <text class="card-description">{{ homepageData.response.eq_scores.dimension2_detail }}</text> -->
+		
+		  <!-- 维度三 -->
+		  <view class="score-container1">
+		    <text class="score-title1">情绪掌控力</text>
+		    <!-- 进度条 -->
+		    <view class="progress-bar1">
+		      <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension3_score) }"></view>
+		    </view>
+		    <text class="score-title1">{{ homepageData.response.eq_scores.dimension3_score }}%</text>
+			<text class="card-description">{{ homepageData.response.eq_scores.dimension3_detail }}</text>
+		  </view>
+		
+		  <!-- <text class="card-description">{{ homepageData.response.eq_scores.dimension3_detail }}</text> -->
+		
+		  <!-- 维度四 -->
+		  <view class="score-container1">
+		    <text class="score-title1">沟通表达力</text>
+		    <!-- 进度条 -->
+		    <view class="progress-bar1">
+		      <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension4_score) }"></view>
+		    </view>
+		    <text class="score-title1">{{ homepageData.response.eq_scores.dimension4_score }}%</text>
+			<text class="card-description">{{ homepageData.response.eq_scores.dimension4_detail }}</text>
+		  </view>
+		
+		  
+		
+		  <!-- 维度五 -->
+		  <view class="score-container1">
+		    <text class="score-title1">人际平衡力</text>
+		    <!-- 进度条 -->
+		    <view class="progress-bar1">
+		      <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension5_score) }"></view>
+		    </view>
+		    <text class="score-title1">{{ homepageData.response.eq_scores.dimension5_score }}%</text>
+			<text class="card-description">{{ homepageData.response.eq_scores.dimension5_detail }}</text>
+		  </view>
+		
+		  
+		</view>
+		
+		<!-- 添加蓝色按钮 -->
+		<button class="guide-button" @click="navigateToGuide">开启高情商之旅</button>
+		
       </view>
-      <view class="emotion-detection-box2">
-        <text class="emotion-detection-title">社交得体度</text>
-      </view>
-      <view class="emotion-detection-box3">
-        <text class="emotion-detection-title">情绪掌控力</text>
-      </view>
-      <view class="emotion-detection-box4">
-        <text class="emotion-detection-title">沟通表达力</text>
-      </view>
-      <view class="emotion-detection-box5">
-        <text class="emotion-detection-title">人际平衡力</text>
-      </view>
-
-      <view class="text-box1">
-        <text class="card-title1">问题诊断</text>
-      </view>
-
-      <view class="card-content">
-        <!-- 插图或图标 -->
-        <image class="emoji" src="/static/emoji.png" mode="widthFix"></image>
-        <!-- 文字内容 -->
-        <view class="card-text-container">
-          <!-- 文字内容框和插图在同一行 -->
-          <view class="icon-text-box">
-            <!-- 文字内容框 -->
-            <view class="text-box">
-              <text class="card-title">{{ homepageData.response.eq_scores.summary }}</text>
-            </view>
-          </view>
-
-          <text class="card-description">{{ homepageData.response.eq_scores.overall_suggestion }}</text>
-        </view>
-      </view>
-    </view>
-
-    <!-- 添加白色卡片1 -->
-    <view class="card1">
-      <view class="text-box1">
-        <text class="card-title1">提升秘诀</text>
-      </view>
-
-      <view class="card-content">
-        <!-- 插图或图标 -->
-        <image class="emoji" src="/static/emoji.png" mode="widthFix"></image>
-        <!-- 文字内容 -->
-        <view class="card-text-container">
-          <!-- 文字内容框和插图在同一行 -->
-          <view class="icon-text-box">
-            <!-- 文字内容框 -->
-            <view class="text-box">
-              <text class="card-title">{{ homepageData.response.eq_scores.summary }}</text>
-            </view>
-          </view>
-
-          <text class="card-description">{{ homepageData.response.eq_scores.detail }}</text>
-        </view>
-      </view>
-    </view>
-
-    <!-- 添加白色卡片2 -->
-    <view class="card2">
-      <view class="text-box1">
-        <text class="card-title1">详细报告</text>
-      </view>
-
-      <!-- 维度一 -->
-      <view class="score-container1">
-        <text class="score-title1">情绪侦查力</text>
-        <!-- 进度条 -->
-        <view class="progress-bar1">
-          <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension1_score) }"></view>
-        </view>
-        <text class="score-title1">{{ homepageData.response.eq_scores.dimension1_score }}%</text>
-      </view>
-
-      <text class="card-description">{{ homepageData.response.eq_scores.dimension1_detail }}</text>
-
-      <!-- 维度二 -->
-      <view class="score-container1">
-        <text class="score-title1">社交得体度</text>
-        <!-- 进度条 -->
-        <view class="progress-bar1">
-          <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension2_score) }"></view>
-        </view>
-        <text class="score-title1">{{ homepageData.response.eq_scores.dimension2_score }}%</text>
-      </view>
-
-      <text class="card-description">{{ homepageData.response.eq_scores.dimension2_detail }}</text>
-
-      <!-- 维度三 -->
-      <view class="score-container1">
-        <text class="score-title1">情绪掌控力</text>
-        <!-- 进度条 -->
-        <view class="progress-bar1">
-          <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension3_score) }"></view>
-        </view>
-        <text class="score-title1">{{ homepageData.response.eq_scores.dimension3_score }}%</text>
-      </view>
-
-      <text class="card-description">{{ homepageData.response.eq_scores.dimension3_detail }}</text>
-
-      <!-- 维度四 -->
-      <view class="score-container1">
-        <text class="score-title1">沟通表达力</text>
-        <!-- 进度条 -->
-        <view class="progress-bar1">
-          <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension4_score) }"></view>
-        </view>
-        <text class="score-title1">{{ homepageData.response.eq_scores.dimension4_score }}%</text>
-      </view>
-
-      <text class="card-description">{{ homepageData.response.eq_scores.dimension4_detail }}</text>
-
-      <!-- 维度五 -->
-      <view class="score-container1">
-        <text class="score-title1">人际平衡力</text>
-        <!-- 进度条 -->
-        <view class="progress-bar1">
-          <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension5_score) }"></view>
-        </view>
-        <text class="score-title1">{{ homepageData.response.eq_scores.dimension5_score }}%</text>
-      </view>
-
-      <text class="card-description">{{ homepageData.response.eq_scores.dimension5_detail }}</text>
-    </view>
-
-    <!-- 添加蓝色按钮 -->
-    <button class="guide-button" @click="navigateToGuide">开启高情商之旅</button>
+    </scroll-view>
   </view>
 </template>
 
@@ -253,79 +287,70 @@ export default {
       const percentage = (value / this.maxScore) * 100;
       return `${percentage}%`;
     },
-    drawRadar() {
-      const query = uni.createSelectorQuery().in(this);
-      query.select('#radarCanvas')
-        .fields({ node: true, size: true, context: true })
-        .exec((res) => {
-          if (!res[0]) {
-            console.error('Canvas element not found');
-            return;
-          }
-          const canvas = res[0].node;
-          const radarCtx = canvas.getContext('2d');
-          if (!radarCtx) {
-            console.error('Unable to get 2D context');
-            return;
-          }
-
-          // 设置 canvas 宽高
-          const dpr = uni.getSystemInfoSync().pixelRatio;
-          canvas.width = res[0].width * dpr;
-          canvas.height = res[0].height * dpr;
-          radarCtx.scale(dpr, dpr);
-
-          // 清除之前的绘制内容
-          radarCtx.clearRect(0, 0, res[0].width, res[0].height);
-
-          // 控制中心点和半径
-          const center = { x: res[0].width / 2, y: res[0].height / 2 };
-          const radius = Math.min(res[0].width, res[0].height) / 2 - 20;
-
-          // 数据处理
-          const data = [
-            {
-              subject: '维度1',
-              A: this.homepageData.response.eq_scores.dimension1_score || 0,
-              fullMark: 100,
-            },
-            {
-              subject: '维度2',
-              A: this.homepageData.response.eq_scores.dimension2_score || 0,
-              fullMark: 100,
-            },
-            {
-              subject: '维度3',
-              A: this.homepageData.response.eq_scores.dimension3_score || 0,
-              fullMark: 100,
-            },
-            {
-              subject: '维度4',
-              A: this.homepageData.response.eq_scores.dimension4_score || 0,
-              fullMark: 100,
-            },
-            {
-              subject: '维度5',
-              A: this.homepageData.response.eq_scores.dimension5_score || 0,
-              fullMark: 100,
-            },
-          ];
-
-          // 绘制雷达图
-          this.drawRadarChart(radarCtx, center, radius, data);
-        });
-    },
+	drawRadar() {
+	  const query = uni.createSelectorQuery().in(this);
+	  query.select('#radarCanvas')
+	    .fields({ node: true, size: true, context: true })
+	    .exec((res) => {
+	      if (!res[0]) {
+	        console.error('Canvas element not found');
+	        return;
+	      }
+	      const canvas = res[0].node;
+	      const radarCtx = canvas.getContext('2d');
+	      if (!radarCtx) {
+	        console.error('Unable to get 2D context');
+	        return;
+	      }
+	
+	      // 确保每次都清除之前的缩放，重置 canvas 状态
+	      radarCtx.resetTransform();
+	
+	      // 设置 canvas 宽高，防止重复缩放
+	      const dpr = uni.getSystemInfoSync().pixelRatio;
+	      canvas.width = res[0].width * dpr;
+	      canvas.height = res[0].height * dpr;
+	      radarCtx.scale(dpr, dpr);
+	
+	      // 清除之前的绘制内容
+	      radarCtx.clearRect(0, 0, canvas.width, canvas.height);
+	
+	      // 控制中心点和半径
+	      const center = { x: res[0].width / 2, y: res[0].height / 2 };
+	      const radius = Math.min(res[0].width, res[0].height) / 2 - 20;
+	
+	      // 检查数据有效性
+	      if (!this.homepageData.response || !this.homepageData.response.eq_scores) {
+	        console.error('Invalid homepage data');
+	        return;
+	      }
+	
+	      const data = [
+	        { subject: '维度1', A: this.homepageData.response.eq_scores.dimension1_score || 0, fullMark: 100 },
+	        { subject: '维度2', A: this.homepageData.response.eq_scores.dimension2_score || 0, fullMark: 100 },
+	        { subject: '维度3', A: this.homepageData.response.eq_scores.dimension3_score || 0, fullMark: 100 },
+	        { subject: '维度4', A: this.homepageData.response.eq_scores.dimension4_score || 0, fullMark: 100 },
+	        { subject: '维度5', A: this.homepageData.response.eq_scores.dimension5_score || 0, fullMark: 100 },
+	      ];
+	
+	      // 绘制雷达图
+	      this.drawRadarChart(radarCtx, center, radius, data);
+	    });
+	},
     drawRadarChart(ctx, center, radius, data) {
       const numSides = data.length;
       const angleSlice = (Math.PI * 2) / numSides;
-
+    
+      // 设置起始角度为 -Math.PI / 2 确保第一个点从顶部开始绘制，这样整个图就会变成水平的
+      const startAngle = -Math.PI / 2;
+    
       // 绘制网格
       ctx.strokeStyle = '#E5E5E5';
       ctx.lineWidth = 1;
       for (let i = 1; i <= 2; i++) {
         ctx.beginPath();
         for (let j = 0; j <= numSides; j++) {
-          const angle = j * angleSlice;
+          const angle = startAngle + j * angleSlice;
           const x = center.x + radius * (i / 2) * Math.cos(angle);
           const y = center.y + radius * (i / 2) * Math.sin(angle);
           if (j === 0) {
@@ -337,25 +362,25 @@ export default {
         ctx.closePath();
         ctx.stroke();
       }
-
+    
       // 绘制轴线
       for (let i = 0; i < numSides; i++) {
-        const angle = i * angleSlice;
+        const angle = startAngle + i * angleSlice;
         const x = center.x + radius * Math.cos(angle);
         const y = center.y + radius * Math.sin(angle);
-
+    
         ctx.beginPath();
         ctx.moveTo(center.x, center.y);
         ctx.lineTo(x, y);
         ctx.stroke();
       }
-
+    
       // 绘制数据区域
       ctx.beginPath();
       ctx.fillStyle = 'rgba(158, 228, 77, 0.3)';
       ctx.strokeStyle = 'rgba(158, 228, 77, 0.8)';
       for (let i = 0; i <= numSides; i++) {
-        const angle = i * angleSlice;
+        const angle = startAngle + i * angleSlice;
         const value = data[i % numSides].A / data[i % numSides].fullMark;
         const x = center.x + radius * value * Math.cos(angle);
         const y = center.y + radius * value * Math.sin(angle);
@@ -368,11 +393,11 @@ export default {
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
-
+    
       // 绘制数据点
       ctx.fillStyle = 'rgba(158, 228, 77, 0.8)';
       for (let i = 0; i < numSides; i++) {
-        const angle = i * angleSlice;
+        const angle = startAngle + i * angleSlice;
         const value = data[i].A / data[i].fullMark;
         const x = center.x + radius * value * Math.cos(angle);
         const y = center.y + radius * value * Math.sin(angle);
@@ -389,7 +414,7 @@ export default {
     getHomepageData() {
       const that = this;
       uni.request({
-        url: `https://a521-2404-f801-9000-1a-3f4b-ed6c-4079-c1bd.ngrok-free.app/get_homepage/${this.jobId}`,
+        url: `https://eqmaster.azurewebsites.net/get_homepage/${this.jobId}`,
         method: 'POST',
         success(response) {
           if (response.statusCode === 200) {
@@ -413,15 +438,25 @@ export default {
 
 <style scoped>
 .container {
-  width: 100%;
-  min-height: 100vh; /* 将 height: 100%; 修改为 min-height: 100vh; */
   position: relative;
   background-color: #2F2F38;
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   align-items: center;
+  padding-top: 100rpx;
+  width: 100%;
+  height: 100%;
   overflow-y: auto;
-  padding-top: 60rpx;
+  -webkit-overflow-scrolling: touch; /* 启用 iOS 惯性滚动 */
+}
+
+
+.content {
+  display: block; /* 避免 flex 布局干扰 */
+  flex-direction: column;
+  align-items: center;
+  /* width: 100%; */
+  /* margin-left: 20px; */
 }
 
 .background-curve {
@@ -448,7 +483,7 @@ export default {
 }
 
 .card, .card1, .card2 {
-  width: 95%;
+  width: 100%;
   background-color: #373742;
   border-radius: 20rpx;
   box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
@@ -489,7 +524,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-bottom: 10rpx;
+  margin-bottom: 80rpx;
 }
 
 .score-details {
@@ -532,7 +567,8 @@ export default {
 .radar-canvas {
   width: 700rpx;
   height: 500rpx;
-  margin: 100rpx 0;
+  margin-top: 50px ;
+  top:-50px;
   background-color: transparent;
 }
 
@@ -540,7 +576,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin-bottom: 20rpx;
+  margin-bottom: 40rpx;
 }
 
 .emoji {
@@ -645,27 +681,27 @@ export default {
 }
 
 .emotion-detection-box1 {
-  top: 320rpx;
+  top: 270rpx;
 }
 
 .emotion-detection-box2 {
-  top: 440rpx;
+  top: 400rpx;
   left: 35%;
 }
 
 .emotion-detection-box3 {
-  top: 440rpx;
+  top: 400rpx;
   right: 35%;
 }
 
 .emotion-detection-box4 {
   top: 740rpx;
-  left: 35%;
+  right: 35%;
 }
 
 .emotion-detection-box5 {
   top: 740rpx;
-  right: 35%;
+  left: 35%;
 }
 
 .emotion-detection-title {

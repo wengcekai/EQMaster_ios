@@ -1,12 +1,10 @@
 <template>
   <view class="container">
-    <!-- 闪屏 -->
     <view v-if="showSplash" class="splash-screen">
       <image class="splash-image" src="/static/启动页闪屏.png" mode="widthFix"></image>
     </view>
-    
-    <!-- 欢迎页 -->
-    <view v-else class="welcome-box">
+	
+	<view class="welcome-box">
       <!-- 添加背景图片 -->
       <image class="background-image" src="/static/landingB.png" mode="aspectFill"></image>
       
@@ -19,10 +17,12 @@
       </view>
       
       <!-- 登录已有账号文本 -->
-      <text class="login-text" @tap="goToLogin">登录已有账号</text>
+      <!-- <text class="login-text" @tap="goToLogin">登录已有账号</text> -->
+	  <text class="login-text">登录已有账号</text>
     </view>
   </view>
 </template>
+
 
 <script>
 export default {
@@ -34,21 +34,24 @@ export default {
   },
   methods: {
     startQuiz() {
-      console.log('开始体验按钮被点击');
       // 生成随机用户名
-      this.username = 'user_' + Math.floor(Math.random() * 10000);
-      console.log('生成的用户名:', this.username);
+      this.username = 'user_' + Math.floor(Math.random() * 10000);  // 生成随机用户名
       // 跳转到问题页面并传递用户名
       uni.navigateTo({
         url: `/pages/experience/experience?username=${this.username}`
       });
     },
     goToLogin() {
-      console.log('登录已有账号文本被点击');
       // 跳转到登录页面
       uni.navigateTo({
         url: '/pages/login/login'
       });
+    }
+  },
+  onLoad(options) {
+    // 获取URL传递的参数
+    if (options.username) {
+      this.username = options.username;  // 将传递过来的用户名存储起来
     }
   },
   mounted() {  // 使用 mounted 钩子
@@ -71,15 +74,8 @@ export default {
 <style scoped>
 .container {
   width: 100%;
-  height: 100vh; /* 使用视口高度确保占满整个屏幕 */
+  height: 100%;
   overflow: hidden;
-  position: relative; /* 确保子元素的绝对定位基于此容器 */
-
-  /* 适配 iOS 的安全区域 */
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
 }
 
 /* 闪屏样式 */
@@ -102,7 +98,6 @@ export default {
   object-fit: cover; /* 确保图片覆盖整个容器 */
 }
 
-/* 欢迎页样式 */
 .welcome-box {
   position: relative;
   width: 100%;
@@ -113,7 +108,6 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* 确保背景图片覆盖整个容器 */
 }
 
 .button {
@@ -153,18 +147,4 @@ export default {
   font-size: 32rpx;
   font-weight: bold;
 }
-
-/* 针对 iOS 的特定样式调整 */
-@media (ios) {
-  .button {
-    /* 示例：在 iOS 上增加按钮的阴影 */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-
-  .login-text {
-    /* 示例：在 iOS 上增加更大的点击区域 */
-    padding: 10rpx;
-  }
-}
 </style>
- 

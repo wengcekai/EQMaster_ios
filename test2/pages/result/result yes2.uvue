@@ -1,0 +1,847 @@
+<template>
+  <view class="container">
+    <view v-if="showSplash" class="splash-screen">
+      <!-- Text on the splash screen -->
+      <text class="splash-text">接下来，\n一起来看看你的职场人格类型吧！</text>
+      
+      <!-- Display two images for continuous scrolling -->
+      <image 
+        class="splash-image" 
+        src="/static/cta.png" 
+        mode="widthFix" 
+        // :style="{ left: splashImageLeft1 + 'rpx' }"
+      ></image>
+      <image 
+        class="splash-image" 
+        src="/static/cta.png" 
+        mode="widthFix" 
+        :style="{ left: splashImageLeft2 + 'rpx' }"
+      ></image>
+
+      <!-- Progress percentage -->
+      <text class="progress-text">{{ progress }}%</text>
+
+      <!-- Progress bar container -->
+      <view class="progress-bar">
+        <!-- Dynamic progress bar fill -->
+        <view class="progress-fill" :style="{ width: progress + '%' }"></view>
+      </view>
+      
+      <!-- 状态文字 -->
+      <text class="status-text">合成中...</text>
+    </view>
+
+    <!-- 主内容在 showSplash 为 false 时才渲染 -->
+    <scroll-view
+      v-else
+      scroll-y
+      style="height: 100%;"
+    >
+      <view class="content">
+        <!-- 保持原有的主内容 -->
+        <text class="score-title-head">我的检测结果</text>
+        <!-- 背景和弧线 -->
+        <view class="background-curve"></view>
+        <!-- 添加插图 -->
+        <image class="illustration1" src="/static/img1.png" mode="widthFix"></image>
+
+        <!-- 添加白色卡片 -->
+        <view class="card">
+          <!-- 标题和分数显示 -->
+          <view class="score-container">
+            <text class="score-title">情商小白</text>
+            <view class="score-details">
+              <text class="score-value-large">{{ homepageData.response.eq_scores.score }}</text>
+              <text class="score-value-small">分</text>
+            </view>
+            <!-- 进度条 -->
+            <view class="progress-bar">
+              <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.score) }"></view>
+            </view>
+          </view>
+
+          <!-- 五维雷达图 -->
+          <canvas id="radarCanvas" class="radar-canvas" width="500" height="500"></canvas>
+
+          <!-- 情绪侦查力等标签 -->
+          <!-- 保持原有的标签和布局 -->
+          <view class="emotion-detection-box1">
+            <text class="emotion-detection-title">情绪侦查力</text>
+          </view>
+          <view class="emotion-detection-box2">
+            <text class="emotion-detection-title">社交得体度</text>
+          </view>
+          <view class="emotion-detection-box3">
+            <text class="emotion-detection-title">情绪掌控力</text>
+          </view>
+          <view class="emotion-detection-box4">
+            <text class="emotion-detection-title">沟通表达力</text>
+          </view>
+          <view class="emotion-detection-box5">
+            <text class="emotion-detection-title">人际平衡力</text>
+          </view>
+
+          <view class="text-box1">
+            <text class="card-title1">问题诊断</text>
+          </view>
+
+          <view class="card-content">
+            <!-- 文字内容 -->
+            <view class="card-text-container">
+              <!-- 文字内容框和插图在同一行 -->
+              <view class="icon-text-box">
+                <!-- 文字内容框 -->
+                <view class="text-box">
+                  <text class="card-title">{{ homepageData.response.eq_scores.summary }}</text>
+                </view>
+              </view>
+
+              <text class="card-description">{{ homepageData.response.eq_scores.overall_suggestion }}</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 添加白色卡片1 -->
+        <view class="card1">
+          <view class="text-box1">
+            <text class="card-title1">提升秘诀</text>
+          </view>
+
+          <view class="card-content">
+            <!-- 文字内容 -->
+            <view class="card-text-container">
+              <!-- 文字内容框和插图在同一行 -->
+              <view class="icon-text-box">
+                <!-- 文字内容框 -->
+                <view class="text-box">
+                  <text class="card-title">{{ homepageData.response.eq_scores.detail_summary }}</text>
+                </view>
+              </view>
+
+              <text class="card-description">{{ homepageData.response.eq_scores.detail }}</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 添加白色卡片2 -->
+        <view class="card2">
+          <view class="text-box1">
+            <text class="card-title1">详细报告</text>
+          </view>
+
+          <!-- 维度一 -->
+          <view class="score-container1">
+            <text class="score-title1">情绪侦查力</text>
+            <!-- 进度条 -->
+            <view class="progress-bar1">
+              <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension1_score) }"></view>
+            </view>
+            <text class="score-title1">{{ homepageData.response.eq_scores.dimension1_score }}%</text>
+            <text class="card-description">{{ homepageData.response.eq_scores.dimension1_detail }}</text>
+          </view>
+
+          <!-- 维度二 -->
+          <view class="score-container1">
+            <text class="score-title1">社交得体度</text>
+            <!-- 进度条 -->
+            <view class="progress-bar1">
+              <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension2_score) }"></view>
+            </view>
+            <text class="score-title1">{{ homepageData.response.eq_scores.dimension2_score }}%</text>
+            <text class="card-description">{{ homepageData.response.eq_scores.dimension2_detail }}</text>
+          </view>
+
+          <!-- 维度三 -->
+          <view class="score-container1">
+            <text class="score-title1">情绪掌控力</text>
+            <!-- 进度条 -->
+            <view class="progress-bar1">
+              <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension3_score) }"></view>
+            </view>
+            <text class="score-title1">{{ homepageData.response.eq_scores.dimension3_score }}%</text>
+            <text class="card-description">{{ homepageData.response.eq_scores.dimension3_detail }}</text>
+          </view>
+
+          <!-- 维度四 -->
+          <view class="score-container1">
+            <text class="score-title1">沟通表达力</text>
+            <!-- 进度条 -->
+            <view class="progress-bar1">
+              <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension4_score) }"></view>
+            </view>
+            <text class="score-title1">{{ homepageData.response.eq_scores.dimension4_score }}%</text>
+            <text class="card-description">{{ homepageData.response.eq_scores.dimension4_detail }}</text>
+          </view>
+
+          <!-- 维度五 -->
+          <view class="score-container1">
+            <text class="score-title1">人际平衡力</text>
+            <!-- 进度条 -->
+            <view class="progress-bar1">
+              <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension5_score) }"></view>
+            </view>
+            <text class="score-title1">{{ homepageData.response.eq_scores.dimension5_score }}%</text>
+            <text class="card-description">{{ homepageData.response.eq_scores.dimension5_detail }}</text>
+          </view>
+        </view>
+
+        <!-- 添加蓝色按钮 -->
+        <button class="guide-button" @click="navigateToGuide">开启高情商之旅</button>
+      </view>
+    </scroll-view>
+  </view>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      score: 28, // 示例分数，可根据需要动态更改
+      maxScore: 100, // 假设最大分数为100
+      userId: '',
+      username: '',
+      gender: '',
+      birthday: null,
+      selectedOptions: [],
+      jobId: null,
+      num: null,
+      homepageData: {
+        response: {
+          personal_info: {
+            name: '',
+            tag: '',
+            tag_description: '',
+            job_id: ''
+          },
+          eq_scores: {
+            score: 0,
+            dimension1_score: 0,
+            dimension1_detail: '',
+            dimension2_score: 0,
+            dimension2_detail: '',
+            dimension3_score: 0,
+            dimension3_detail: '',
+            dimension4_score: 0,
+            dimension4_detail: '',
+            dimension5_score: 0,
+            dimension5_detail: '',
+            summary: '',
+            detail: '',
+            overall_suggestion: '',
+            detail_summary: ''
+          },
+          contacts: []
+        }
+      },
+      intervalId: null,
+      showSplash: true,
+      progress: 0,
+      progressInterval: null,
+      // 新增的闪屏相关数据
+      splashImageLeft1: 0,
+      splashImageLeft2: 2000,
+      imageWidth: 2000,
+      interval: null,
+    };
+  },
+  computed: {
+    formattedBirthday() {
+      if (this.birthday) {
+        const date = new Date(this.birthday.year, this.birthday.month - 1, this.birthday.day);
+        return date.toLocaleDateString();
+      }
+      return '未设置';
+    }
+  },
+  onLoad(option) {
+    console.log('Received options:', option);
+
+    // 接收上一个页面传递的数据
+    this.userId = option.userId || '';
+    this.username = decodeURIComponent(option.username || '');
+    this.gender = option.gender || '';
+    this.jobId = option.jobId || '';
+    this.num = option.num || '';
+
+    if (option.options) {
+      try {
+        this.selectedOptions = JSON.parse(decodeURIComponent(option.options));
+      } catch (e) {
+        console.error('Error parsing options:', e);
+        this.selectedOptions = [];
+      }
+    }
+
+    if (option.birthday) {
+      try {
+        this.birthday = JSON.parse(decodeURIComponent(option.birthday));
+      } catch (e) {
+        console.error('Error parsing birthday:', e);
+        this.birthday = null;
+      }
+    }
+
+    console.log('Parsed data:', {
+      userId: this.userId,
+      username: this.username,
+      gender: this.gender,
+      selectedOptions: this.selectedOptions,
+      birthday: this.birthday,
+      jobId: this.jobId,
+      num: this.num,
+    });
+
+    // 立即调用一次
+    this.getHomepageData();
+
+    // 设置定时调用
+    this.intervalId = setInterval(() => {
+      this.getHomepageData();
+    }, 50000); // 每50秒调用一次
+  },
+  onUnload() {
+    // 页面卸载时清除定时器
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+    if (this.progressInterval) {
+      clearInterval(this.progressInterval);
+    }
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
+  },
+  methods: {
+    progressWidth(value) {
+      // 计算进度条宽度百分比
+      const percentage = (value / this.maxScore) * 100;
+      return `${percentage}%`;
+    },
+    drawRadar() {
+      // 保持原有的雷达图绘制逻辑
+      const query = uni.createSelectorQuery().in(this);
+      query.select('#radarCanvas')
+        .fields({ node: true, size: true, context: true })
+        .exec((res) => {
+          if (!res[0]) {
+            console.error('Canvas element not found');
+            return;
+          }
+          const canvas = res[0].node;
+          const radarCtx = canvas.getContext('2d');
+          if (!radarCtx) {
+            console.error('Unable to get 2D context');
+            return;
+          }
+
+          // 确保每次都清除之前的缩放，重置 canvas 状态
+          radarCtx.resetTransform();
+
+          // 设置 canvas 宽高，防止重复缩放
+          const dpr = uni.getSystemInfoSync().pixelRatio;
+          canvas.width = res[0].width * dpr;
+          canvas.height = res[0].height * dpr;
+          radarCtx.scale(dpr, dpr);
+
+          // 清除之前的绘制内容
+          radarCtx.clearRect(0, 0, canvas.width, canvas.height);
+
+          // 控制中心点和半径
+          const center = { x: res[0].width / 2, y: res[0].height / 2 };
+          const radius = Math.min(res[0].width, res[0].height) / 2 - 20;
+
+          // 检查数据有效性
+          if (!this.homepageData.response || !this.homepageData.response.eq_scores) {
+            console.error('Invalid homepage data');
+            return;
+          }
+
+          const data = [
+            { subject: '维度1', A: this.homepageData.response.eq_scores.dimension1_score || 0, fullMark: 100 },
+            { subject: '维度2', A: this.homepageData.response.eq_scores.dimension2_score || 0, fullMark: 100 },
+            { subject: '维度3', A: this.homepageData.response.eq_scores.dimension3_score || 0, fullMark: 100 },
+            { subject: '维度4', A: this.homepageData.response.eq_scores.dimension4_score || 0, fullMark: 100 },
+            { subject: '维度5', A: this.homepageData.response.eq_scores.dimension5_score || 0, fullMark: 100 },
+          ];
+
+          // 绘制雷达图
+          this.drawRadarChart(radarCtx, center, radius, data);
+        });
+    },
+    drawRadarChart(ctx, center, radius, data) {
+      // 保持原有的雷达图绘制逻辑
+      const numSides = data.length;
+      const angleSlice = (Math.PI * 2) / numSides;
+
+      // 设置起始角度为 -Math.PI / 2 确保第一个点从顶部开始绘制，这样整个图就会变成水平的
+      const startAngle = -Math.PI / 2;
+
+      // 绘制网格
+      ctx.strokeStyle = '#aaa8ac';
+      ctx.lineWidth = 1;
+      for (let i = 1; i <= 2; i++) {
+        ctx.beginPath();
+        for (let j = 0; j <= numSides; j++) {
+          const angle = startAngle + j * angleSlice;
+          const x = center.x + radius * (i / 2) * Math.cos(angle);
+          const y = center.y + radius * (i / 2) * Math.sin(angle);
+          if (j === 0) {
+            ctx.moveTo(x, y);
+          } else {
+            ctx.lineTo(x, y);
+          }
+        }
+        ctx.closePath();
+        ctx.stroke();
+      }
+
+      // 绘制轴线
+      for (let i = 0; i < numSides; i++) {
+        const angle = startAngle + i * angleSlice;
+        const x = center.x + radius * Math.cos(angle);
+        const y = center.y + radius * Math.sin(angle);
+
+        ctx.beginPath();
+        ctx.moveTo(center.x, center.y);
+        ctx.lineTo(x, y);
+        ctx.stroke();
+      }
+
+      // 绘制数据区域
+      ctx.beginPath();
+      ctx.fillStyle = 'rgba(164, 163, 171, 0.3)';
+      ctx.strokeStyle = 'rgba(158, 228, 77, 0.8)';
+      ctx.lineWidth = 4; // 设置绿线（数据区域）的粗细
+
+      for (let i = 0; i <= numSides; i++) {
+        const angle = startAngle + i * angleSlice;
+        const value = data[i % numSides].A / data[i % numSides].fullMark;
+        const x = center.x + radius * value * Math.cos(angle);
+        const y = center.y + radius * value * Math.sin(angle);
+        if (i === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+      }
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // 绘制数据点
+      ctx.fillStyle = 'rgba(158, 228, 77, 0.8)';
+      for (let i = 0; i < numSides; i++) {
+        const angle = startAngle + i * angleSlice;
+        const value = data[i].A / data[i].fullMark;
+        const x = center.x + radius * value * Math.cos(angle);
+        const y = center.y + radius * value * Math.sin(angle);
+        ctx.beginPath();
+        ctx.arc(x, y, 3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    },
+    navigateToGuide() {
+      uni.navigateTo({
+        url: '/pages/dashboard/dashboard' // 根据需要更新路径
+      });
+    },
+    getHomepageData() {
+      const that = this;
+      uni.request({
+        url: `https://eqmaster.azurewebsites.net/get_homepage/${this.jobId}`,
+        method: 'POST',
+        success(response) {
+          if (response.statusCode === 200) {
+            that.homepageData = response.data;
+            console.log('Homepage data received:', that.homepageData);
+            that.$nextTick(() => {
+              that.drawRadar();
+            });
+    
+            // 当后端数据接收成功，立即结束闪屏
+            that.showSplash = false;
+            if (that.interval) {
+              clearInterval(that.interval);
+            }
+            if (that.progressInterval) {
+              clearInterval(that.progressInterval);
+            }
+          } else {
+            console.error('Failed to fetch homepage data:', response.statusCode);
+          }
+        },
+        fail(error) {
+          console.error('Error fetching homepage data:', error);
+        }
+      });
+    },
+    startProgress() {
+      // 10秒内将进度增加到100%
+      const totalDuration = 30000; // 10秒
+      const intervalDuration = totalDuration / 100; // 每次更新的间隔时间
+
+      this.progressInterval = setInterval(() => {
+        if (this.progress < 100) {
+          this.progress += 1;
+        } else {
+          clearInterval(this.progressInterval);
+        }
+      }, intervalDuration);
+    },
+    animateImage() {
+      this.interval = setInterval(() => {
+        // 更新两张图片的位置
+        this.splashImageLeft1 -= 10; // 每次移动10rpx
+        this.splashImageLeft2 -= 10;
+        
+        // 如果第一张图片完全离开屏幕，则将它的位置重置到第二张图片的后面
+        if (this.splashImageLeft1 <= -this.imageWidth) {
+          this.splashImageLeft1 = this.splashImageLeft2 + this.imageWidth;
+        }
+        
+        // 如果第二张图片完全离开屏幕，则将它的位置重置到第一张图片的后面
+        if (this.splashImageLeft2 <= -this.imageWidth) {
+          this.splashImageLeft2 = this.splashImageLeft1 + this.imageWidth;
+        }
+      }, 30); // 每30毫秒更新一次位置
+    },
+  },
+  mounted() {
+    this.startProgress(); // 开始进度条
+    this.animateImage(); // 开始图片动画
+
+    // 在设定的持续时间后隐藏闪屏（例如，10秒）
+    setTimeout(() => {
+      this.showSplash = false;
+      clearInterval(this.interval); // 停止动画
+    }, 30000);
+  },
+  beforeDestroy() {
+    // 页面销毁前清除定时器
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+    if (this.progressInterval) {
+      clearInterval(this.progressInterval);
+    }
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
+  }
+};
+</script>
+
+<style scoped>
+.container {
+  position: relative;
+  background-color: #2F2F38;
+  /* display: flex; */
+  flex-direction: column;
+  align-items: center;
+  padding-top: 100rpx;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* 启用 iOS 惯性滚动 */
+}
+
+/* Splash screen styles */
+.splash-screen {
+  position: absolute; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000000; /* 黑色背景 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* 确保splash screen在最上层 */
+}
+
+.splash-text {
+  color: #FFFFFF;
+  font-size: 40rpx;
+  text-align: left;
+  top: 20%;
+  position: absolute;
+  margin-bottom: 20rpx; /* 添加文本和图像之间的空间 */
+  line-height: 40rpx; /* 调整行高以提高可读性 */
+  white-space: pre-wrap; /* 确保文本正确换行 */
+  font-weight: bold;
+}
+
+.splash-image {
+  width: 2000rpx; /* 放大图片的宽度 */
+  height: auto; /* 保持纵横比 */
+  margin-top: 20rpx; /* 在图像上方添加一些空间 */
+  position: absolute; /* 绝对定位以便移动 */
+}
+
+
+.content {
+  display: block; /* 避免 flex 布局干扰 */
+  flex-direction: column;
+  align-items: center;
+  /* width: 100%; */
+  /* margin-left: 20px; */
+}
+
+.background-curve {
+  width: 200%;
+  height: 500rpx;
+  background-color: #2F2F38;
+  border-radius: 70%;
+  position: absolute;
+  top: -100rpx;
+  left: -300rpx;
+  transform: rotate(35deg);
+  z-index: 5;
+}
+
+.illustration1 {
+  width: 800rpx;
+  height: auto;
+  position: relative;
+  z-index: 10;
+  top: -5px;
+  left: 0px;
+  margin-top: 80rpx;
+  margin-bottom: 0rpx;
+}
+
+.card, .card1, .card2 {
+  width: 370px;
+  background-color: #373742;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 20;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60rpx 30rpx 0rpx 30rpx;
+  margin-bottom: 30rpx;
+
+}
+
+.score-title-head {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #FFFFFF;
+  margin-top: 30rpx;
+  margin-bottom: 5rpx;
+  position: relative;
+  z-index: 30;
+}
+
+.score-title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #9EE44D;
+  margin-bottom: 5rpx;
+}
+
+.score-title1 {
+  font-size: 36rpx;
+  color: #FFFFFF;
+  margin-bottom: 5rpx;
+}
+
+.score-container, .score-container1 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 80rpx;
+}
+
+.score-details {
+  display: flex;
+  align-items: baseline;
+  margin-bottom:20rpx;
+  margin-top:20rpx;
+  width: 100%;
+}
+
+.score-value-large {
+  font-size: 80rpx;
+  font-weight: bold;
+  color: #9EE44D;
+  margin-right: 5rpx;
+}
+
+.score-value-small {
+  font-size: 40rpx;
+  font-weight: normal;
+  color: #9EE44D;
+  position: absolute;
+  top: 40rpx;
+  left: 180rpx;
+}
+
+.progress-bar, .progress-bar1 {
+  width: 100%;
+  height: 10rpx;
+  background-color: #E5E5E5;
+  border-radius: 5rpx;
+  overflow: hidden;
+  margin-top: 5rpx;
+}
+
+.progress {
+  height: 100%;
+  background-color: #9EE44D;
+}
+
+.radar-canvas {
+  width: 700rpx;
+  height: 500rpx;
+  margin-top: 50px ;
+  top:-50px;
+  background-color: transparent;
+}
+
+.card-content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 40rpx;
+}
+
+.emoji {
+  width: 60rpx;
+  height: auto;
+  margin-right: 10rpx;
+}
+
+.card-text-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.icon-text-box {
+  display: flex;
+  align-items: center;
+}
+
+.text-box, .text-box1 {
+  display: inline-flex;
+  align-items: center;
+  border: 1rpx solid #373742;
+  padding: 5rpx 10rpx;
+  border-radius: 10rpx;
+  background-color: #373742;
+  box-shadow: 0 0 12rpx 0rpx rgba(0, 0, 0, 0.3);
+  margin: 10rpx;
+}
+
+.text-box1 {
+  padding: 10rpx;
+  box-shadow: none;
+  margin: 0rpx 10rpx 10rpx 10rpx;
+}
+
+.card-title {
+  font-size: 28rpx;
+  color: #252529; 
+  background-color: #EDFB8B;
+  margin-bottom: 10rpx;
+}
+
+.card-title1 {
+  font-size: 32rpx;
+  color: #FFFFFF;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.card-description {
+  font-size: 32rpx;
+  color: #FFFFFF;
+  line-height: 1.5;
+  margin-top: 10rpx;
+}
+
+.guide-button {
+  width: 90%;
+  height: 100rpx;
+  background-color: #9EE44D;
+  color: #252529;
+  font-size: 36rpx;
+  border-radius: 50rpx;
+  text-align: center;
+  line-height: 100rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.debug-info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 5px;
+  font-size: 10px;
+  z-index: 100;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.debug-info text {
+  display: block;
+  margin-bottom: 2px;
+}
+
+.emotion-detection-box1,
+.emotion-detection-box2,
+.emotion-detection-box3,
+.emotion-detection-box4,
+.emotion-detection-box5 {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+}
+
+.emotion-detection-box1 {
+  top: 300rpx;
+}
+
+.emotion-detection-box2 {
+  top: 400rpx;
+  left: 35%;
+}
+
+.emotion-detection-box3 {
+  top: 400rpx;
+  right: 35%;
+}
+
+.emotion-detection-box4 {
+  top: 740rpx;
+  right: 35%;
+}
+
+.emotion-detection-box5 {
+  top: 740rpx;
+  left: 35%;
+}
+
+.emotion-detection-title {
+  font-size: 22rpx;
+  color: #FFFFFF;
+  font-weight: bold;
+  background-color: #4A4A57;
+  padding: 10rpx 20rpx;
+  border-radius: 10rpx;
+}
+</style>

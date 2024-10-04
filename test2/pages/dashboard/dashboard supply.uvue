@@ -1,0 +1,265 @@
+<template>
+  <view class="container">
+    <scroll-view
+      scroll-y
+      style="height: 100%;"
+    >
+      <view class="content">
+        <!-- 保持原有的主内容 -->
+        <text class="score-title-head">早，Mina{{username}}！</text>
+        <!-- 添加插图 -->
+        <image class="illustration1" src="/static/usercard.png" mode="widthFix"></image>
+
+        <!-- 添加白色卡片 -->
+        <view class="card">
+          <image class="illustration3" src="/static/diamond.png" mode="widthFix"></image>
+          <text class="score-value-large">{{ Math.round(120) }}</text>
+          
+          <view class="progress-bar">
+            <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.score) }"></view>
+          </view>
+
+          <text class="card-description">你的情绪稳定能力略有欠缺，需要进一步提升。较大的情绪波动会影响你的工作效和人际关系哦。{{ homepageData.response.eq_scores.overall_suggestion }}</text>
+          <image class="illustration31" src="/static/fullbutton.png" mode="widthFix"></image>
+        </view>
+
+        <text class="card-title1">今日锦囊</text>
+        <image class="illustration32" src="/static/tip.png" mode="widthFix"></image>
+        <text class="card-title12">{{ currentMonth }}</text>
+        <text class="card-title13">{{ currentDate }}</text>
+        <text class="card-title1">我的人脉网</text>
+        <text class="card-title15">AI 战略家通过分析多维关系，帮助您建立职场联系</text>
+        
+        <!-- 人脉网图像部分 -->
+        <view class="peoplecontain">
+          <image class="illustration35" src="/static/CTA1.png" mode="widthFix" @click="showPopup = true"></image>
+        </view>
+
+        <!-- 弹窗组件 -->
+        <view v-show="showPopup" class="popup-overlay" @click.self="closePopup">
+          <view class="popup-content">
+            <text class="popup-title">创建人脉档案</text>
+            <input class="input-field" v-model="popupData.inputText" placeholder="请输入名称" />
+
+            <text class="popup-label">TA 是你的？</text>
+            <view class="button-group">
+              <button v-for="(option, index) in relations" 
+                      :key="index" 
+                      :class="{ active: popupData.relation === option }" 
+                      @click="selectRelation(option)">
+                {{ option }}
+              </button>
+            </view>
+
+            <text class="popup-label">哪些标签可以用来形容 TA？</text>
+            <view class="tags-group">
+              <button v-for="(tag, index) in tags" 
+                      :key="index" 
+                      :class="{ active: popupData.tags.includes(tag) }" 
+                      @click="toggleTag(tag)">
+                {{ tag }}
+              </button>
+            </view>
+
+            <!-- 自定义标签输入 -->
+            <input class="input-field" v-model="popupData.customTag" placeholder="自定义标签" @keyup.enter="addCustomTag"/>
+
+            <button class="create-button" @click="createProfile">创建档案</button>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</template>
+
+
+<script>
+export default {
+  data() {
+    return {
+      score: 28,
+      maxScore: 100,
+      userId: '',
+      username: '',
+      gender: '',
+      birthday: null,
+      selectedOptions: [],
+      jobId: null,
+      num: null,
+      homepageData: {
+        response: {
+          personal_info: {
+            name: '',
+            tag: '',
+            tag_description: '',
+            job_id: ''
+          },
+          eq_scores: {
+            score: 0,
+            dimension1_score: 0,
+            dimension1_detail: '',
+            dimension2_score: 0,
+            dimension2_detail: '',
+            dimension3_score: 0,
+            dimension3_detail: '',
+            dimension4_score: 0,
+            dimension4_detail: '',
+            dimension5_score: 0,
+            dimension5_detail: '',
+            summary: '',
+            detail: '',
+            overall_suggestion: '',
+            detail_summary: ''
+          },
+          contacts: []
+        }
+      },
+      intervalId: null,
+      showSplash: false,
+      progress: 0,
+      progressInterval: null,
+      isExpanded: false,
+      showPopup: false, // 控制弹窗显示
+      popupData: {
+        inputText: '',
+        relation: '',
+        tags: [],
+        customTag: '' // 自定义标签输入
+      },
+      relations: ['同事', '老板', '下属'],
+      tags: ['摸鱼高手', '时间管理大师', '潜力股', '马屁精', '靠谱伙伴'],
+    };
+  },
+  computed: {
+    formattedBirthday() {
+      if (this.birthday) {
+        const date = new Date(this.birthday.year, this.birthday.month - 1, this.birthday.day);
+        return date.toLocaleDateString();
+      }
+      return '未设置';
+    },
+    currentMonth() {
+      const options = { month: 'long' };
+      return new Intl.DateTimeFormat('zh-CN', options).format(new Date());
+    },
+    currentDate() {
+      return new Date().getDate();
+    }
+  },
+  methods: {
+    progressWidth(value) {
+      const percentage = (value / this.maxScore) * 100;
+      return `${percentage}%`;
+    },
+    selectRelation(option) {
+      this.popupData.relation = option;
+    },
+    toggleTag(tag) {
+      if (this.popupData.tags.includes(tag)) {
+        this.popupData.tags = this.popupData.tags.filter(t => t !== tag);
+      } else {
+        this.popupData.tags.push(tag);
+      }
+    },
+    addCustomTag() {
+      if (this.popupData.customTag && !this.popupData.tags.includes(this.popupData.customTag)) {
+        this.popupData.tags.push(this.popupData.customTag);
+        this.popupData.customTag = '';
+      }
+    },
+    createProfile() {
+      console.log('档案信息:', this.popupData);
+      this.showPopup = false;
+    },
+    closePopup() {
+      this.showPopup = false;
+    },
+    getHomepageData() {
+      const that = this;
+      uni.request({
+        url: `https://eqmaster.azurewebsites.net/get_homepage/${this.jobId}`,
+        method: 'POST',
+        success(response) {
+          if (response.statusCode === 200) {
+            that.homepageData = response.data;
+          } else {
+            console.error('Failed to fetch homepage data:', response.statusCode);
+          }
+        },
+        fail(error) {
+          console.error('Error fetching homepage data:', error);
+        }
+      });
+    }
+  }
+};
+</script>
+
+<style scoped>
+.container {
+  position: relative;
+  background-color: #2F2F38;
+  height: 100%;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  width: 80%;
+  max-width: 400px;
+  background-color: #3E3E4E;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  color: #fff;
+}
+
+.popup-title {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: none;
+}
+
+.button-group button,
+.tags-group button {
+  background-color: #5A5A6A;
+  border: none;
+  padding: 5px 10px;
+  margin: 5px;
+  color: white;
+  border-radius: 5px;
+}
+
+.button-group button.active,
+.tags-group button.active {
+  background-color: #9EE44D;
+}
+
+.create-button {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #9EE44D;
+  border: none;
+  border-radius: 5px;
+  color: black;
+  cursor: pointer;
+}
+</style>

@@ -114,7 +114,7 @@ export default {
     },
     getScenarioData() {
       uni.request({
-        url: 'https://eqmaster.azurewebsites.net/start_scenario', // 替换为您的后端服务地址
+        url: 'https://eqmaster.azurewebsites.net/start_scenario/${this.jobId}', // 替换为您的后端服务地址
         method: 'POST',
         success: (res) => {
           try {

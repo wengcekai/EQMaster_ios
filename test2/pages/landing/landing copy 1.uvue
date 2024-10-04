@@ -1,195 +1,264 @@
 <template>
   <view class="container">
-    <!-- 使用 scroll-view 实现页面滚动 -->
-    <scroll-view
-      scroll-y
-      style="height: 100%;"
-    >
-      <view class="content">
-        <!-- 模拟多段长文本 -->
-        <!-- <view class="text-block" v-for="n in 20" :key="n"> -->
-          <!-- 这是第 {{ n }} 段内容。这是一个非常长的文本段落，用于测试页面是否可以正常滚动。 -->
-        <!-- </view> -->
-		<text class="score-title-head">我的检测结果</text>
-		<!-- 背景和弧线 -->
-		<view class="background-curve"></view>
-		<!-- 添加插图 -->
-		<image class="illustration1" src="/static/img1.png" mode="widthFix"></image>
-		
-		<!-- 添加白色卡片 -->
-		<view class="card">
-		  <!-- 标题和分数显示 -->
-		  <view class="score-container">
-		    <text class="score-title">情商小白</text>
-		    <view class="score-details">
-		      <text class="score-value-large">{{ homepageData.response.eq_scores.score }}</text>
-		      <text class="score-value-small">分</text>
-		    </view>
-		    <!-- 进度条 -->
-		    <view class="progress-bar">
-		      <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.score) }"></view>
-		    </view>
-		  </view>
-		
-		  <!-- 五维雷达图 -->
-		  <canvas id="radarCanvas" class="radar-canvas" width="500" height="500"></canvas>
-		  <!-- <canvas canvas-id="radarCanvas" class="radar-canvas" style="width: 700rpx; height: 500rpx;"></canvas> -->
-		
-		  <!-- 情绪侦查力等标签 -->
-		  <view class="emotion-detection-box1">
-		    <text class="emotion-detection-title">情绪侦查力</text>
-		  </view>
-		  <view class="emotion-detection-box2">
-		    <text class="emotion-detection-title">社交得体度</text>
-		  </view>
-		  <view class="emotion-detection-box3">
-		    <text class="emotion-detection-title">情绪掌控力</text>
-		  </view>
-		  <view class="emotion-detection-box4">
-		    <text class="emotion-detection-title">沟通表达力</text>
-		  </view>
-		  <view class="emotion-detection-box5">
-		    <text class="emotion-detection-title">人际平衡力</text>
-		  </view>
-		
-		  <view class="text-box1">
-		    <text class="card-title1">问题诊断</text>
-		  </view>
-		
-		  <view class="card-content">
-		    <!-- 插图或图标 -->
-		    <image class="emoji" src="/static/emoji.png" mode="widthFix"></image>
-		    <!-- 文字内容 -->
-		    <view class="card-text-container">
-		      <!-- 文字内容框和插图在同一行 -->
-		      <view class="icon-text-box">
-		        <!-- 文字内容框 -->
-		        <view class="text-box">
-		          <text class="card-title">{{ homepageData.response.eq_scores.summary }}</text>
-		        </view>
-		      </view>
-		
-		      <text class="card-description">{{ homepageData.response.eq_scores.overall_suggestion }}</text>
-		    </view>
-		  </view>
-		</view>
-		
-		<!-- 添加白色卡片1 -->
-		<view class="card1">
-		  <view class="text-box1">
-		    <text class="card-title1">提升秘诀</text>
-		  </view>
-		
-		  <view class="card-content">
-		    <!-- 插图或图标 -->
-		    <image class="emoji" src="/static/emoji.png" mode="widthFix"></image>
-		    <!-- 文字内容 -->
-		    <view class="card-text-container">
-		      <!-- 文字内容框和插图在同一行 -->
-		      <view class="icon-text-box">
-		        <!-- 文字内容框 -->
-		        <view class="text-box">
-		          <text class="card-title">{{ homepageData.response.eq_scores.summary }}</text>
-		        </view>
-		      </view>
-		
-		      <text class="card-description">{{ homepageData.response.eq_scores.detail }}</text>
-		    </view>
-		  </view>
-		</view>
-		
-		<!-- 添加白色卡片2 -->
-		<view class="card2">
-		  <view class="text-box1">
-		    <text class="card-title1">详细报告</text>
-		  </view>
-		
-		  <!-- 维度一 -->
-		  <view class="score-container1">
-		    <text class="score-title1">情绪侦查力</text>
-		    <!-- 进度条 -->
-		    <view class="progress-bar1">
-		      <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension1_score) }"></view>
-		    </view>
-		    <text class="score-title1">{{ homepageData.response.eq_scores.dimension1_score }}%</text>
-		  </view>
-		
-		  <text class="card-description">{{ homepageData.response.eq_scores.dimension1_detail }}</text>
-		
-		  <!-- 维度二 -->
-		  <view class="score-container1">
-		    <text class="score-title1">社交得体度</text>
-		    <!-- 进度条 -->
-		    <view class="progress-bar1">
-		      <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension2_score) }"></view>
-		    </view>
-		    <text class="score-title1">{{ homepageData.response.eq_scores.dimension2_score }}%</text>
-		  </view>
-		
-		  <text class="card-description">{{ homepageData.response.eq_scores.dimension2_detail }}</text>
-		
-		  <!-- 维度三 -->
-		  <view class="score-container1">
-		    <text class="score-title1">情绪掌控力</text>
-		    <!-- 进度条 -->
-		    <view class="progress-bar1">
-		      <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension3_score) }"></view>
-		    </view>
-		    <text class="score-title1">{{ homepageData.response.eq_scores.dimension3_score }}%</text>
-		  </view>
-		
-		  <text class="card-description">{{ homepageData.response.eq_scores.dimension3_detail }}</text>
-		
-		  <!-- 维度四 -->
-		  <view class="score-container1">
-		    <text class="score-title1">沟通表达力</text>
-		    <!-- 进度条 -->
-		    <view class="progress-bar1">
-		      <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension4_score) }"></view>
-		    </view>
-		    <text class="score-title1">{{ homepageData.response.eq_scores.dimension4_score }}%</text>
-		  </view>
-		
-		  <text class="card-description">{{ homepageData.response.eq_scores.dimension4_detail }}</text>
-		
-		  <!-- 维度五 -->
-		  <view class="score-container1">
-		    <text class="score-title1">人际平衡力</text>
-		    <!-- 进度条 -->
-		    <view class="progress-bar1">
-		      <view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.dimension5_score) }"></view>
-		    </view>
-		    <text class="score-title1">{{ homepageData.response.eq_scores.dimension5_score }}%</text>
-		  </view>
-		
-		  <text class="card-description">{{ homepageData.response.eq_scores.dimension5_detail }}</text>
-		</view>
-		
-		<!-- 添加蓝色按钮 -->
-		<button class="guide-button" @click="navigateToGuide">开启高情商之旅</button>
-		
+    <view v-if="showSplash" class="splash-screen">
+      <!-- Text on the splash screen -->
+      <text class="splash-splash-text">接下来，\n一起来看看你的职场人格类型吧！</text>
+      
+      <!-- Display two images for continuous scrolling -->
+      <image 
+        class="splash-image" 
+        src="/static/cta.png" 
+        mode="widthFix" 
+        :style="{ left: splashImageLeft1 + 'rpx' }"
+      ></image>
+      <image 
+        class="splash-image" 
+        src="/static/cta.png" 
+        mode="widthFix" 
+        :style="{ left: splashImageLeft2 + 'rpx' }"
+      ></image>
+
+      <!-- Progress percentage -->
+      <text class="splash-progress-text">{{ progress }}%</text>
+
+      <!-- Progress bar container -->
+      <view class="splash-progress-bar">
+        <!-- Dynamic progress bar fill -->
+        <view class="splash-progress-fill" :style="{ width: progressWidth + '%' }"></view>
       </view>
-    </scroll-view>
+      
+      <!-- 状态文字 -->
+      <text class="status-text">合成中...</text>
+    </view>
+	
+	<view class="welcome-box">
+      <!-- Background image for the welcome box -->
+      <image class="background-image" src="/static/landingB.png" mode="aspectFill"></image>
+      
+      <!-- Start Experience button -->
+      <view 
+        class="button button1" 
+        @click="startQuiz"
+      >
+        <text class="button-text">开始体验</text>
+      </view>
+      
+      <!-- Login existing account text -->
+      <text class="login-text" @click="goToLogin">登录已有账号</text>
+    </view>
   </view>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      showSplash: true,       // 控制splash screen显示
+      splashImageLeft1: 0,    // 第一张图片的初始位置
+      splashImageLeft2: 2000, // 第二张图片的初始位置（在第一张图片的宽度后面）
+      imageWidth: 2000,       // 图片宽度，单位为rpx，放大到2000rpx
+      interval: null,         // 存储定时器ID
+      progress: 0,            // 进度百分比
+      progressInterval: null  // 进度条定时器ID
+    };
+  },
+  computed: {
+    progressWidth() {
+      return this.progress; // 进度条宽度百分比
+    }
+  },
+  methods: {
+    startQuiz() {
+      // 生成随机用户名
+      this.username = 'user_' + Math.floor(Math.random() * 10000); 
+      // 跳转到体验页面并传递用户名
+      uni.navigateTo({
+        url: `/pages/experience/experience?username=${this.username}`
+      });
+    },
+    goToLogin() {
+      // 跳转到登录页面
+      uni.navigateTo({
+        url: '/pages/login/login'
+      });
+    },
+    animateImage() {
+      this.interval = setInterval(() => {
+        // 更新两张图片的位置
+        this.splashImageLeft1 -= 10; // 每次移动10rpx
+        this.splashImageLeft2 -= 10;
+        
+        // 如果第一张图片完全离开屏幕，则将它的位置重置到第二张图片的后面
+        if (this.splashImageLeft1 <= -this.imageWidth) {
+          this.splashImageLeft1 = this.splashImageLeft2 + this.imageWidth;
+        }
+        
+        // 如果第二张图片完全离开屏幕，则将它的位置重置到第一张图片的后面
+        if (this.splashImageLeft2 <= -this.imageWidth) {
+          this.splashImageLeft2 = this.splashImageLeft1 + this.imageWidth;
+        }
+      }, 30); // 每30毫秒更新一次位置
+    },
+    startProgress() {
+      // 10秒内将进度增加到100%
+      const totalDuration = 10000; // 10秒
+      const intervalDuration = totalDuration / 100; // 每次更新的间隔时间
+
+      this.progressInterval = setInterval(() => {
+        if (this.progress < 100) {
+          this.progress += 1;
+        } else {
+          clearInterval(this.progressInterval);
+        }
+      }, intervalDuration);
+    }
+  },
+  mounted() {
+    console.log('Page mounted');
+    // 在设定的持续时间后隐藏splash screen（例如，10秒）
+    setTimeout(() => {
+      console.log('Hide splash screen');
+      this.showSplash = false;
+      clearInterval(this.interval); // 停止动画
+    }, 10000);
+    
+    // 开始图片动画
+    this.animateImage();
+    // 开始进度条
+    this.startProgress();
+  },
+  beforeDestroy() {
+    // 页面销毁前清除定时器
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
+    if (this.progressInterval) {
+      clearInterval(this.progressInterval);
+    }
+  }
 };
 </script>
 
-<style>
-/* 确保父级元素高度正确 */
+<style scoped>
 .container {
   width: 100%;
   height: 100%;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch; /* 启用 iOS 惯性滚动 */
+  overflow: hidden;
 }
 
-.content {
-  display: block; /* 避免 flex 布局干扰 */
+/* Splash screen styles */
+.splash-screen {
+  position: absolute; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000000; /* 黑色背景 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* 确保splash screen在最上层 */
 }
 
+.splash-text {
+  color: #FFFFFF;
+  font-size: 40rpx;
+  text-align: left;
+  top: 20%;
+  position: absolute;
+  margin-bottom: 20rpx; /* 添加文本和图像之间的空间 */
+  line-height: 40rpx; /* 调整行高以提高可读性 */
+  white-space: pre-wrap; /* 确保文本正确换行 */
+  font-weight: bold;
+}
 
+.splash-image {
+  width: 2000rpx; /* 放大图片的宽度 */
+  height: auto; /* 保持纵横比 */
+  margin-top: 20rpx; /* 在图像上方添加一些空间 */
+  position: absolute; /* 绝对定位以便移动 */
+}
+
+.splash-progress-text {
+	top:200px;
+  font-size: 40rpx;
+  color: #9EE44D;
+  font-weight: bold;
+  margin-top: 100rpx;
+}
+
+.splash-progress-bar {
+  width: 20%;
+  height: 20rpx;
+  top:200px;
+  background-color: #3d3d3d; /* 背景颜色 */
+  border-radius: 15rpx;
+  margin: 20rpx 0;
+  overflow: hidden;
+}
+
+.splash-progress-fill {
+  height: 100%;
+  background-color: #9EE44D; /* 进度条颜色 */
+  border-radius: 15rpx;
+}
+
+.status-text {
+	top:190px;
+  font-size: 40rpx;
+  color: #9EE44D;
+  margin-top: 20rpx;
+}
+
+.welcome-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.background-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.button {
+  width: 600rpx;
+  height: 80rpx;
+  border: none;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: transform 0.2s;
+  border-color: #ffffff;
+  background-color: #ffffff;
+}
+
+.button1 {
+  background-color: #9EE44D;
+  border-radius: 45rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  bottom: 265rpx;
+  transform: translateX(-50%);
+}
+
+.login-text {
+  color: #9EE44D;
+  font-size: 32rpx;
+  text-decoration: underline;
+  position: absolute;
+  bottom: 190rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+}
+
+.button-text {
+  color: #252529;
+  font-size: 32rpx;
+  font-weight: bold;
+}
 </style>

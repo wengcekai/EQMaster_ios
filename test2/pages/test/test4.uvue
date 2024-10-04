@@ -2,30 +2,40 @@
   <view class="container">
     <!-- 调试信息显示区域 -->
     <!-- <view class="debug-info"> -->
-      <!-- 如需调试信息，可取消注释以下行 -->
       <!-- <text>Scenario Data: {{ JSON.stringify(scenarioData) }}</text> -->
     <!-- </view> -->
 
+    <!-- 背景图片 -->
     <image class="background-image" src="/static/bg1.png" mode="aspectFill" />
-    <view class="room-info">
-      <text class="room-text">三楼电梯间</text>
-    </view>
-    <view class="gray-circle">
-      <image class="logo" src="/static/Vector.png" mode="aspectFit" />
-    </view>
+	
+	<image class="logo" src="/static/sign.png" mode="aspectFit" />
+	<text class="room-text">三楼电梯间</text>
+	
 
-    <image class="user-avatar" src="/static/npc2.png" mode="aspectFill" />
-    <!-- 调整用户信息模块的位置 -->
-    <view class="user-info" :style="userInfoStyle">
-      <text class="user-name">小李</text>
-    </view>
 
+    <!-- 灰色圆圈和图标 -->
+<!--    <view class="gray-circle">
+      <image class="logo" src="/static/sign.png" mode="aspectFit" />
+    </view> -->
+    
     <!-- 文字框 -->
-    <view class="text-box">
-      <text class="text-content">{{ description }}</text>
-      <view class="expand-icon" @click="navigateToTest1">▼</view>
-    </view>
+	<view class="text-box1">
+		<image class="user-avatar" src="/static/npc2.png" mode="aspectFill" />
+		<!-- 调整用户x信息模块的位置 -->
+		<text class="user-name" >小李</text>
+		<image class="logo1" src="/static/Rectangle.png" mode="aspectFill" style="width: 100px; height: auto;top: 168px;left: 150px" />
+		<!-- <image class="logo" src="/static/sign.png" mode="aspectFit" style="width: 100px; height: auto;" /> -->
 
+		<!-- <view class="user-info" >
+		  <text class="user-name">小李</text>
+		</view> -->
+		<view class="text-box">
+		  <text class="text-content">{{ description }}</text>
+		  <view class="expand-icon" @tap="navigateToTest1" style="margin-left: auto;">
+			<image class="icon-image" src="/static/icon3.png" mode="aspectFit" />
+		  </view>
+		</view>
+	</view>
   </view>
 </template>
 
@@ -103,7 +113,7 @@ export default {
     },
     getScenarioData() {
       uni.request({
-        url: `${this.baseURL}/get_current_scenario`,
+        url: `${this.baseURL}/get_current_scenario/${this.jobId}`,
         method: 'POST',
         success: (res) => {
           console.log('Scenario data:', res.data);
@@ -132,7 +142,7 @@ export default {
 .container {
   position: relative;
   width: 100%;
-  height: 100%; /* 改为100% */
+  height: 100%;
 }
 
 .background-image {
@@ -145,100 +155,111 @@ export default {
 
 .room-info {
   position: absolute;
-  top: 40px;
+  top: 80rpx;
   left: 50%;
-  margin-left: -70px; /* 替换 transform */
+  transform: translateX(-50%);
   background-color: rgba(55, 55, 66, 0.4);
-  border-radius: 20px;
-  padding: 12px 10px;
-  width: 140px;
+  border-radius: 40rpx;
+  padding: 24rpx 20rpx;
+  width: 280rpx;
   box-sizing: border-box;
 }
 
 .room-text {
-  color: #F6ECC9;
-  font-size: 16px;
-  text-align: right;
-  padding-right: 10px;
+  color: #ffffff;
+  font-size: 32rpx;
+  text-align: center;
+  /* padding-right: 20rpx; */
+  top:10.5%;
+  
 }
 
-.gray-circle {
+/* .gray-circle {
   position: absolute;
-  width: 35px;
-  height: 35px;
+  width: 70rpx;
+  height: 70rpx;
   background-color: #373742;
   border-radius: 50%;
-  top: 61px;
-  left: 130px;
+  top: 122rpx;
+  left: 260rpx;
+  transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
   align-items: center;
+} */
+
+.logo {
+  width: 300rpx; 
+  height: 300rpx;
+  position: absolute;
+  top: 11%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* 同时水平和垂直居中 */
 }
 
 .logo {
-  width: 20px;
-  height: 20px;
+  width: 300rpx; 
+  height: 300rpx;
+  position: absolute;
+  top: 11%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* 同时水平和垂直居中 */
+}
+.text-box1 {
+  position: absolute;
+  bottom: 80rpx;
+  left: 40rpx;
+  right: 40rpx;
+
+  padding-top: 50rpx;
+  padding-bottom: 50rpx;
+  padding-left: 50rpx;
+  padding-right: 50rpx;
+  z-index: 1;
+  height: 800rpx;
+
 }
 
 .text-box {
   position: absolute;
-  bottom: 100px; /* 改为相对于底部定位 */
-  left: 20px;
-  right: 20px;
+  bottom: 80rpx;
+  left: 40rpx;
+  right: 40rpx;
   background-color: rgba(55, 55, 66, 0.8);
-  border-radius: 50px;
-  padding-top: 25px;
-  padding-bottom: 15px;
-  padding-left: 25px;
-  padding-right: 25px;
-  min-height: 50px;
-  max-height: 200px;
+  border-radius: 50rpx;
+  padding-top: 50rpx;
+  padding-bottom: 50rpx;
+  padding-left: 50rpx;
+  padding-right: 50rpx;
+  z-index: 1;
+  min-height: 230rpx;
+  max-height: 230rpx;
   overflow: auto;
+  border: 6rpx solid #F2BC74; /* 示例边框颜色 */
 }
 
 .text-content {
   color: white;
-  font-size: 14px;
+  font-size: 28rpx;
   line-height: 1.4;
 }
 
 .expand-icon {
   text-align: center;
   color: white;
-  font-size: 12px;
-  margin-top: 5px;
+  font-size: 24rpx;
+  margin-top: 10rpx;
+
 }
 
-.user-info {
-  position: absolute;
-  bottom: 180px;
-  left: 50%;
-  margin-left: -65px; /* 替换 transform */
-  background-color: rgba(0, 0, 0, 0.6);
-  border-radius: 20px;
-  padding: 5px 15px;
-  display: flex;
-  align-items: center;
-  width: 130px;
-  z-index: 1; /* 确保用户信息框在文字框之上 */
+.icon-image {
+  width: 20px; /* 使图片适应容器宽度 */
+  height: 20px; /* 使图片适应容器高度 */
 }
 
-.user-avatar {
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  bottom: 185px; /* 根据需要调整位置 */
-  left: 50%;
-  margin-left: -63px; /* 替换 left 值和 transform */
-  border-radius: 50%;
-  margin-right: 10px;
-  z-index: 2;
-}
-
-.user-name {
-  color: white;
-  font-size: 16px;
-  padding: 5px 5px 5px 25px ;
+.icon-image1 {
+  width: 20px; /* 使图片适应容器宽度 */
+  height: 20px; /* 使图片适应容器高度 */
 }
 
 .debug-info {
@@ -248,8 +269,8 @@ export default {
   right: 0;
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
-  padding: 5px;
-  font-size: 10px;
+  padding: 10rpx;
+  font-size: 20rpx;
   z-index: 100;
   max-height: 50vh;
   overflow-y: auto;
@@ -257,6 +278,47 @@ export default {
 
 .debug-info text {
   display: block;
-  margin-bottom: 2px;
+  margin-bottom: 4rpx;
 }
+
+
+.user-avatar {
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  bottom: 185px; /* 根据需要调整位置 */
+  left: 90%;
+  top:51%;
+  margin-left: -63px; /* 替换 left 值和 transform */
+  border-radius: 50rpx;
+  margin-right: 10px;
+  z-index: 3;
+  border: 6rpx  #F2BC74; /* 示例边框颜色 */
+}
+
+
+.user-info {
+  position: absolute;
+  clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%); /* 创建梯形 */
+  background-color: #F2BC74;
+  left: 45%;
+  top:63%;
+  /* border-radius: 20px; */
+  padding: 0px 15px;
+  display: flex;
+  align-items: center;
+  width: 130px;
+  z-index: 2; /* 确保用户信息框在文字框之上 */
+}
+
+
+.user-name {
+	top:47%;
+  left:45%;
+  color: black;
+  font-size: 16px;
+  padding: 5px 5px 5px 25px ;
+  z-index: 3;
+}
+
 </style>
