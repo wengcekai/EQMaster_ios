@@ -1,7 +1,7 @@
 (function (vue) {
   'use strict';
 
-  const _sfc_main$q = vue.defineComponent({
+  const _sfc_main$t = vue.defineComponent({
       props: {
           gemCount: {
               type: Number,
@@ -10,9 +10,9 @@
       }
   });
 
-  const _imports_0$a = "/static/battlefield/diamond.png";
+  const _imports_2$4 = "/static/battlefield/diamond.png";
 
-  const _style_0$q = {"gem-container":{"":{"display":"flex","flexDirection":"row","justifyContent":"space-around","alignItems":"center","width":"250rpx","backgroundColor":"rgba(16,16,16,0.4)","borderRadius":"50rpx","paddingTop":10,"paddingRight":20,"paddingBottom":10,"paddingLeft":20}},"gem-icon":{"":{"width":28,"height":28,"marginRight":10}},"gem-count":{"":{"color":"#ffcc66","fontSize":24,"fontWeight":"bold"}}};
+  const _style_0$t = {"gem-container":{"":{"display":"flex","flexDirection":"row","justifyContent":"space-around","alignItems":"center","width":"250rpx","backgroundColor":"rgba(16,16,16,0.4)","borderRadius":"50rpx","paddingTop":10,"paddingRight":20,"paddingBottom":10,"paddingLeft":20}},"gem-icon":{"":{"width":28,"height":28,"marginRight":10}},"gem-count":{"":{"color":"#ffcc66","fontSize":24,"fontWeight":"bold"}}};
 
   const _export_sfc = (sfc, props) => {
     const target = sfc.__vccOpts || sfc;
@@ -22,11 +22,11 @@
     return target;
   };
 
-  function _sfc_render$p(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$s(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "gem-container" }, [
       vue.createElementVNode("image", {
         class: "gem-icon",
-        src: _imports_0$a,
+        src: _imports_2$4,
         mode: "aspectFit"
       }),
       vue.createElementVNode(
@@ -38,9 +38,9 @@
       )
     ]);
   }
-  const RewardBar = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$p], ["styles", [_style_0$q]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/components/RewardBar.vue"]]);
+  const RewardBar = /* @__PURE__ */ _export_sfc(_sfc_main$t, [["render", _sfc_render$s], ["styles", [_style_0$t]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/components/RewardBar.vue"]]);
 
-  const _sfc_main$p = vue.defineComponent({
+  const _sfc_main$s = vue.defineComponent({
       props: {
           health: {
               type: Number,
@@ -68,9 +68,9 @@
       }
   });
 
-  const _style_0$p = {"character-container":{"":{"display":"flex","flexDirection":"column","alignItems":"center"}},"blood-container":{"":{"height":20,"display":"flex","flexDirection":"column","alignItems":"center"}},"health-bar-container":{"":{"width":100,"height":10,"marginBottom":"10rpx","position":"relative","overflow":"visible"}},"health-bar-background":{"":{"width":"100%","height":"100%","backgroundColor":"rgba(0,0,0,0.3)","borderRadius":5,"position":"relative","overflow":"visible","zIndex":3}},"health-bar-foreground":{"":{"height":"100%","borderRadius":5,"position":"absolute","top":0,"left":0,"overflow":"visible","boxShadow":"0 -6px 6px -3px rgba(255, 255, 255, 0.3)"}},"health-bar-line":{"":{"position":"absolute","left":"50%","width":"2rpx","height":10,"backgroundColor":"#ffffff","zIndex":3}},"avatar-container":{"":{"display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center","height":100}},"avatar":{"":{"width":70,"height":70,"borderRadius":35,"backgroundColor":"#ffffff","objectFit":"cover","borderWidth":2,"borderStyle":"solid","borderColor":"rgba(0,0,0,0.1)"}},"character-name":{"":{"position":"absolute","bottom":8,"fontSize":16,"width":"90%","height":22,"color":"#ffffff","textAlign":"center","backgroundColor":"rgba(16,16,16,0.2)","paddingTop":2,"paddingRight":8,"paddingBottom":2,"paddingLeft":8,"borderRadius":10}}};
+  const _style_0$s = {"character-container":{"":{"display":"flex","flexDirection":"column","alignItems":"center"}},"blood-container":{"":{"height":20,"display":"flex","flexDirection":"column","alignItems":"center"}},"health-bar-container":{"":{"width":100,"height":10,"marginBottom":"10rpx","position":"relative","overflow":"visible"}},"health-bar-background":{"":{"width":"100%","height":"100%","backgroundColor":"rgba(0,0,0,0.3)","borderRadius":5,"position":"relative","overflow":"visible","zIndex":3}},"health-bar-foreground":{"":{"height":"100%","borderRadius":5,"position":"absolute","top":0,"left":0,"overflow":"visible","boxShadow":"0 -6px 6px -3px rgba(255, 255, 255, 0.3)"}},"health-bar-line":{"":{"position":"absolute","left":"50%","width":"2rpx","height":10,"backgroundColor":"#ffffff","zIndex":3}},"avatar-container":{"":{"display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center","height":100}},"avatar":{"":{"width":70,"height":70,"borderRadius":35,"backgroundColor":"#ffffff","objectFit":"cover","borderWidth":2,"borderStyle":"solid","borderColor":"rgba(0,0,0,0.1)"}},"character-name":{"":{"position":"absolute","bottom":8,"fontSize":16,"width":"90%","height":22,"color":"#ffffff","textAlign":"center","backgroundColor":"rgba(16,16,16,0.2)","paddingTop":2,"paddingRight":8,"paddingBottom":2,"paddingLeft":8,"borderRadius":10}}};
 
-  function _sfc_render$o(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$r(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "character-container" }, [
       vue.createCommentVNode(" \u8840\u6761 "),
       vue.createElementVNode("view", { class: "blood-container" }, [
@@ -106,9 +106,9 @@
       ])
     ]);
   }
-  const NpcStatus = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$o], ["styles", [_style_0$p]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/components/NpcStatus.vue"]]);
+  const NpcStatus = /* @__PURE__ */ _export_sfc(_sfc_main$s, [["render", _sfc_render$r], ["styles", [_style_0$s]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/components/NpcStatus.vue"]]);
 
-  const _sfc_main$o = vue.defineComponent({
+  const _sfc_main$r = vue.defineComponent({
       props: {
           avatar: {
               type: String,
@@ -125,11 +125,11 @@
       }
   });
 
-  const _imports_0$9 = "/static/battlefield/character_background.png";
+  const _imports_0$b = "/static/battlefield/character_background.png";
 
-  const _style_0$o = {"container":{"":{"display":"flex","flexDirection":"column","alignItems":"center","paddingTop":10,"paddingRight":10,"paddingBottom":10,"paddingLeft":10,"backgroundColor":"rgba(0,0,0,0)","borderRadius":12}},"avatar":{"":{"width":"400rpx","height":"400rpx"}},"bubble-container":{"":{"backgroundColor":"#23232a","borderRadius":10,"paddingTop":12,"paddingRight":12,"paddingBottom":12,"paddingLeft":12,"color":"#FFFFFF","borderWidth":2,"borderStyle":"solid","borderColor":"#eeaf61","overflow":"visible"}},"character-background":{"":{"paddingTop":5,"paddingRight":10,"paddingBottom":5,"paddingLeft":10,"width":"20%","height":25,"position":"absolute"}},"background-parent":{"":{"position":"absolute","top":-20,"width":"100%","height":20,"overflow":"hidden"}},"character":{"":{"color":"#000000","paddingTop":5,"paddingRight":10,"paddingBottom":5,"paddingLeft":10,"top":-25,"height":25,"position":"absolute"}},"wording":{"":{"fontSize":16,"textAlign":"left","color":"#FFFFFF"}}};
+  const _style_0$r = {"container":{"":{"display":"flex","flexDirection":"column","alignItems":"center","paddingTop":10,"paddingRight":10,"paddingBottom":10,"paddingLeft":10,"backgroundColor":"rgba(0,0,0,0)","borderRadius":12}},"avatar":{"":{"width":"400rpx","height":"400rpx"}},"bubble-container":{"":{"backgroundColor":"#23232a","borderRadius":10,"paddingTop":12,"paddingRight":12,"paddingBottom":12,"paddingLeft":12,"color":"#FFFFFF","borderWidth":2,"borderStyle":"solid","borderColor":"#eeaf61","overflow":"visible"}},"character-background":{"":{"paddingTop":5,"paddingRight":10,"paddingBottom":5,"paddingLeft":10,"width":"20%","height":25,"position":"absolute"}},"background-parent":{"":{"position":"absolute","top":-20,"width":"100%","height":20,"overflow":"hidden"}},"character":{"":{"color":"#000000","paddingTop":5,"paddingRight":10,"paddingBottom":5,"paddingLeft":10,"top":-25,"height":25,"position":"absolute"}},"wording":{"":{"fontSize":16,"textAlign":"left","color":"#FFFFFF"}}};
 
-  function _sfc_render$n(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$q(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, [
       vue.createElementVNode("image", {
         class: "avatar",
@@ -140,7 +140,7 @@
         vue.createElementVNode("view", { class: "background-parent" }, [
           vue.createElementVNode("image", {
             class: "character-background",
-            src: _imports_0$9
+            src: _imports_0$b
           })
         ]),
         vue.createElementVNode(
@@ -160,9 +160,9 @@
       ])
     ]);
   }
-  const LargeAvatarBubble = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["render", _sfc_render$n], ["styles", [_style_0$o]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/components/LargeAvatarBubble.vue"]]);
+  const LargeAvatarBubble = /* @__PURE__ */ _export_sfc(_sfc_main$r, [["render", _sfc_render$q], ["styles", [_style_0$r]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/components/LargeAvatarBubble.vue"]]);
 
-  const _sfc_main$n = vue.defineComponent({
+  const _sfc_main$q = vue.defineComponent({
       props: {
           title: {
               type: String,
@@ -198,9 +198,9 @@
       }
   });
 
-  const _style_0$n = {"feedback-container":{"":{"borderRadius":12,"paddingTop":16,"paddingRight":16,"paddingBottom":16,"paddingLeft":16,"boxShadow":"0px 4px 8px rgba(0, 0, 0, 0.1)","width":"100%","height":200,"position":"absolute","bottom":0}},"title":{"":{"fontWeight":"700","fontSize":17,"marginBottom":8}},"wording":{"":{"fontSize":16,"color":"#3E3E3E","marginBottom":16}},"button-container":{"":{"display":"flex","justifyContent":"center","marginBottom":20}},"action-button":{"":{"color":"#3E3E3E","borderRadius":50,"fontSize":16,"height":50,"width":"100%","lineHeight":"50px","textAlign":"center","borderWidth":"medium","borderStyle":"none","borderColor":"#000000"}}};
+  const _style_0$q = {"feedback-container":{"":{"borderRadius":12,"paddingTop":16,"paddingRight":16,"paddingBottom":16,"paddingLeft":16,"boxShadow":"0px 4px 8px rgba(0, 0, 0, 0.1)","width":"100%","height":200,"position":"absolute","bottom":0}},"title":{"":{"fontWeight":"700","fontSize":17,"marginBottom":8}},"wording":{"":{"fontSize":16,"color":"#3E3E3E","marginBottom":16}},"button-container":{"":{"display":"flex","justifyContent":"center","marginBottom":20}},"action-button":{"":{"color":"#3E3E3E","borderRadius":50,"fontSize":16,"height":50,"width":"100%","lineHeight":"50px","textAlign":"center","borderWidth":"medium","borderStyle":"none","borderColor":"#000000"}}};
 
-  function _sfc_render$m(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$p(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock(
       "view",
       {
@@ -248,14 +248,220 @@
       /* STYLE */
     );
   }
-  const Judge = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$m], ["styles", [_style_0$n]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/components/Judge.vue"]]);
+  const Judge = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$p], ["styles", [_style_0$q]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/components/Judge.vue"]]);
+
+  const _sfc_main$p = vue.defineComponent({
+      props: {
+          quit: {
+              type: Function,
+              required: true,
+          },
+          help: {
+              type: Function,
+              required: true,
+          },
+          hint: {
+              type: Function,
+              required: true,
+          }
+      },
+      data() {
+          return {
+              selectedCard: null,
+          };
+      },
+      methods: {
+          selectCard(card = null) {
+              uni.__log__('log', 'at components/Tipping.vue:73', "Selected card:", card);
+              this.selectedCard = card;
+          },
+          confirmSelection() {
+              if (this.selectedCard) {
+                  uni.__log__('log', 'at components/Tipping.vue:78', 'Selected card:', this.selectedCard);
+                  quit();
+                  if (this.selectedCard === "help") {
+                      help();
+                  }
+                  else {
+                      hint();
+                  }
+              }
+              else {
+                  uni.showToast({
+                      title: '请选择一张卡片',
+                      icon: 'none',
+                  });
+              }
+          }
+      },
+  });
+
+  const _imports_0$a = "/static/battlefield/quit.png";
+
+  const _imports_1$8 = "/static/battlefield/tipping-left.png";
+
+  const _imports_3$2 = "/static/battlefield/tipping-right.png";
+
+  const _style_0$p = {"quit":{"":{"width":"40rpx","height":"40rpx","position":"absolute","top":"40rpx","right":"40rpx","zIndex":2}},"container":{"":{"display":"flex","justifyContent":"center","alignItems":"center","height":"100%"}},"modal":{"":{"width":"80%","backgroundColor":"#FDEDC8","borderRadius":10,"paddingTop":20,"paddingRight":20,"paddingBottom":20,"paddingLeft":20,"boxSizing":"border-box","boxShadow":"0 4px 8px rgba(0, 0, 0, 0.1)"}},"modal-header":{"":{"textAlign":"center","marginBottom":20,"width":"100%","display":"flex","flexDirection":"row","justifyContent":"center"}},"title":{"":{"fontSize":20,"fontWeight":"bold","color":"#8c5225"}},"cards":{"":{"display":"flex","flexDirection":"row","justifyContent":"space-between","marginBottom":20,"overflow":"visible"}},"card":{"":{"width":"250rpx","height":"300rpx","position":"relative","borderRadius":10,"backgroundColor":"#ffffff","overflow":"hidden","cursor":"pointer","boxShadow":"0px 0px 3px 0px #FED397","boxSizing":"border-box","display":"flex","flexDirection":"column","justifyContent":"center"},".selected":{"boxShadow":"0 0 0 4px #F2BC74"}},"card-background":{"":{"position":"absolute","top":"20%","left":"50%","width":"50%","height":"50%","opacity":0.8,"zIndex":1}},"card-content":{"":{"display":"flex","flexDirection":"column","alignItems":"center","zIndex":1,"boxSizing":"border-box"}},"card-title":{"":{"fontSize":16,"fontWeight":"bold"}},"card-description":{"":{"fontSize":12,"color":"#67677A","width":"90%","marginTop":10,"marginRight":0,"marginBottom":10,"marginLeft":0,"paddingTop":2,"paddingRight":2,"paddingBottom":2,"paddingLeft":2}},"card-cost":{"":{"fontSize":14,"color":"#ff9900","display":"flex","flexDirection":"row","justifyContent":"center","alignItems":"center"}},"confirm-btn":{"":{"backgroundColor":"#F2BC74","color":"#ffffff","textAlign":"center","paddingTop":10,"paddingRight":10,"paddingBottom":10,"paddingLeft":10,"borderRadius":20,"display":"flex","flexDirection":"row","justifyContent":"center"}},"not-selected":{"":{"opacity":0.5}},"diamond":{"":{"width":"35rpx","height":"35rpx","marginRight":"8rpx"}},"confirm-text":{"":{"fontWeight":"400"}}};
+
+  function _sfc_render$o(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, [
+      vue.createElementVNode("view", { class: "modal" }, [
+        vue.createElementVNode("image", {
+          class: "quit",
+          src: _imports_0$a,
+          onClick: _cache[0] || (_cache[0] = (...args) => $props.quit && $props.quit(...args))
+        }),
+        vue.createElementVNode("view", { class: "modal-header" }, [
+          vue.createElementVNode("text", { class: "title" }, "\u9009\u62E9\u9526\u56CA\u5361\u7247")
+        ]),
+        vue.createElementVNode("view", { class: "cards" }, [
+          vue.createCommentVNode(" \u5E2E\u56DE\u5361 "),
+          vue.createElementVNode(
+            "view",
+            {
+              class: vue.normalizeClass(["card", { selected: $data.selectedCard === "help" }]),
+              onClick: _cache[1] || (_cache[1] = ($event) => $options.selectCard("help"))
+            },
+            [
+              vue.createElementVNode("image", {
+                class: "card-background",
+                src: _imports_1$8,
+                mode: "scaleToFill"
+              }),
+              vue.createElementVNode("view", { class: "card-content" }, [
+                vue.createElementVNode("text", { class: "card-title" }, "\u5E2E\u56DE\u5361"),
+                vue.createElementVNode("text", { class: "card-description" }, " \u5FEB\u901F\u8C03\u6574\u4F60\u7684\u56DE\u7B54\uFF0C\u63D0\u5347\u8D28\u91CF\uFF0C\u8BA9\u5BF9\u8BDD\u66F4\u6D41\u7545\u3002 "),
+                vue.createElementVNode("view", { class: "card-cost" }, [
+                  vue.createElementVNode("image", {
+                    class: "diamond",
+                    src: _imports_2$4
+                  }),
+                  vue.createElementVNode("text", null, "60")
+                ])
+              ])
+            ],
+            2
+            /* CLASS */
+          ),
+          vue.createCommentVNode(" \u63D0\u793A\u5361 "),
+          vue.createElementVNode(
+            "view",
+            {
+              class: vue.normalizeClass(["card", { selected: $data.selectedCard === "hint" }]),
+              onClick: _cache[2] || (_cache[2] = ($event) => $options.selectCard("hint"))
+            },
+            [
+              vue.createElementVNode("image", {
+                class: "card-background",
+                src: _imports_3$2,
+                mode: "scaleToFill"
+              }),
+              vue.createElementVNode("view", { class: "card-content" }, [
+                vue.createElementVNode("text", { class: "card-title" }, "\u63D0\u793A\u5361"),
+                vue.createElementVNode("text", { class: "card-description" }, " \u63D0\u4F9B\u60C5\u7EEA\u5F15\u5BFC\u6216\u5EFA\u8BAE\uFF0C\u5E2E\u52A9\u4F60\u66F4\u597D\u5730\u7406\u89E3\u548C\u56DE\u5E94\u3002 "),
+                vue.createElementVNode("view", { class: "card-cost" }, [
+                  vue.createElementVNode("image", {
+                    class: "diamond",
+                    src: _imports_2$4
+                  }),
+                  vue.createElementVNode("text", null, "20")
+                ])
+              ])
+            ],
+            2
+            /* CLASS */
+          )
+        ]),
+        vue.createElementVNode(
+          "view",
+          {
+            class: vue.normalizeClass(["confirm-btn", { "not-selected": !$data.selectedCard }]),
+            onClick: _cache[3] || (_cache[3] = (...args) => $options.confirmSelection && $options.confirmSelection(...args))
+          },
+          [
+            vue.createElementVNode("text", { class: "confirm-text" }, "\u786E\u5B9A\u5151\u6362")
+          ],
+          2
+          /* CLASS */
+        )
+      ])
+    ]);
+  }
+  const Tipping = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$o], ["styles", [_style_0$p]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/components/Tipping.vue"]]);
+
+  const _sfc_main$o = vue.defineComponent({
+      props: {
+          tip: {
+              type: String,
+              required: true
+          }
+      }
+  });
+
+  const _imports_0$9 = "/static/battlefield/question-mark.png";
+
+  const _imports_1$7 = "/static/battlefield/tip-yellow.png";
+
+  const _style_0$o = {"tip-container":{"":{"position":"relative","width":"90%","backgroundColor":"#FDEDC8","borderRadius":10,"paddingTop":"20rpx","paddingRight":"20rpx","paddingBottom":"20rpx","paddingLeft":"20rpx","boxSizing":"border-box","boxShadow":"0 4px 8px rgba(0, 0, 0, 0.1)"}},"tip-background":{"":{"position":"absolute","bottom":0,"right":0,"width":"40%","height":"auto","opacity":0.8}},"tip-mark":{"":{"width":30,"height":30,"marginLeft":3,"zIndex":2}},"tip-content":{"":{"position":"relative","zIndex":1,"display":"flex","flexDirection":"row","justifyContent":"space-between","overflow":"visible","width":"90%"}},"tip-text":{"":{"fontSize":16,"color":"#333333","lineHeight":1.5}}};
+
+  function _sfc_render$n(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "tip-container" }, [
+      vue.createElementVNode("image", {
+        class: "tip-background",
+        src: _imports_0$9,
+        mode: "widthFix"
+      }),
+      vue.createElementVNode("view", { class: "tip-content" }, [
+        vue.createElementVNode("image", {
+          class: "tip-mark",
+          src: _imports_1$7
+        }),
+        vue.createElementVNode(
+          "text",
+          { class: "tip-text" },
+          vue.toDisplayString($props.tip),
+          1
+          /* TEXT */
+        )
+      ])
+    ]);
+  }
+  const TippingChatBox = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["render", _sfc_render$n], ["styles", [_style_0$o]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/components/TippingChatBox.vue"]]);
+
+  const _sfc_main$n = vue.defineComponent({
+      props: {
+          message: {
+              type: String,
+              required: true
+          }
+      }
+  });
+
+  const _style_0$n = {"message-container":{"":{"width":"90%","backgroundColor":"#FDEDC8","borderRadius":10,"paddingTop":"20rpx","paddingRight":"20rpx","paddingBottom":"20rpx","paddingLeft":"20rpx","boxSizing":"border-box","borderWidth":"2rpx","borderStyle":"solid","borderColor":"#8c5225"}},"message-text":{"":{"fontSize":16,"color":"#333333","lineHeight":1.5}}};
+
+  function _sfc_render$m(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "message-container" }, [
+      vue.createElementVNode(
+        "text",
+        { class: "message-text" },
+        vue.toDisplayString($props.message),
+        1
+        /* TEXT */
+      )
+    ]);
+  }
+  const SelfChatBox = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$m], ["styles", [_style_0$n]], ["__file", "/Users/taokai/codes/EQMaster_ios/test2/components/SelfChatBox.vue"]]);
 
   const _sfc_main$m = vue.defineComponent({
       components: {
           RewardBar,
           NpcStatus,
           LargeAvatarBubble,
-          Judge
+          Judge,
+          Tipping,
+          TippingChatBox,
+          SelfChatBox
       },
       data() {
           return {
@@ -290,21 +496,21 @@
               this.isMiddleClicked = true; // 按下时隐藏两侧图标
           },
           handleMiddleRelease() {
-              uni.__log__('log', 'at pages/battlefield/battlefield-playground.uvue:94', "Released");
+              uni.__log__('log', 'at pages/battlefield/battlefield-playground.uvue:109', "Released");
               this.isMiddleClicked = false; // 松开时恢复显示两侧图标
           },
           dismissNpc() {
-              uni.__log__('log', 'at pages/battlefield/battlefield-playground.uvue:98', "Dismiss npc");
+              uni.__log__('log', 'at pages/battlefield/battlefield-playground.uvue:113', "Dismiss npc");
               this.state = "";
           },
           getNextState() {
               if (this.state === "NpcTalk" && this.chattingHistory.length === 0) {
-                  uni.__log__('log', 'at pages/battlefield/battlefield-playground.uvue:103', "Dismiss npc");
+                  uni.__log__('log', 'at pages/battlefield/battlefield-playground.uvue:118', "Dismiss npc");
                   this.state = "userTalk";
               }
           },
           handleJudgeContinue(goodJudge = null) {
-              uni.__log__('log', 'at pages/battlefield/battlefield-playground.uvue:110', "judge continue clicked.");
+              uni.__log__('log', 'at pages/battlefield/battlefield-playground.uvue:125', "judge continue clicked.");
               if (goodJudge) {
                   this.state = 'NpcTalk';
               }
@@ -312,6 +518,19 @@
                   this.state = 'userTalk';
               }
           },
+          handleTippingQuit() {
+              uni.__log__('log', 'at pages/battlefield/battlefield-playground.uvue:133', "Clicked quit tipping");
+              this.state = 'userTalk'; // 改变状态
+          },
+          help() {
+              uni.__log__('log', 'at pages/battlefield/battlefield-playground.uvue:137', "Choose help card");
+          },
+          hint() {
+              uni.__log__('log', 'at pages/battlefield/battlefield-playground.uvue:140', "Choose hint card");
+          },
+          clickHintButton() {
+              this.state = 'hint';
+          }
       }
   });
 
@@ -329,16 +548,18 @@
 
   const _imports_6 = "/static/battlefield/streamline.png";
 
-  const _style_0$m = {"continue-button-container":{"":{"width":"100%","height":50,"display":"flex","alignItems":"center","justifyContent":"center","position":"absolute","bottom":"50rpx","zIndex":3}},"background-image":{"":{"position":"absolute","top":0,"left":0,"width":"100%","height":"100%","zIndex":1}},"continue-btn":{"":{"width":"80%","backgroundColor":"#ffcc66","borderWidth":"medium","borderStyle":"none","borderColor":"#000000","borderRadius":25,"fontSize":15,"color":"#000000","zIndex":3}},"overlay":{"":{"position":"absolute","top":0,"left":0,"width":"100%","height":"100%","backgroundColor":"rgba(46,46,47,0.75)","zIndex":2}},"back-button":{"":{"width":24,"height":24,"marginLeft":"20rpx"}},"navbar":{"":{"display":"flex","flexDirection":"row","justifyContent":"space-between","alignItems":"center","paddingTop":"20rpx","paddingRight":"20rpx","paddingBottom":"20rpx","paddingLeft":"20rpx","position":"relative","zIndex":3,"marginTop":"80rpx","marginLeft":"20rpx"}},"progress-bar":{"":{"flex":1,"width":"100%","height":20,"display":"flex","flexDirection":"row","justifyContent":"center","alignItems":"center"}},"content":{"":{"paddingTop":20,"paddingRight":20,"paddingBottom":20,"paddingLeft":20,"textAlign":"center","position":"relative","zIndex":3,"display":"flex","justifyContent":"center","alignItems":"center","marginTop":"200rpx"}},"container":{"":{"position":"relative","width":"100%","height":"100%","color":"#ffffff"}},"time-info":{"":{"fontSize":16,"color":"#bbbbbb","marginBottom":20}},"description":{"":{"fontSize":16,"lineHeight":1.6,"color":"#ffffff"}},"content-item":{"":{"marginTop":"30rpx"}},"setting-group":{"":{"display":"flex","flexDirection":"row"}},"setting-item":{"":{"width":24,"marginRight":"20rpx","height":24}},"npc-group":{"":{"display":"flex","flexDirection":"row","zIndex":3,"justifyContent":"space-around","marginTop":"50rpx"}},"player-action-container":{"":{"display":"flex","flexDirection":"row","width":"100%","justifyContent":"space-around","zIndex":3,"overflow":"visible","position":"absolute","bottom":"50rpx"}},"action-icon":{"":{"width":30,"height":30}},"action-icon-middle":{"":{"width":40,"height":40}},"action-item":{"":{"width":40,"height":40,"borderRadius":20,"backgroundColor":"rgba(253,237,200,1)","display":"flex","justifyContent":"center","alignItems":"center"}},"action-item-middle":{"":{"width":50,"height":50,"borderRadius":25,"backgroundImage":"linear-gradient(180deg, rgba(253, 242, 211, 1) 0%, rgba(241, 188, 116, 1) 100%)"}},"middle-container":{"":{"width":56,"height":56,"borderRadius":28,"backgroundColor":"rgba(0,0,0,0)","borderWidth":"2rpx","borderStyle":"solid","borderColor":"rgba(253,242,211,1)","display":"flex","justifyContent":"center","alignItems":"center","boxShadow":"0px 0px 4px 0px rgba(254, 211, 151, 1)"}},"npc-talk-container":{"":{"width":"100%","zIndex":3,"backgroundColor":"rgba(0,0,0,0)"}},"shadowed":{"":{"zIndex":2}},"input-container":{"":{"position":"fixed","width":"80%","left":"10%","bottom":"200rpx","display":"flex","justifyContent":"center","paddingTop":10,"paddingRight":0,"paddingBottom":10,"paddingLeft":0,"backgroundColor":"rgba(255,255,255,0.9)"}},"keyboard-container":{"":{"width":"100%","display":"flex","flexDirection":"row","justifyContent":"center"}},"judge-container":{"":{"width":"100%","zIndex":3,"position":"absolute","height":300,"bottom":0}}};
+  const _style_0$m = {"continue-button-container":{"":{"width":"100%","height":50,"display":"flex","alignItems":"center","justifyContent":"center","position":"absolute","bottom":"50rpx","zIndex":3}},"background-image":{"":{"position":"absolute","top":0,"left":0,"width":"100%","height":"100%","zIndex":1}},"continue-btn":{"":{"width":"80%","backgroundColor":"#ffcc66","borderWidth":"medium","borderStyle":"none","borderColor":"#000000","borderRadius":25,"fontSize":15,"color":"#000000","zIndex":3}},"overlay":{"":{"position":"absolute","top":0,"left":0,"width":"100%","height":"100%","backgroundColor":"rgba(46,46,47,0.75)","zIndex":2}},"back-button":{"":{"width":24,"height":24,"marginLeft":"20rpx"}},"navbar":{"":{"display":"flex","flexDirection":"row","justifyContent":"space-between","alignItems":"center","paddingTop":"20rpx","paddingRight":"20rpx","paddingBottom":"20rpx","paddingLeft":"20rpx","position":"relative","zIndex":3,"marginTop":"80rpx","marginLeft":"20rpx"}},"progress-bar":{"":{"flex":1,"width":"100%","height":20,"display":"flex","flexDirection":"row","justifyContent":"center","alignItems":"center"}},"content":{"":{"paddingTop":20,"paddingRight":20,"paddingBottom":20,"paddingLeft":20,"textAlign":"center","position":"relative","zIndex":3,"display":"flex","justifyContent":"center","alignItems":"center","marginTop":"200rpx"}},"container":{"":{"position":"relative","width":"100%","height":"100%","color":"#ffffff"}},"time-info":{"":{"fontSize":16,"color":"#bbbbbb","marginBottom":20}},"description":{"":{"fontSize":16,"lineHeight":1.6,"color":"#ffffff"}},"content-item":{"":{"marginTop":"30rpx"}},"setting-group":{"":{"display":"flex","flexDirection":"row"}},"setting-item":{"":{"width":24,"marginRight":"20rpx","height":24}},"npc-group":{"":{"display":"flex","flexDirection":"row","zIndex":3,"justifyContent":"space-around","marginTop":"50rpx"}},"player-action-container":{"":{"display":"flex","flexDirection":"row","width":"100%","justifyContent":"space-around","zIndex":3,"overflow":"visible","position":"absolute","bottom":"50rpx"}},"action-icon":{"":{"width":30,"height":30}},"action-icon-middle":{"":{"width":40,"height":40}},"action-item":{"":{"width":40,"height":40,"borderRadius":20,"backgroundColor":"rgba(253,237,200,1)","display":"flex","justifyContent":"center","alignItems":"center"}},"action-item-middle":{"":{"width":50,"height":50,"borderRadius":25,"backgroundImage":"linear-gradient(180deg, rgba(253, 242, 211, 1) 0%, rgba(241, 188, 116, 1) 100%)"}},"middle-container":{"":{"width":56,"height":56,"borderRadius":28,"backgroundColor":"rgba(0,0,0,0)","borderWidth":"2rpx","borderStyle":"solid","borderColor":"rgba(253,242,211,1)","display":"flex","justifyContent":"center","alignItems":"center","boxShadow":"0px 0px 4px 0px rgba(254, 211, 151, 1)"}},"npc-talk-container":{"":{"width":"100%","zIndex":3,"backgroundColor":"rgba(0,0,0,0)"}},"shadowed":{"":{"zIndex":2}},"input-container":{"":{"position":"fixed","width":"80%","left":"10%","bottom":"200rpx","display":"flex","justifyContent":"center","paddingTop":10,"paddingRight":0,"paddingBottom":10,"paddingLeft":0,"backgroundColor":"rgba(255,255,255,0.9)"}},"keyboard-container":{"":{"width":"100%","display":"flex","flexDirection":"row","justifyContent":"center"}},"judge-container":{"":{"width":"100%","zIndex":3,"position":"absolute","height":300,"bottom":0}},"tipping-card":{"":{"zIndex":3}},"chat-history-container":{"":{"zIndex":3,"width":"100%","display":"flex","alignItems":"center"}}};
 
   function _sfc_render$l(_ctx, _cache, $props, $setup, $data, $options) {
     const _component_reward_bar = vue.resolveComponent("reward-bar");
     const _component_npc_status = vue.resolveComponent("npc-status");
+    const _component_tipping_chat_box = vue.resolveComponent("tipping-chat-box");
     const _component_large_avatar_bubble = vue.resolveComponent("large-avatar-bubble");
     const _component_judge = vue.resolveComponent("judge");
+    const _component_tipping = vue.resolveComponent("tipping");
     return vue.openBlock(), vue.createElementBlock("view", {
       class: "container",
-      onClick: _cache[4] || (_cache[4] = (...args) => $options.getNextState && $options.getNextState(...args))
+      onClick: _cache[5] || (_cache[5] = (...args) => $options.getNextState && $options.getNextState(...args))
     }, [
       vue.createElementVNode("image", {
         class: "background-image",
@@ -395,6 +616,9 @@
         2
         /* CLASS */
       ),
+      vue.createElementVNode("view", { class: "chat-history-container" }, [
+        vue.createVNode(_component_tipping_chat_box, { tip: "\u63D0\u793A\uFF1A\u4F60\u7684\u56DE\u590D\u5F88\u70ED\u60C5\uFF0C\u4F46\u8981\u517C\u987E\u540C\u4E8B\u548C\u8001\u677F\u3002\u53EF\u4EE5\u8BF4\uFF1A\u201C\u6211\u660E\u767D\u4F60\u8981\u6E05\u6DE1\u996E\u98DF\uFF0C\u54B1\u4EEC\u518D\u52A0\u4E2A\u8F7B\u53E3\u5473\u7684\u83DC\u5427" })
+      ]),
       $data.state === "NpcTalk" ? (vue.openBlock(), vue.createElementBlock("view", {
         key: 0,
         class: "npc-talk-container"
@@ -405,7 +629,7 @@
           wording: "\u54CE,\u4E0A\u6B21\u5C0F\u674E\u70B9\u7684\u90A3\u4E2A\u9C7C, \u54B1\u9886\u5BFC\u53EF\u662F\u771F\u7684\u5361\u4F4F\u4E86,\u76F4\u63A5\u9001\u533B\u9662\u6025\u6551! \u8FD9\u6B21\u4F60\u53EF\u5F97\u5C0F\u5FC3,\u522B\u8BA9\u9886\u5BFC\u518D\u4F53\u9A8C\u4E00\u6B21\u751F\u6B7B\u8FB9\u7F18\u4E86"
         }, null, 8, ["avatar", "character"])
       ])) : vue.createCommentVNode("v-if", true),
-      $data.state === "NpcTalk" || $data.state === "" ? (vue.openBlock(), vue.createElementBlock(
+      $data.state === "NpcTalk" || $data.state === "" || $data.state === "userTalk" ? (vue.openBlock(), vue.createElementBlock(
         "view",
         {
           key: 1,
@@ -449,7 +673,8 @@
           }, [
             vue.createElementVNode("image", {
               class: "action-icon",
-              src: _imports_6
+              src: _imports_6,
+              onClick: _cache[3] || (_cache[3] = (...args) => $options.clickHintButton && $options.clickHintButton(...args))
             })
           ])) : vue.createCommentVNode("v-if", true)
         ],
@@ -467,7 +692,7 @@
               type: "text",
               focus: "{{focusInput}}",
               placeholder: "\u8BF7\u8F93\u5165...",
-              onBlur: _cache[3] || (_cache[3] = ($event) => $data.showInput = false)
+              onBlur: _cache[4] || (_cache[4] = ($event) => $data.showInput = false)
             },
             null,
             32
@@ -483,8 +708,18 @@
           title: "well done",
           wording: "\u505A\u7684\u5F88\u597D\uFF0C\u8003\u8651\u4E86\u5927\u5BB6\u7684\u611F\u53D7",
           onJudge: $options.handleJudgeContinue,
-          "good-judge": "true"
+          "good-judge": true
         }, null, 8, ["onJudge"])
+      ])) : vue.createCommentVNode("v-if", true),
+      $data.state === "hint" ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 3,
+        class: "tipping-card"
+      }, [
+        vue.createVNode(_component_tipping, {
+          quit: $options.handleTippingQuit,
+          hint: $options.hint,
+          help: $options.help
+        }, null, 8, ["quit", "hint", "help"])
       ])) : vue.createCommentVNode("v-if", true)
     ]);
   }

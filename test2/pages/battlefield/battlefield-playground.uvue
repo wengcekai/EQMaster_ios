@@ -15,12 +15,17 @@
 				:characterName="npc.characterName"></npc-status>
 		</view>
 
+		<view class="chat-history-container">
+			<tipping-chat-box :tip="'提示：你的回复很热情，但要兼顾同事和老板。可以说：“我明白你要清淡饮食，咱们再加个轻口味的菜吧'">
+			</tipping-chat-box>
+		</view>
+
 		<view v-if="state === 'NpcTalk'" class="npc-talk-container">
 			<large-avatar-bubble :avatar="npcs[talkingNpc].avatar" :character="npcs[talkingNpc].characterName"
 				:wording="'哎,上次小李点的那个鱼, 咱领导可是真的卡住了,直接送医院急救! 这次你可得小心,别让领导再体验一次生死边缘了'">
 			</large-avatar-bubble>
 		</view>
-		<view class="player-action-container" v-if="state==='NpcTalk' || state ===''"
+		<view class="player-action-container" v-if="state==='NpcTalk' || state ==='' || state ==='userTalk'"
 			:class="state === 'NpcTalk' ? 'shadowed':''">
 			<view class="action-item" v-if="!isMiddleClicked" @click="showInput = true; focusInput = true;">
 				<image class="action-icon" src="/static/battlefield/keyboard.png"></image>
@@ -32,7 +37,7 @@
 				</view>
 			</view>
 			<view class="action-item" v-if="!isMiddleClicked">
-				<image class="action-icon" src="/static/battlefield/streamline.png"></image>
+				<image class="action-icon" src="/static/battlefield/streamline.png" @click="clickHintButton"></image>
 			</view>
 		</view>
 		<view class="keyboard-container">
@@ -41,7 +46,11 @@
 			</view>
 		</view>
 		<view class="judge-container" v-if="state==='judge'">
-			<judge :title="'well done'" :wording="'做的很好，考虑了大家的感受'" @judge="handleJudgeContinue" good-judge=true></judge>
+			<judge :title="'well done'" :wording="'做的很好，考虑了大家的感受'" @judge="handleJudgeContinue" :good-judge="true">
+			</judge>
+		</view>
+		<view class="tipping-card" v-if="state === 'hint'">
+			<tipping :quit="handleTippingQuit" :hint="hint" :help="help"></tipping>
 		</view>
 	</view>
 </template>
@@ -51,12 +60,18 @@
 	import NpcStatus from '../../components/NpcStatus.vue';
 	import LargeAvatarBubble from '../../components/LargeAvatarBubble.vue';
 	import Judge from '../../components/Judge.vue';
+	import Tipping from '../../components/Tipping.vue';
+	import TippingChatBox from '../../components/TippingChatBox.vue';
+	import SelfChatBox from '../../components/SelfChatBox.vue';
 	export default {
 		components: {
 			RewardBar,
 			NpcStatus,
 			LargeAvatarBubble,
-			Judge
+			Judge,
+			Tipping,
+			TippingChatBox,
+			SelfChatBox
 		},
 		data() {
 			return {
@@ -114,6 +129,19 @@
 					this.state = 'userTalk'
 				}
 			},
+			handleTippingQuit() {
+				console.log("Clicked quit tipping");
+				this.state = 'userTalk';  // 改变状态
+			},
+			help() {
+				console.log("Choose help card");
+			},
+			hint() {
+				console.log("Choose hint card");
+			},
+			clickHintButton() {
+				this.state = 'hint'
+			}
 		}
 	}
 </script>
@@ -291,5 +319,16 @@
 		position: absolute;
 		height: 300px;
 		bottom: 0px;
+	}
+
+	.tipping-card {
+		z-index: 3;
+	}
+
+	.chat-history-container {
+		z-index: 3;
+		width: 100%;
+		display: flex;
+		align-items: center;
 	}
 </style>
