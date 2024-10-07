@@ -1,12 +1,19 @@
 {
 	"pages": [{
+			// "path": "pages/dashboard/dashboard",
+			"path": "pages/landing/landing",
+			"style": {
+				// "navigationBarTitleText": "Scroll Test",
+				"navigationStyle": "custom"
+			}
+		}, {
 			"path": "pages/battlefield/battlefield-task",
 			"style": {
 				// "navigationBarTitleText": "Scroll Test",
 				"navigationStyle": "custom"
 			}
 		}, {
-			"path": "pages/landing/landing",
+			"path": "pages/dashboard/dashboard2",
 			"style": {
 				"navigationStyle": "custom"
 			}
@@ -74,8 +81,7 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
-		},
-		{
+		}, {
 			"path": "pages/preference/preference3",
 			"style": {
 				"navigationStyle": "custom"

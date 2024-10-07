@@ -7,6 +7,8 @@
 				<!-- 添加插图 -->
 
 				<image class="illustration1" :src="userCard" mode="widthFix"></image>
+				<!-- <image class="illustration1" src="/static/dashboard/ciwei.png" mode="widthFix"></image> -->
+
 
 				<!-- 添加白色卡片 -->
 				<view class="card">
@@ -120,7 +122,7 @@
 				<!-- <button class="guide-button" @click="navigateToGuide">开启高情商之旅</button> -->
 				<view class="card3">
 					<image class="illustration36" src="/static/Frame1.png" mode="widthFix"></image>
-					<image class="illustration37" src="/static/Frame2.png" mode="widthFix"></image>
+					<image class="illustration37" src="/static/Frame2.png" mode="widthFix" @click="navigateToDashboard2"></image>
 					<image class="illustration38" src="/static/Frame3.png" mode="widthFix"></image>
 				</view>
 
@@ -238,25 +240,26 @@
 			},
 			userCard() {
 				const scores = this.homepageData.response.eq_scores;
+				console.log('jobid:', this.jobId);
 				console.log('results for backgrounds:', scores);
 				const minScore = Math.min(scores.dimension1_score, scores.dimension2_score, scores.dimension3_score, scores.dimension4_score, scores.dimension5_score);
 
 				// 根据最低分选择图片
 				if (minScore === scores.dimension1_score) {
 					console.log("usercard src:", '水豚')
-					return '/static/dashboard/水豚.png';
+					return '/static/dashboard/shuitu.png';
 				} else if (minScore === scores.dimension2_score) {
 					console.log("usercard src:", '猴子')
-					return '/static/dashboard/猴子.png';
+					return '/static/dashboard/houzi.png';
 				} else if (minScore === scores.dimension3_score) {
 					console.log("usercard src:", '刺猬')
-					return '/static/dashboard/刺猬.png';
+					return '/static/dashboard/ciwei.png';
 				} else if (minScore === scores.dimension4_score) {
 					console.log("usercard src:", '鸵鸟')
-					return '/static/dashboard/鸵鸟.png';
+					return '/static/dashboard/tuoniao.png';
 				} else if (minScore === scores.dimension5_score) {
 					console.log("usercard src:", '狼')
-					return '/static/dashboard/狼.png';
+					return '/static/dashboard/lang.png';
 				}
 			}
 		},
@@ -266,36 +269,12 @@
 			// 接收上一个页面传递的数据
 			this.userId = option.userId || '';
 			this.username = decodeURIComponent(option.username || '');
-			this.gender = option.gender || '';
 			this.jobId = option.jobId || '';
-			this.num = option.num || '';
-
-			if (option.options) {
-				try {
-					this.selectedOptions = JSON.parse(decodeURIComponent(option.options));
-				} catch (e) {
-					console.error('Error parsing options:', e);
-					this.selectedOptions = [];
-				}
-			}
-
-			if (option.birthday) {
-				try {
-					this.birthday = JSON.parse(decodeURIComponent(option.birthday));
-				} catch (e) {
-					console.error('Error parsing birthday:', e);
-					this.birthday = null;
-				}
-			}
 
 			console.log('Parsed data:', {
 				userId: this.userId,
 				username: this.username,
-				gender: this.gender,
-				selectedOptions: this.selectedOptions,
-				birthday: this.birthday,
-				jobId: this.jobId,
-				num: this.num,
+				jobId: this.jobId
 			});
 
 			// 立即调用一次
@@ -336,13 +315,14 @@
 			},
 			getHomepageData() {
 				const that = this;
+				console.log('Fetching homepage data with jobId:', this.jobId);
 				uni.request({
 					url: `https://eqmaster.azurewebsites.net/get_homepage/${this.jobId}`,
 					method: 'POST',
 					success(response) {
 						if (response.statusCode === 200) {
 							that.homepageData = response.data;
-							// console.log('Homepage data received:', that.homepageData);
+							console.log('Homepage data received:', that.homepageData);
 							that.$nextTick(() => {
 								that.drawRadar();
 							});
@@ -439,6 +419,21 @@
 			closeNewPopup() {
 				this.showNewPopup = false;
 			},
+			// navigateToDashboard2() {
+			// 	uni.navigateTo({
+			// 		url: '/pages/dashboard/dashboard2'
+			// 	});
+			// },
+			navigateToDashboard2() {
+				console.log('Navigating to guide with data:', {
+					userId: this.userId,
+					username: this.username,
+					jobId: this.homepageData.response.personal_info.job_id
+				});
+				uni.navigateTo({
+					url: `/pages/dashboard/dashboard2?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData.response.personal_info.job_id}`
+				});
+			},
 		},
 	};
 </script>
@@ -449,20 +444,21 @@
 		background-color: #2F2F38;
 		/* display: flex; */
 		flex-direction: column;
-		align-items: center;
+		align-items: left;
 		padding-top: 100rpx;
 		width: 100%;
 		height: 100%;
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;
-		/* 启用 iOS 惯性滚动 */
 	}
 
 	.content {
-		display: block;
+		display: flex;
 		/* 避免 flex 布局干扰 */
 		flex-direction: column;
 		align-items: left;
+		/* width: 100%; */
+		margin-left: 20px;
 	}
 
 
@@ -544,8 +540,8 @@
 		width: 320rpx;
 		height: auto;
 		position: absolute;
-		top: 1200rpx;
-		left: 350rpx;
+		top: 1240rpx;
+		left: 380rpx;
 		margin-bottom: 10px;
 		z-index: 40;
 	}
@@ -617,14 +613,14 @@
 	}
 
 	.card {
-		width: 190px;
-		height: 225px;
+		width: 150px;
+		height: 210px;
 		background-color: #373742;
 		border-radius: 20rpx;
 		box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
 		position: absolute;
-		top: 58px;
-		left: 170px;
+		top: 65px;
+		left: 190px;
 		text-align: left;
 		display: flex;
 		flex-direction: column;
@@ -634,13 +630,13 @@
 	}
 
 	.card1 {
-		width: 360px;
+		width: 88%;
 		background-color: #373742;
 		border-radius: 50rpx;
 		box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
 		position: relative;
 		z-index: 20;
-		text-align: center;
+		text-align: left;
 		display: flex;
 		flex-direction: column;
 		align-items: left;
@@ -649,7 +645,7 @@
 	}
 
 	.cardjuese {
-		width: 170px;
+		width: 138px;
 		height: auto;
 		background-color: #373742;
 		border-radius: 50rpx;
@@ -664,7 +660,7 @@
 	}
 
 	.cardjuese1 {
-		width: 170px;
+		width: 138px;
 		height: 60px;
 		background-color: #373742;
 		border-radius: 50rpx;

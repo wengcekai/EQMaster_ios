@@ -1,0 +1,1320 @@
+<template>
+	<view class="container">
+		<scroll-view scroll-y style="height: 100%;">
+			<view class="content">
+				<!-- 保持原有的主内容 -->
+				<text class="score-title-head">早，{{username}}！</text>
+				<!-- 添加插图 -->
+
+				<image class="illustration1" :src="userCard" mode="widthFix"></image>
+
+				<!-- 添加白色卡片 -->
+				<view class="card">
+					<image class="illustration3" src="/static/diamond.png" mode="widthFix"></image>
+					<text class="score-value-large">{{ Math.round(120) }}</text>
+					<!-- <text class="score-value-large">{{ Math.round(homepageData.response.eq_scores.score) }}</text> -->
+
+					<view class="progress-bar">
+						<!-- <view class="progress" :style="{ width: progressWidth(42) }"></view> -->
+						<view class="progress" :style="{ width: progressWidth(homepageData.response.eq_scores.score) }">
+						</view>
+					</view>
+
+					<text class="card-description">{{ homepageData.response.eq_scores.overall_suggestion }}</text>
+					<image class="illustration31" src="/static/fullbutton.png" mode="widthFix"
+						@click="navigateToResult"></image>
+				</view>
+
+				<text class="card-title1">今日锦囊</text>
+				<image class="illustration32" src="/static/tip.png" mode="widthFix"></image>
+
+				<text class="card-title1">我的人脉网</text>
+				<text class="card-title15">AI 战略家通过分析多维关系，帮助您建立职场联系</text>
+				<!-- 添加白色卡片1 -->
+				<view class="card1">
+					<text class="card-title14">添加微信助手，获取深度职场分析！</text>
+					<image class="illustration33" src="/static/add.png" mode="widthFix" @click="openNewPopup"></image>
+					<image class="illustration34" src="/static/x.png" mode="widthFix"></image>
+				</view>
+
+				<image class="illustration35" src="/static/CTA1.png" mode="widthFix" @click="openPopup"></image>
+
+				<view class="peoplecontain">
+					<view v-for="(card, index) in roleCards" :key="index"
+						:class="['cardjuese', index % 2 === 1 ? 'lower-card' : '']">
+						<!-- <text class="card-title14">{{ card.title }}</text> -->
+						<!-- <image class="illustrationhead" src="/static/head.png" mode="widthFix"></image> -->
+						<!-- <image class="illustrationhead" src="/static/head.png" mode="widthFix"></image> -->
+
+						<view class="card-a">
+							<view class="card1inner">
+								<image class="illustrationhead" src="/static/head.png" mode="widthFix"></image>
+								<view class="card2inner">
+									<text class="usercard-title1">{{ card.title }}</text>
+									<text class="usercard-title2">设计师{{ name }}</text>
+								</view>
+							</view>
+							<view class="white-line"></view>
+							<text class="usercard-title3">同事对你印象如何？导入聊天记录截图一探究竟吧！</text>
+
+
+						</view>
+
+						<!-- 如果卡片有更多内容，可以在这里添加 -->
+					</view>
+					<!-- 添加一个空的占位卡片 -->
+					<view class="cardjuese1" style="visibility: hidden;"></view>
+				</view>
+
+
+
+
+
+
+				<view v-if="showPopup" class="popup-overlay">
+					<view class="popup-content" @click.stop>
+						<view class="popup-header">
+							<text class="popup-title">创建人脉档案</text>
+							<text class="popup-close" @click="closePopup">×</text>
+						</view>
+						<input class="popup-input" v-model="profileName" placeholder="请输入名字" />
+						<view class="popup-section">
+							<text class="popup-question">TA是你的？</text>
+						</view>
+						<view class="popup-options">
+							<text class="popup-option" :class="{ active: selectedOption === 'subordinate' }"
+								@click="selectOption('subordinate')">同事</text>
+							<text class="popup-option1" :class="{ active: selectedOption === 'supervisor' }"
+								@click="selectOption('supervisor')">老板</text>
+							<text class="popup-option2" :class="{ active: selectedOption === '下属' }"
+								@click="selectOption('下属')">下属</text>
+						</view>
+
+						<view class="popup-section">
+							<text class="popup-question">哪些标签可以用来形容TA？</text>
+							<!-- <text class="popup-tag custom-tag">自定义标签</text> -->
+						</view>
+						<view class="popup-tags">
+							<text v-for="tag in currentTags" :key="tag" class="popup-tag"
+								:class="{ active: selectedTags.includes(tag) }" @click="toggleTag(tag)">{{ tag }}</text>
+						</view>
+
+						<image v-if="!isExpanded" @click="expand" src="/static/expand.png" class="expand-image">
+						</image>
+
+
+						<!-- <button class="popup-button" @click="createProfile">创建档案</button> -->
+						<!-- Updated button with simplified disabled style -->
+						<button class="popup-button" @click="toProfilePage"
+							:style="{ opacity: canNavigateToProfile ? 1 : 0.5 }">
+							创建档案
+						</button>
+						<!-- New button -->
+						<!-- <image class="illustration39" src="/static/createperson.png" mode="widthFix" @click="openPopup"></image> -->
+					</view>
+				</view>
+
+				<!-- 添加白色卡片2 -->
+
+				<!-- 添加蓝色按钮 -->
+				<!-- <button class="guide-button" @click="navigateToGuide">开启高情商之旅</button> -->
+				<view class="card3">
+					<image class="illustration36" src="/static/Frame1.png" mode="widthFix"></image>
+					<image class="illustration37" src="/static/Frame2.png" mode="widthFix" @click="navigateToDashboard2"></image>
+					<image class="illustration38" src="/static/Frame3.png" mode="widthFix"></image>
+				</view>
+
+				<!-- New Popup -->
+				<view v-if="showNewPopup" class="popup-overlay">
+					<view class="popup-content" @click.stop>
+						<view class="popup-header">
+							<text class="popup-title"> </text>
+							<text class="popup-close" @click="closeNewPopup">×</text>
+						</view>
+						<!-- Add your new popup content here -->
+						<!-- <text>这是新弹窗的内容</text> -->
+						<image class="illustration-qr" src="/static/QRcode.jpg" mode="widthFix"></image>
+
+						<!-- Add more elements as needed -->
+					</view>
+				</view>
+
+			</view>
+		</scroll-view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				score: 28, // 示例分数，可根据需要动态改
+				maxScore: 100, // 假设最大分数为100
+				userId: '',
+				username: '',
+				gender: '',
+				birthday: null,
+				selectedOptions: [],
+				jobId: null,
+				num: null,
+				homepageData: {
+					response: {
+						personal_info: {
+							name: '',
+							tag: '',
+							tag_description: '',
+							job_id: ''
+						},
+						eq_scores: {
+							score: 0,
+							dimension1_score: 0,
+							dimension1_detail: '',
+							dimension2_score: 0,
+							dimension2_detail: '',
+							dimension3_score: 0,
+							dimension3_detail: '',
+							dimension4_score: 0,
+							dimension4_detail: '',
+							dimension5_score: 0,
+							dimension5_detail: '',
+							summary: '',
+							detail: '',
+							overall_suggestion: '',
+							detail_summary: ''
+						},
+						contacts: []
+					}
+				},
+				intervalId: null,
+				showSplash: false, // 默认不显示闪屏
+				progress: 0,
+				progressInterval: null,
+				isExpanded: false, // 默认收起状态
+				showPopup: false, // 将初始值设为 false，使弹窗在页面加载时不显示
+				selectedOption: 'subordinate', // 默认选择"同事"
+				// 添加同类型的标签表
+				colleagueTags: ['摸鱼高手', '时间管理大师', '潜力股', '马屁精', '靠谱伙伴'],
+				bossSubordinateTags: ['完美主义者', 'PUA大', '加班狂魔', '甩锅侠', '独裁者'],
+				selectedTags: [],
+				isProfileComplete: false, // New data property to track profile completion
+				profileName: '', // New data property for profile name
+				roleCards: [
+					{ title: '角色卡1' },
+					{ title: '角色卡2' },
+					{ title: '角色卡3' },
+					{ title: '角色卡4' },
+					{ title: '角色卡5' },
+					// 可以根据需要添加更多卡片
+				],
+				showNewPopup: false,
+			};
+		},
+		computed: {
+			formattedBirthday() {
+				if (this.birthday) {
+					const date = new Date(this.birthday.year, this.birthday.month - 1, this.birthday.day);
+					return date.toLocaleDateString();
+				}
+				return '未设置';
+			},
+			currentMonth() {
+				const options = { month: 'long' }; // 'long' for full month name
+				return new Intl.DateTimeFormat('zh-CN', options).format(new Date());
+			},
+			currentDate() {
+				return new Date().getDate(); // Get only the day of the month
+			},
+			currentTags() {
+				if (this.selectedOption === 'subordinate') {
+					return this.colleagueTags;
+				} else if (this.selectedOption === 'supervisor' || this.selectedOption === '下属') {
+					return this.bossSubordinateTags;
+				} else {
+					return [];
+				}
+			},
+			canNavigateToProfile() {
+				return this.profileName.trim() !== '' && this.selectedTags.length > 0;
+			},
+			userCard() {
+				const scores = this.homepageData.response.eq_scores;
+				console.log('jobid:', this.jobId);
+				console.log('results for backgrounds:', scores);
+				const minScore = Math.min(scores.dimension1_score, scores.dimension2_score, scores.dimension3_score, scores.dimension4_score, scores.dimension5_score);
+
+				// 根据最低分选择图片
+				if (minScore === scores.dimension1_score) {
+					console.log("usercard src:", '水豚')
+					return '/static/dashboard/shuitu.png';
+				} else if (minScore === scores.dimension2_score) {
+					console.log("usercard src:", '猴子')
+					return '/static/dashboard/houzi.png';
+				} else if (minScore === scores.dimension3_score) {
+					console.log("usercard src:", '刺猬')
+					return '/static/dashboard/ciwei.png';
+				} else if (minScore === scores.dimension4_score) {
+					console.log("usercard src:", '鸵鸟')
+					return '/static/dashboard/tuoniao.png';
+				} else if (minScore === scores.dimension5_score) {
+					console.log("usercard src:", '狼')
+					return '/static/dashboard/lang.png';
+				}
+			}
+		},
+		onLoad(option) {
+			console.log('Received options:', option);
+
+			// 接收上一个页面传递的数据
+			this.userId = option.userId || '';
+			this.username = decodeURIComponent(option.username || '');
+			this.jobId = option.jobId || '';
+
+			console.log('Parsed data:', {
+				userId: this.userId,
+				username: this.username,
+				jobId: this.jobId
+			});
+
+			// 立即调用一次
+			this.getHomepageData();
+
+			// 设置定时调用
+			this.intervalId = setInterval(() => {
+				this.getHomepageData();
+			}, 50000); // 每50秒调用一次
+		},
+		onUnload() {
+			// 页面卸载时清除定时器
+			if (this.intervalId) {
+				clearInterval(this.intervalId);
+			}
+			if (this.progressInterval) {
+				clearInterval(this.progressInterval);
+			}
+		},
+		methods: {
+			progressWidth(value) {
+				// 算进度条宽度百分比
+				const percentage = (value / this.maxScore) * 100;
+				// console.log('${percentage}%：', `${percentage}%`)
+				return `${percentage}%`;
+			},
+			circleLeftPosition(value) {
+				// 获取进度条实际宽度
+				const percentage1 = (value / this.maxScore) * 100;
+				const progressBarWidth = uni.getSystemInfoSync().windowWidth * 0.8; // 80%的屏幕宽度作为进度条的际宽度
+				console.log(percentage1)
+				return (percentage1 / 100) * progressBarWidth;
+			},
+			navigateToGuide() {
+				uni.navigateTo({
+					url: `/pages/dashboard/dashboard?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.jobId}` // 添加查询参数
+				});
+			},
+			getHomepageData() {
+				const that = this;
+				console.log('Fetching homepage data with jobId:', this.jobId);
+				uni.request({
+					url: `https://eqmaster.azurewebsites.net/get_homepage/${this.jobId}`,
+					method: 'POST',
+					success(response) {
+						if (response.statusCode === 200) {
+							that.homepageData = response.data;
+							console.log('Homepage data received:', that.homepageData);
+							that.$nextTick(() => {
+								that.drawRadar();
+							});
+						} else {
+							console.error('Failed to fetch homepage data:', response.statusCode);
+						}
+					},
+					fail(error) {
+						console.error('Error fetching homepage data:', error);
+					}
+				});
+			},
+			expand() {
+				this.isExpanded = true; // 只展开，不再收起
+			},
+			openPopup() {
+				this.showPopup = true;
+			},
+			closePopup() {
+				this.showPopup = false;
+			},
+			selectOption(option) {
+				this.selectedOption = option;
+				this.selectedTags = []; // 切换选项时重置已选择的标签
+			},
+			toggleTag(tag) {
+				const index = this.selectedTags.indexOf(tag);
+				if (index > -1) {
+					this.selectedTags.splice(index, 1);
+				} else {
+					this.selectedTags.push(tag);
+				}
+			},
+			createProfile() {
+				console.log('创建档案', {
+					name: this.profileName,
+					option: this.selectedOption,
+					tags: this.selectedTags
+				});
+				this.closePopup();
+			},
+			toProfilePage() {
+				if (this.canNavigateToProfile) {
+					// 准备要发送的数据
+					const requestData = {
+						personal_name: this.username,
+						name: this.profileName,
+						tag: this.selectedTags.join(','),
+						contact_relationship: this.selectedOption
+					};
+
+					// 在发送请求之前打印数据
+					console.log('Sending data to create contact profile:', requestData);
+
+					// 发送请求创建联系人档案
+					uni.request({
+						url: 'https://eqmaster.azurewebsites.net/create_contact_profile',
+						method: 'POST',
+						data: requestData,
+						success: (res) => {
+							if (res.statusCode === 200) {
+								console.log('Contact profile created successfully:', res.data);
+								// 创建成功后，导航到档案页面
+								uni.navigateTo({
+									url: `/pages/profile/profile?personal_name=${encodeURIComponent(this.username)}&name=${encodeURIComponent(this.profileName)}&jobId=${this.jobId}&relation=${encodeURIComponent(this.selectedOption)}&tags=${encodeURIComponent(JSON.stringify(this.selectedTags))}&contactId=${res.data.contact_id}`
+								});
+							} else {
+								console.error('Failed to create contact profile:', res.statusCode, res.data);
+								uni.showToast({
+									title: `创建档案失败: ${res.statusCode}`,
+									icon: 'none'
+								});
+							}
+						},
+						fail: (err) => {
+							console.error('Error creating contact profile:', err);
+							uni.showToast({
+								title: '网络错误，请稍后重试',
+								icon: 'none'
+							});
+						}
+					});
+				}
+			},
+			navigateToResult() {
+				uni.navigateTo({
+					url: `/pages/result/loading?jobId=${this.jobId}`
+				});
+			},
+			openNewPopup() {
+				this.showNewPopup = true;
+			},
+
+			closeNewPopup() {
+				this.showNewPopup = false;
+			},
+			// navigateToDashboard2() {
+			// 	uni.navigateTo({
+			// 		url: '/pages/dashboard/dashboard2'
+			// 	});
+			// },
+			navigateToDashboard2() {
+				console.log('Navigating to guide with data:', {
+					userId: this.userId,
+					username: this.username,
+					jobId: this.homepageData.response.personal_info.job_id
+				});
+				uni.navigateTo({
+					url: `/pages/dashboard/dashboard2?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData.response.personal_info.job_id}`
+				});
+			},
+		},
+	};
+</script>
+
+<style scoped>
+	.container {
+		position: relative;
+		background-color: #2F2F38;
+		/* display: flex; */
+		flex-direction: column;
+		align-items: left;
+		padding-top: 100rpx;
+		width: 100%;
+		height: 100%;
+		overflow-y: auto;
+		-webkit-overflow-scrolling: touch;
+		/* 启用 iOS 惯性滚动 */
+	}
+
+	.content {
+		display: block;
+		/* 避免 flex 布局干扰 */
+		flex-direction: column;
+		align-items: left;
+		padding: 10rpx;
+	}
+
+
+	.illustration1 {
+		width: 300rpx;
+		height: auto;
+		position: relative;
+		z-index: 10;
+		top: -5px;
+		left: 0px;
+		margin-top: 30rpx;
+		margin-bottom: 50rpx;
+	}
+
+	.illustration-qr {
+		width: 570rpx;
+		height: auto;
+		position: relative;
+		z-index: 10;
+		top: -5px;
+		left: 0px;
+		margin-top: 30rpx;
+		margin-bottom: 50rpx;
+	}
+
+	.illustration2 {
+		width: 130rpx;
+		height: auto;
+		position: absolute;
+		top: 1030rpx;
+		left: 290rpx;
+	}
+
+	.illustration3 {
+		width: 100rpx;
+		height: auto;
+		position: relative;
+		top: 0rpx;
+		left: 0rpx;
+	}
+
+	.illustration31 {
+		width: 250rpx;
+		height: auto;
+		position: absolute;
+		top: 340rpx;
+		left: 60rpx;
+		margin-top: 3px;
+	}
+
+	.illustration32 {
+		width: 690rpx;
+		height: auto;
+		position: relative;
+		top: 0rpx;
+		left: 0rpx;
+		margin-bottom: 10px;
+	}
+
+	.illustration33 {
+		width: 130rpx;
+		height: auto;
+		position: absolute;
+		top: 0rpx;
+		left: 500rpx;
+		margin-bottom: 10px;
+	}
+
+	.illustration34 {
+		width: 60rpx;
+		height: auto;
+		position: absolute;
+		top: 15rpx;
+		left: 620rpx;
+		margin-bottom: 10px;
+	}
+
+	.illustration35 {
+		width: 320rpx;
+		height: auto;
+		position: absolute;
+		top: 1200rpx;
+		left: 350rpx;
+		margin-bottom: 10px;
+		z-index: 40;
+	}
+
+	.illustration36 {
+		width: 60rpx;
+		height: auto;
+		position: absolute;
+		top: 30rpx;
+		left: 100rpx;
+	}
+
+	.illustration37 {
+		width: 60rpx;
+		height: auto;
+		position: absolute;
+		top: 30rpx;
+		left: 340rpx;
+	}
+
+	.illustration38 {
+		width: 60rpx;
+		height: auto;
+		position: absolute;
+		top: 30rpx;
+		left: 570rpx;
+	}
+
+	.illustration39 {
+		width: 300px;
+		height: auto;
+		position: absolute;
+		top: 30rpx;
+		left: 10 px;
+	}
+
+	.illustration4 {
+		width: 70rpx;
+		height: auto;
+		position: absolute;
+		margin-top: -20rpx;
+		left: 390rpx;
+	}
+
+	.illustration5 {
+		width: 150rpx;
+		height: auto;
+		position: absolute;
+		margin-top: -20rpx;
+		left: 520rpx;
+	}
+
+	.illustration6 {
+		width: 400rpx;
+		height: auto;
+		position: absolute;
+		bottom: -20rpx;
+		left: 250rpx;
+	}
+
+	.illustrationhead {
+		width: 100rpx;
+		height: auto;
+		position: relative;
+		z-index: 10;
+		left: 0px;
+		margin-top: 30rpx;
+		margin-bottom: 0rpx;
+	}
+
+	.card {
+		width: 190px;
+		height: 225px;
+		background-color: #373742;
+		border-radius: 20rpx;
+		box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
+		position: absolute;
+		top: 58px;
+		left: 170px;
+		text-align: left;
+		display: flex;
+		flex-direction: column;
+		align-items: left;
+		padding: 30rpx 30rpx 0rpx 30rpx;
+		margin-bottom: 10rpx;
+	}
+
+	.card1 {
+		width: 360px;
+		background-color: #373742;
+		border-radius: 50rpx;
+		box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
+		position: relative;
+		z-index: 20;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: left;
+		padding: 20rpx 30rpx 20rpx 30rpx;
+		margin-bottom: 30rpx;
+	}
+
+	.cardjuese {
+		width: 170px;
+		height: auto;
+		background-color: #373742;
+		border-radius: 50rpx;
+		box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
+		position: relative;
+		z-index: 20;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: left;
+		padding: 20rpx 30rpx 20rpx 30rpx;
+	}
+
+	.cardjuese1 {
+		width: 170px;
+		height: 60px;
+		background-color: #373742;
+		border-radius: 50rpx;
+		box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
+		position: relative;
+		z-index: 20;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: left;
+		padding: 20rpx 30rpx 20rpx 30rpx;
+	}
+
+	.card3 {
+		width: 100%;
+		height: 150rpx;
+		background-color: #252529;
+		color: #252529;
+		font-size: 36rpx;
+		text-align: center;
+		line-height: 100rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		/* margin-bottom: 30rpx; */
+		z-index: 1000;
+		/* 确保按钮悬浮其他内容之上 */
+		position: fixed;
+		/* 固定定位 */
+		bottom: 0px;
+		transform: translateX(-50%);
+		/* 调整水平位置以居中 */
+		left: 50%;
+		/* 水平居中 */
+	}
+
+	.peoplecontain {
+		width: 360px;
+		background-color: #2F2F38;
+		position: relative;
+		z-index: 20;
+		text-align: center;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		/* 添加这行 */
+		align-items: flex-start;
+		padding: 0rpx 0rpx 0rpx 0rpx;
+		margin-bottom: 200rpx;
+	}
+
+	.lower-card {
+		top: 70px;
+		/* 偶数卡片下移 30px */
+		margin-left: 10px;
+		margin-right: 10px;
+		margin-top: 5px;
+		margin-bottom: 5px;
+	}
+
+	.score-title-head {
+		font-size: 50rpx;
+		font-weight: bold;
+		color: #FFFFFF;
+		margin-top: 30rpx;
+		position: relative;
+		z-index: 30;
+	}
+
+	.score-title {
+		font-size: 40rpx;
+		font-weight: bold;
+		color: #9EE44D;
+		margin-bottom: 5rpx;
+	}
+
+	.score-title1 {
+		font-size: 36rpx;
+		color: #FFFFFF;
+		margin-bottom: 5rpx;
+	}
+
+	.score-title2 {
+		font-size: 30rpx;
+		color: #FFFFFF;
+		/* margin-bottom: 5rpx; */
+		left: 300px;
+		top: -23px;
+		font-weight: bold;
+	}
+
+	.score-container,
+	.score-container1 {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		margin-bottom: 80rpx;
+	}
+
+	.score-details {
+		display: flex;
+		align-items: baseline;
+		margin-bottom: 20rpx;
+		margin-top: 20rpx;
+		width: 100%;
+	}
+
+	.score-value-large {
+		font-size: 50rpx;
+		font-weight: bold;
+		color: #FFFFFF;
+		margin-left: 60rpx;
+		left: 30px;
+		top: 26px;
+		position: absolute;
+
+	}
+
+	.score-value-small {
+		font-size: 40rpx;
+		font-weight: normal;
+		color: #9EE44D;
+		position: absolute;
+		top: 40rpx;
+		left: 120rpx;
+	}
+
+	.progress-bar {
+		width: 95%;
+		height: 10rpx;
+		background-color: rgba(125, 123, 126, 0.5);
+		/* 设置透明度为50% */
+		border-radius: 25rpx;
+		overflow: hidden;
+		margin-top: 5rpx;
+		margin-bottom: 15rpx;
+	}
+
+	.status-text {
+		top: 190px;
+		font-size: 40rpx;
+		color: #9EE44D;
+		margin-top: 20rpx;
+	}
+
+	.progress-bar1 {
+		width: 85%;
+		height: 15rpx;
+		background-color: #7d7b7e;
+		border-radius: 15rpx;
+		overflow: hidden;
+		margin-top: 15rpx;
+		margin-bottom: 15rpx;
+	}
+
+	.progress {
+		height: 100%;
+		background-color: #9EE44D;
+	}
+
+	.radar-canvas {
+		width: 700rpx;
+		height: 500rpx;
+		margin-top: 50px;
+		top: -50px;
+		background-color: transparent;
+	}
+
+	.card-content {
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		margin-bottom: 40rpx;
+	}
+
+	.emoji {
+		width: 60rpx;
+		height: auto;
+		margin-right: 10rpx;
+	}
+
+	.card-text-container {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		margin-bottom: 30px;
+	}
+
+	.icon-text-box {
+		display: flex;
+		align-items: center;
+	}
+
+	.text-box,
+	.text-box1 {
+		display: inline-flex;
+		align-items: center;
+		border: 1rpx solid #373742;
+		padding: 5rpx 10rpx;
+		border-radius: 10rpx;
+		background-color: #373742;
+		box-shadow: 0 0 12rpx 0rpx rgba(0, 0, 0, 0.3);
+		/* margin: 10rpx; */
+	}
+
+	.text-box1 {
+		padding: 10rpx;
+		box-shadow: none;
+		margin: 0rpx 10rpx 10rpx 10rpx;
+	}
+
+	.card-title {
+		font-size: 28rpx;
+		/* color: #252529; */
+		background-color: #EDFB8B;
+		margin-bottom: 10rpx;
+		padding: 10px;
+		border-radius: 20rpx 20rpx 20rpx 0rpx;
+		/* 左上角方角，其他三个角为圆角 */
+	}
+
+
+	.card-title2 {
+		font-size: 28rpx;
+		/* color: #252529; */
+		background-color: #9EE44D;
+		margin-bottom: 10rpx;
+		margin-top: 20rpx;
+		padding: 10px;
+		border-radius: 20rpx 20rpx 20rpx 0rpx;
+		/* 左上角方角，其他三个角为圆角 */
+	}
+
+	.card-title1 {
+		font-size: 45rpx;
+		color: #FFFFFF;
+		font-weight: bold;
+		margin-bottom: 10rpx;
+	}
+
+	.card-title12 {
+		position: absolute;
+		top: 400px;
+		left: 32px;
+		font-size: 26rpx;
+		color: #FFFFFF;
+		font-weight: bold;
+		margin-bottom: 10rpx;
+	}
+
+	.card-title13 {
+		position: absolute;
+		top: 415px;
+		left: 30px;
+		font-size: 50rpx;
+		color: #FFFFFF;
+		font-weight: bold;
+		margin-bottom: 10rpx;
+	}
+
+	.card-title14 {
+		font-size: 25rpx;
+		color: #FFFFFF;
+		margin-bottom: 10rpx;
+		margin-top: 10rpx;
+		margin-left: 20rpx;
+	}
+
+	.card-title15 {
+		font-size: 25rpx;
+		color: #bbbbbb;
+		margin-bottom: 10rpx;
+		margin-top: 10rpx;
+	}
+
+	.logo {
+		width: 300rpx;
+		height: 300rpx;
+		position: absolute;
+		top: 11%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		/* 同时水平和垂直居中 */
+	}
+
+	.card-description {
+		font-size: 20rpx;
+		color: #FFFFFF;
+		line-height: 1.5;
+		margin-top: 0rpx;
+
+	}
+
+	.card-description1 {
+		font-size: 24rpx;
+		color: #FFFFFF;
+		line-height: 1.5;
+		margin-top: 10rpx;
+	}
+
+	.guide-button {
+		width: 100%;
+		height: 150rpx;
+		background-color: #252529;
+		color: #252529;
+		font-size: 36rpx;
+		text-align: center;
+		line-height: 100rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		/* margin-bottom: 30rpx; */
+		z-index: 1000;
+		/* 确保按钮悬浮在其他容之上 */
+		position: fixed;
+		/* 固定定位 */
+		bottom: 0px;
+		transform: translateX(-50%);
+		/* 调整水平位置以居中 */
+		left: 50%;
+		/* 水平居中 */
+	}
+
+
+
+	.debug-info {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		background-color: rgba(0, 0, 0, 0.5);
+		color: white;
+		padding: 5px;
+		font-size: 10px;
+		z-index: 100;
+		max-height: 50vh;
+		overflow-y: auto;
+	}
+
+	.debug-info text {
+		display: block;
+		margin-bottom: 2px;
+	}
+
+	.emotion-detection-box1,
+	.emotion-detection-box2,
+	.emotion-detection-box3,
+	.emotion-detection-box4,
+	.emotion-detection-box5 {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: absolute;
+	}
+
+	.emotion-detection-box1 {
+		top: 350rpx;
+	}
+
+	.emotion-detection-box2 {
+		top: 450rpx;
+		left: 35%;
+	}
+
+	.emotion-detection-box3 {
+		top: 450rpx;
+		right: 35%;
+	}
+
+	.emotion-detection-box4 {
+		top: 800rpx;
+		right: 35%;
+	}
+
+	.emotion-detection-box5 {
+		top: 800rpx;
+		left: 35%;
+	}
+
+	.emotion-detection-title {
+		font-size: 22rpx;
+		color: #FFFFFF;
+		font-weight: bold;
+		background-color: #4A4A57;
+		padding: 10rpx 20rpx;
+		border-radius: 10rpx;
+	}
+
+	.green-circle {
+		position: absolute;
+		width: 45rpx;
+		height: 45rpx;
+		background-color: #9EE44D;
+		border-radius: 50px;
+		top: 95px;
+		z-index: 30;
+		border: 3rpx solid #FFFFFF;
+		/* 添加白色边框 */
+
+	}
+
+	.green-circle1 {
+		position: absolute;
+		width: 22rpx;
+		height: 22rpx;
+		background-color: #b3bec1;
+		border-radius: 50px;
+		top: 102px;
+		/* z-index: 3; */
+	}
+
+	.expand-button {
+		color: #9EE44D;
+		/* 按钮文字颜色 */
+		border: none;
+		/* 去掉边框 */
+		padding: 0;
+		/* 去掉内边距 */
+		text-align: center;
+		/* 文字居中 */
+		text-decoration: underline;
+		/* 添加下划线以突出显示 */
+		display: inline;
+		/* 使按钮为行内元素 */
+		font-size: 16px;
+		/* 字体大小 */
+		margin: 0;
+		/* 掉外边距 */
+		cursor: pointer;
+		/* 鼠标悬停时显示手型 */
+		background-color: #373742;
+	}
+
+	.expand-button:hover {
+		color: #9EE44D;
+		/* 悬停时的文字颜色 */
+		text-decoration: underline;
+		/* 悬停时保持下划线 */
+	}
+
+	.expand-image {
+		width: 150rpx;
+		/* Adjust the width to your desired size */
+		height: 55rpx;
+		/* Adjust the height to your desired size */
+		cursor: pointer;
+		/* Make it clickable */
+		margin: 0 auto;
+		/* Center it */
+		/* bottom:30px; */
+	}
+
+	.popup-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.5);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		z-index: 1000;
+	}
+
+	.popup-content {
+		width: 90%;
+		background-color: #3C3C47;
+		border-radius: 50rpx;
+		padding: 50rpx;
+	}
+
+	.popup-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: left;
+		margin-bottom: 20rpx;
+	}
+
+	.popup-title {
+		color: #FFFFFF;
+		font-size: 40rpx;
+		font-weight: bold;
+		margin-bottom: 20px;
+	}
+
+	.popup-close {
+		color: #FFFFFF;
+		font-size: 40rpx;
+		position: absolute;
+		right: 5px;
+	}
+
+	.popup-input {
+		background-color: #2F2F38;
+		color: #FFFFFF;
+		padding: 20rpx;
+		border-radius: 30rpx;
+		margin-bottom: 20rpx;
+		width: 80%;
+	}
+
+	.popup-section {
+		margin-bottom: 20rpx;
+	}
+
+	.popup-question {
+		color: #FFFFFF;
+		font-size: 30rpx;
+		font-weight: bold;
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+
+	.popup-options {
+		display: flex;
+		flex-direction: row;
+		/* 改为横向排列 */
+		flex-wrap: wrap;
+		/* 允许换行 */
+		align-items: flex-start;
+	}
+
+	.popup-option {
+		background-color: #2F2F38;
+		color: #FFFFFF;
+		border-radius: 50rpx 0rpx 0rpx 50rpx;
+		padding: 20rpx 60rpx;
+		margin-right: 10rpx;
+		margin-bottom: 10rpx;
+		width: auto;
+		font-size: 14px;
+	}
+
+	.popup-option1 {
+		background-color: #2F2F38;
+		color: #FFFFFF;
+		border-radius: 0rpx;
+		padding: 20rpx 60rpx;
+		margin-right: 10rpx;
+		margin-bottom: 10rpx;
+		width: auto;
+		font-size: 14px;
+	}
+
+	.popup-option2 {
+		background-color: #2F2F38;
+		color: #FFFFFF;
+		border-radius: 0rpx 30rpx 30rpx 0rpx;
+		padding: 20rpx 60rpx;
+		margin-right: 10rpx;
+		margin-bottom: 10rpx;
+		width: auto;
+		font-size: 14px;
+	}
+
+	.popup-option.active,
+	.popup-option1.active,
+	.popup-option2.active {
+		background-color: #9EE44D;
+		color: #2F2F38;
+	}
+
+	.popup-tags {
+		display: flex;
+		flex-direction: row;
+		/* 改为横向排列 */
+		flex-wrap: wrap;
+		/* 允许换行 */
+		align-items: flex-start;
+		width: 100%;
+		/* 按钮组占满整个宽度 */
+		margin-bottom: 10px;
+		/* 调整间距 */
+	}
+
+	.popup-tag {
+		display: inline-block;
+		background-color: #2F2F38;
+		color: #FFFFFF;
+		padding: 20rpx 40rpx;
+		border-radius: 30rpx;
+		margin: 5px;
+		/* 调整间距 */
+		white-space: nowrap;
+		cursor: pointer;
+		/* 增加点击效果 */
+		font-size: 14px;
+	}
+
+	.popup-tag.active {
+		background-color: #9EE44D;
+		color: #2F2F38;
+	}
+
+	.custom-tag {
+		border: 1rpx dashed #FFFFFF;
+	}
+
+	.popup-button {
+		background: linear-gradient(-30deg, #EDFB8B -20%, #9EE44D 120%);
+		color: #2F2F38;
+		width: 100%;
+		padding: 5rpx;
+		border-radius: 50rpx;
+		text-align: center;
+		margin-top: 10px;
+	}
+
+	.new-profile-button {
+		background: linear-gradient(-30deg, #8BE1FB -20%, #4D9EE4 120%);
+		margin-top: 20px;
+	}
+
+	.card1inner {
+		flex-direction: row;
+		margin-left: 20rpx;
+	}
+
+	.card2inner {
+		flex-direction: column;
+		margin-left: 20rpx;
+		top: 20px;
+	}
+
+	.white-line {
+		width: 100%;
+		height: 1rpx;
+		background-color: #acacac;
+		margin: 30rpx 0;
+	}
+
+	.usercard-title1 {
+		font-size: 26rpx;
+		color: #FFFFFF;
+		/* font-weight: bold; */
+		/* margin-top: 20rpx; */
+		/* margin-bottom: 20rpx; */
+	}
+
+	.usercard-title2 {
+		font-size: 32rpx;
+		color: #FFFFFF;
+		font-weight: bold;
+		/* margin-top: 20rpx; */
+		/* margin-bottom: 20rpx; */
+	}
+
+	.usercard-title3 {
+		font-size: 26rpx;
+		color: #FFFFFF;
+		/* font-weight: bold; */
+		/* margin-top: 20rpx; */
+		margin-bottom: 10rpx;
+	}
+</style>

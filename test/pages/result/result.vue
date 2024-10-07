@@ -317,8 +317,13 @@
 				console.log("Draw radar stopped");
 			},
 			navigateToGuide() {
+				console.log('Navigating to guide with data:', {
+					userId: this.userId,
+					username: this.username,
+					jobId: this.homepageData.response.personal_info.job_id
+				});
 				uni.navigateTo({
-					url: `/pages/dashboard/dashboard?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.jobId}` // 添加查询参数
+					url: `/pages/dashboard/dashboard?userId=${this.userId}&username=${encodeURIComponent(this.username)}&jobId=${this.homepageData.response.personal_info.job_id}`
 				});
 			},
 			expand() {

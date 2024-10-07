@@ -4,19 +4,20 @@
 		background-color: #2F2F38;
 		/* display: flex; */
 		flex-direction: column;
-		align-items: center;
+		align-items: left;
 		padding-top: 3.125rem;
 		width: 100%;
 		height: 100%;
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;
-		/* 启用 iOS 惯性滚动 */
 }
 .content[data-v-75e816e7] {
-		display: block;
+		display: flex;
 		/* 避免 flex 布局干扰 */
 		flex-direction: column;
 		align-items: left;
+		/* width: 100%; */
+		margin-left: 20px;
 }
 .illustration1[data-v-75e816e7] {
 		width: 9.375rem;
@@ -88,8 +89,8 @@
 		width: 10rem;
 		height: auto;
 		position: absolute;
-		top: 37.5rem;
-		left: 10.9375rem;
+		top: 38.75rem;
+		left: 11.875rem;
 		margin-bottom: 10px;
 		z-index: 40;
 }
@@ -152,14 +153,14 @@
 		margin-bottom: 0;
 }
 .card[data-v-75e816e7] {
-		width: 190px;
-		height: 225px;
+		width: 150px;
+		height: 210px;
 		background-color: #373742;
 		border-radius: 0.625rem;
 		box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
 		position: absolute;
-		top: 58px;
-		left: 170px;
+		top: 65px;
+		left: 190px;
 		text-align: left;
 		display: flex;
 		flex-direction: column;
@@ -168,13 +169,13 @@
 		margin-bottom: 0.3125rem;
 }
 .card1[data-v-75e816e7] {
-		width: 360px;
+		width: 88%;
 		background-color: #373742;
 		border-radius: 1.5625rem;
 		box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
 		position: relative;
 		z-index: 20;
-		text-align: center;
+		text-align: left;
 		display: flex;
 		flex-direction: column;
 		align-items: left;
@@ -182,7 +183,7 @@
 		margin-bottom: 0.9375rem;
 }
 .cardjuese[data-v-75e816e7] {
-		width: 170px;
+		width: 138px;
 		height: auto;
 		background-color: #373742;
 		border-radius: 1.5625rem;
@@ -196,7 +197,7 @@
 		padding: 0.625rem 0.9375rem 0.625rem 0.9375rem;
 }
 .cardjuese1[data-v-75e816e7] {
-		width: 170px;
+		width: 138px;
 		height: 60px;
 		background-color: #373742;
 		border-radius: 1.5625rem;
