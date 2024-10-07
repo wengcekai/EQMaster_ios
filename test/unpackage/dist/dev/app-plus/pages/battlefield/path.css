@@ -1,0 +1,50 @@
+
+.container {
+		background-color: #23232a;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 100%;
+		height: 100vh;
+		touch-action: none;
+}
+.icon-container {
+		width: 3.125rem;
+		overflow: visible;
+		height: 2.5rem;
+}
+.header-img {
+		overflow: visible;
+		margin-top: 100px;
+		height: 100%;
+		width: 100%;
+}
+.header {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		width: 100%;
+}
+.dimension {
+		background-color: #373742;
+		width: 80%;
+		height: 12vh;
+		margin-top: 15vh;
+		border-radius: 20px;
+}
+.h1 {
+		width: 6.25rem;
+}
+.h2 {
+		width: 4.6875rem;
+}
+.h3{
+		width: 4.0625rem;
+		padding-right: 10px;
+}
+.path {
+		width: 100%;
+}
+.img {
+		width: 100%;
+}

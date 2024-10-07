@@ -60,7 +60,7 @@
 		</view>
 
 		<view class="judge-container" v-if="state==='judge'">
-			<judge :title="'well done'" :wording="'做的很好，考虑了大家的感受'" @judge="handleJudgeContinue" :good-judge="true">
+			<judge :title="judgeTitle" :wording="judgeContent" @judge="gotoNextRound" :good-judge="isGoodReply">
 			</judge>
 		</view>
 	</view>
@@ -88,7 +88,8 @@
 		getBattlefieldAvatar
 	} from '../../scripts/locate_name';
 	import {
-		filterChatHistory
+		filterChatHistory,
+		getNpcIndex
 	} from '../../scripts/battlefield-chat';
 
 	export default {
@@ -104,6 +105,13 @@
 		},
 		data() {
 			return {
+				judgeTitle: '',
+				judgeContent: '',
+				task1Finished: false,
+				task2Finished: false,
+				task1Title: '一句话让同事们赞不绝口',
+				task2Title: '情绪过山车',
+				isGoodReply: true,
 				state: '', // Current state
 				showTippingCard: false, // Controls the tipping card visibility
 				talkingNpc: 0,
@@ -116,6 +124,31 @@
 					role: '领导',
 					content: '唉，我最近有点上火，医生嘱咐我要清淡饮食。这些重口味的菜我可真不敢吃了，不然怕是吃完嘴上火气就更旺了。',
 				}, ],
+				async gotoNextRound() {
+					if (!this.isGoodReply) {
+						this.retry();
+						return;
+					}
+					const nextRound = await continueChat(this.chattingHistory);
+					console.log("next round data", nextRound);
+
+					this.chattingHistory.concat(nextRound.dialog);
+
+					for (; self.displayedNpcChatIndex < this.chattingHistory.length; self.displayedNpcChatIndex++) {
+						let npcIndex = getNpcIndex((this.chattingHistory[self.displayedNpcChatIndex]));
+						if (npcIndex >= 0) {
+							this.talkingNpc = npcIndex;
+							break;
+						}
+					}
+
+					this.state = 'npcTalk';
+				},
+
+				retry() {
+					this.state = 'userTalk';
+				},
+
 				talkingNpc: 0,
 				showInput: false,
 				focusInput: false,
@@ -171,14 +204,6 @@
 					// Other state transitions
 				}
 			},
-			handleJudgeContinue(goodJudge) {
-				console.log('Judge continue clicked.');
-				if (goodJudge) {
-					this.state = 'NpcTalk';
-				} else {
-					this.state = 'userTalk';
-				}
-			},
 			handleTippingQuit() {
 				console.log('Clicked quit tipping');
 				this.state = 'userTalk'; // Change state
@@ -215,6 +240,7 @@
 					});
 				});
 			},
+
 			dismissNpcTalk() {
 				let foundNpcMessage = false;
 				const history = this.chattingHistory;
@@ -239,13 +265,27 @@
 			getNpcIndexByName(name) {
 				return this.npcs.findIndex(npc => npc.characterName === name);
 			},
+			async Pass() {
+				const evaluationResult = await evalBattlefield(this.chattingHistory);
+				console.log('evaluation result:', evaluationResult);
+				uni.setStorage({
+					key: 'evalResult',
+					data: evaluationResult
+				})
 
+				setTimeout(() => {
+					uni.navigateTo({
+						url: '/pages/battlefield/battlefield-summary'
+					}), 500
+				});
+			},
 			handleContainerClick() {
 				if (this.state === 'NpcTalk') {
 					this.dismissNpcTalk();
 				}
 				// If needed, handle clicks in other states
 			},
+
 			initRecorderManager() {
 				recorderManager.onStart(() => {
 					console.log('Recorder start');
@@ -265,16 +305,60 @@
 						const validChats = filterChatHistory(this.chattingHistory);
 						const judgeResult = await reply(validChats);
 
-						console.warn("judge result:", judgeResult);
+						const totalScore = judgeResult.moods.reduce((acc, mood) => {
+							return acc + parseInt(mood.mood, 10);
+						}, 0);
 
+						this.isGoodReply = totalScore > 0 ? true : false;
+						this.judgeTitle = this.isGoodReply ? "做的好" : "继续努力";
+						if (!this.task1Finished) {
+							const allPositive = judgeResult.moods.every(item => parseInt(item.mood, 10) > 0);
+							this.task1Finished = true;
+							this.judgeTitle = `${this.task1Title} (1/1)`;
+						}
+						this.judgeContent = judgeResult.comments;
+						this.state = 'judge';
 
+						// 遍历 judgeResult.moods 并根据角色调整 this.mood 的值
+						judgeResult.moods.forEach(item => {
+							let randomValue;
+							if (item.role === '领导') {
+								if (parseInt(item.mood, 10) > 0) {
+									// 正数，增加 20 到 30 的随机值
+									randomValue = Math.floor(Math.random() * 11) + 20;
+									this.npcs[0].health += randomValue;
+								} else if (parseInt(item.mood, 10) < 0) {
+									// 负数，减少 30 到 40 的随机值
+									randomValue = Math.floor(Math.random() * 11) + 30;
+									this.npcs[0].health -= randomValue;
+								}
+							} else if (item.role === '同事A') {
+								if (parseInt(item.mood, 10) > 0) {
+									randomValue = Math.floor(Math.random() * 11) + 20;
+									this.npcs[0].health += randomValue;
+								} else if (parseInt(item.mood, 10) < 0) {
+									randomValue = Math.floor(Math.random() * 11) + 30;
+									this.npcs[0].health -= randomValue;
+								}
+							} else if (item.role === '同事B') {
+								if (parseInt(item.mood, 10) > 0) {
+									randomValue = Math.floor(Math.random() * 11) + 20;
+									this.npcs[0].health += randomValue;
+								} else if (parseInt(item.mood, 10) < 0) {
+									randomValue = Math.floor(Math.random() * 11) + 30;
+									this.npcs[0].health -= randomValue;
+								}
+							}
+						});
+
+						await this.Pass();
+						return;
 					} catch (error) {
 						console.error('在用户说话反馈过程中有错发生哦：', error);
 					}
 				});
 			},
 		},
-
 		onLoad(option) {
 			uni.getStorage({
 				key: 'chats',

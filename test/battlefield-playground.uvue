@@ -98,6 +98,11 @@
 		},
 		data() {
 			return {
+				currentScene: 0,
+				task1Finished: false,
+				task1: '一句话让同事们赞不绝口',
+				task2Finished: false,
+				task2: '情绪过山车',
 				state: '', // Current state
 				showTippingCard: false, // Controls the tipping card visibility
 				talkingNpc: 0,
@@ -113,18 +118,7 @@
 						avatar: '/static/battlefield/boss.png',
 						content:
 							'唉，我最近有点上火，医生嘱咐我要清淡饮食。这些重口味的菜我可真不敢吃了，不然怕是吃完嘴上火气就更旺了。',
-					},
-					// {
-					// 	sender: 'tipping',
-					// 	content:
-					// 		'提示：你的回复很热情，但要兼顾同事和老板。可以说：“我明白你要清淡饮食，咱们再加个轻口味的菜吧',
-					// },
-					// {
-					// 	sender: 'user',
-					// 	content:
-					// 		'我觉得这道菜味道不错，但是可能有点重口味，大家觉得要不要试试？',
-					// },
-					// Add more chat history items as needed
+					}
 				],
 				talkingNpc: 0,
 				showInput: false,

@@ -1,10 +1,10 @@
 <template>
-	<view class="feedback-container" :style="{ backgroundColor: bgColor }">
+	<view class="judge-container" :style="{ backgroundColor: bgColor }">
 		<text class="title" :style="{color: fontColor}">{{ title }}
 		</text>
 		<text class="wording" :style="{color: fontColor}">{{ wording }}</text>
-		<view class="button-container">
-			<button class="action-button" :style="{
+		<view class="judge-button-container">
+			<button class="judge-action-button" :style="{
 				backgroundColor: buttonBgColor
 			}" @tap="onContinue">继续</button>
 		</view>
@@ -50,40 +50,44 @@
 </script>
 
 <style scoped>
-	.feedback-container {
+	.judge-container {
 		border-radius: 12px;
-		padding: 16px;
-		box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 		width: 100%;
-		height: 200px;
+		height: 15vh;
 		position: absolute;
+		display: flex;
+		flex-direction: column;
 		bottom: 0;
 	}
 
 	.title {
 		font-weight: 700;
 		font-size: 17px;
-		margin-bottom: 8px;
+		margin-top: 10px;
+		margin-left: 10px;
 	}
 
 	.wording {
 		font-size: 16px;
 		color: #3E3E3E;
-		margin-bottom: 16px;
+		margin-left: 10px;
+		margin-top: 10px;
 	}
 
-	.button-container {
+	.judge-button-container {
 		display: flex;
 		justify-content: center;
-		margin-bottom: 20px;
+		width: 100%;
+		position: absolute;
+		bottom: 50rpx;
 	}
 
-	.action-button {
+	.judge-action-button {
 		color: #3E3E3E;
 		border-radius: 50px;
 		font-size: 16px;
 		height: 50px;
-		width: 100%;
+		width: 80%;
 		line-height: 50px;
 		text-align: center;
 		border: none;

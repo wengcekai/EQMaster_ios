@@ -4,16 +4,43 @@ const EVAL_URL = 'https://eqmaster.azurewebsites.net/eval/battlefield';
 
 function sendRequest(person_id, course_id, chat_content, url = BASE_URL) {
 	return new Promise((resolve, reject) => {
-		const formattedChatContent = chat_content.map(chat => ({
-			...chat,
-			role: ['领导', "同事A", "同事B"].includes(chat.role) ? 'assistant' : chat.role,
-			content: Array.isArray(chat.content) ? chat.content.map(c => ({
-				type: c.type || 'text',
-				text: c.text || c
-			})) : chat.content
-		}));
+		const formattedChatContent = [];
+		let assistantDialog = {
+			role: 'assistant',
+			content: [{
+				type: 'text',
+				text: {
+					dialog: []
+				}
+			}]
+		};
 
-		console.log("##begin to evaluate user chat:", formattedChatContent);
+		// 遍历 chat_content，将“领导”、“同事A”、“同事B”的对话存入 dialog 数组中
+		chat_content.forEach(chat => {
+			if (['领导', '同事A', '同事B'].includes(chat.role)) {
+				assistantDialog.content[0].text.dialog.push({
+					role: chat.role,
+					content: chat.content
+				});
+			} else {
+				// 非 assistant 的对话直接加入 formattedChatContent
+				formattedChatContent.push({
+					...chat,
+					content: Array.isArray(chat.content) ? chat.content.map(c => ({
+						type: c.type || 'text',
+						text: c.text || c
+					})) : chat.content
+				});
+			}
+		});
+
+		// 将 dialog 转为 JSON 字符串格式
+		assistantDialog.content[0].text = JSON.stringify(assistantDialog.content[0].text, null, 4);
+
+		// 将组合好的 assistant 对象插入到结果数组中
+		formattedChatContent.unshift(assistantDialog);
+
+		console.log(formattedChatContent);
 
 		const body = {
 			person_id: person_id || 1,
@@ -32,7 +59,7 @@ function sendRequest(person_id, course_id, chat_content, url = BASE_URL) {
 			data: body,
 			success: (res) => {
 				console.log('请求成功:', res);
-				resolve(res.data); 
+				resolve(res.data);
 			},
 			fail: (err) => {
 				console.error('请求失败:', err);
@@ -116,4 +143,18 @@ export function filterChatHistory(chatHistory) {
 		// 如果 role 符合且不包含关键字，则保留该条目
 		return true;
 	});
+}
+
+export function getNpcIndex(role) {
+	if (role == '老板') {
+		return 0;
+	}
+	if (role == "同事A") {
+		return 1;
+	}
+	if (role == "同事B") {
+		return 2;
+	}
+
+	return -1;
 }

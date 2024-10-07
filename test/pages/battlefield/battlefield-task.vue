@@ -22,16 +22,16 @@
 							1
 						</text>
 					</view>
-					<text class="task-word">得到领导的夸赞</text>
+					<text class="task-word">一句话让同事们赞不绝口：用一句话让每位同事心情绪愉悦。</text>
 				</view>
-				<view class="task-item">
+				<!-- 				<view class="task-item">
 					<view class="index-circle">
 						<text class="index-word">
 							2
 						</text>
 					</view>
-					<text class="task-word">点出让众人满意的菜品</text>
-				</view>
+					<text class="task-word">情绪过山车：让同事B对你不满，随后安抚他</text>
+				</view> -->
 			</view>
 		</view>
 		<view class="continue-button-container">
