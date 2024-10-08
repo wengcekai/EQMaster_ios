@@ -1,89 +1,9 @@
 {
 	"pages": [{
-			// "path": "pages/profile/profile",
+			// "path": "pages/dashboard/dashboard",
 			"path": "pages/landing/landing",
 			"style": {
 				// "navigationBarTitleText": "Scroll Test",
-				"navigationStyle": "custom"
-			}
-		}, {
-			"path": "pages/battlefield/battlefield-task",
-			"style": {
-				// "navigationBarTitleText": "Scroll Test",
-				"navigationStyle": "custom"
-			}
-		}, {
-			"path": "pages/dashboard/dashboard2",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		}, {
-			"path": "pages/battlefield/battlefield-playground",
-			"style": {
-				// "navigationBarTitleText": "Scroll Test",
-				"navigationStyle": "custom"
-			}
-		}, {
-			"path": "pages/battlefield/battlefield-intro",
-			"style": {
-				// "navigationBarTitleText": "Scroll Test",
-				"navigationStyle": "custom"
-			}
-		}, {
-			"path": "pages/result/loading",
-			"style": {
-				// "navigationStyle": "custom",
-				"navigationStyle": "custom"
-			}
-		}, {
-			"path": "pages/result/result",
-			"style": {
-				// "navigationStyle": "custom",
-				"navigationStyle": "custom"
-			}
-		}, {
-			"path": "pages/test/test5",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		}, {
-			"path": "pages/test/test1",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		}, {
-			"path": "pages/test/test",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		}, {
-			"path": "pages/preference/preference2",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		}, {
-			"path": "pages/preference/preference1",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		}, {
-			"path": "pages/preference/preference",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		}, {
-			"path": "pages/test/test2",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		}, {
-			"path": "pages/dashboard/dashboard",
-			"style": {
-				"navigationStyle": "custom"
-			}
-		}, {
-			"path": "pages/preference/preference3",
-			"style": {
 				"navigationStyle": "custom"
 			}
 		},
@@ -95,6 +15,107 @@
 			}
 		},
 		{
+			"path": "pages/battlefield/battlefield-summary",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/battlefield/battlefield-task",
+			"style": {
+				// "navigationBarTitleText": "Scroll Test",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/dashboard/dashboard2",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/battlefield/battlefield-playground",
+			"style": {
+				// "navigationBarTitleText": "Scroll Test",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/battlefield/battlefield-intro",
+			"style": {
+				// "navigationBarTitleText": "Scroll Test",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/result/loading",
+			"style": {
+				// "navigationStyle": "custom",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/result/result",
+			"style": {
+				// "navigationStyle": "custom",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/test/test5",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/test/test1",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/test/test",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/preference/preference2",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/preference/preference1",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/preference/preference",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/test/test2",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/dashboard/dashboard",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/preference/preference3",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/test/test3",
 			"style": {
 				"navigationStyle": "custom"
@@ -102,7 +123,6 @@
 		},
 		{
 			"path": "pages/profile/profile",
-			// "path": "pages/landing/landing",
 			"style": {
 				"navigationStyle": "custom"
 			}

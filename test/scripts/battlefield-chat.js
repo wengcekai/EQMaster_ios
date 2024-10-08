@@ -88,40 +88,46 @@ export async function reply(chatHistory) {
 // 导出helpReply函数
 export async function helpReply(chatHistory) {
 	// 在 chat_content 中插入“帮我回答”
-	chatHistory.chat_content.push({
+	chatHistory.push({
 		role: "user",
 		content: [{
 			type: "text",
 			text: "帮我回答"
 		}]
 	});
-	return await sendRequest(chatHistory.person_id, chatHistory.course_id, chatHistory);
+	const result = await sendRequest(chatHistory.person_id, chatHistory.course_id, chatHistory);
+	result.pop();
+	return result;
 }
 
 // 导出hint函数
 export async function hint(chatHistory) {
 	// 在 chat_content 中插入“给我提示”
-	chatHistory.chat_content.push({
+	chatHistory.push({
 		role: "user",
 		content: [{
 			type: "text",
 			text: "给我提示"
 		}]
 	});
-	return await sendRequest(chatHistory.person_id, chatHistory.course_id, chatHistory);
+	const result = await sendRequest(chatHistory.person_id, chatHistory.course_id, chatHistory);
+	chatHistory.pop();
+	return result;
 }
 
 // 导出continueChat函数
 export async function continueChat(chatHistory) {
 	// 在 chat_content 中插入“继续”
-	chatHistory.chat_content.push({
+	chatHistory.push({
 		role: "user",
 		content: [{
 			type: "text",
 			text: "继续"
 		}]
 	});
-	return await sendRequest(chatHistory.person_id, chatHistory.course_id, chatHistory);
+	const result = await sendRequest(chatHistory.person_id, chatHistory.course_id, chatHistory);
+	chatHistory.pop();
+	return result;
 }
 
 // 导出evalBattlefield函数，发送到 /eval/battlefield

@@ -19,7 +19,7 @@
 		</view>
 
 		<view class="chat-history-container" :class="{ shadowed: shouldShadow }" v-if="state!='NpcTalk'">
-			<template v-for="(chat, index) in chattingHistory">
+			<template v-for="(chat, index) in displayedMessages">
 				<self-chat-box v-if="chat.role === 'user'" :key="index" :wording="chat.content"></self-chat-box>
 				<npc-chat-box v-else-if="chat.role === '领导' || chat.role === '同事A' || chat.role === '同事B'"
 					:key="'npc-' + index" :avatar="getBattlefieldAvatar(chat.role)" :name="chat.role"
@@ -124,31 +124,6 @@
 					role: '领导',
 					content: '唉，我最近有点上火，医生嘱咐我要清淡饮食。这些重口味的菜我可真不敢吃了，不然怕是吃完嘴上火气就更旺了。',
 				}, ],
-				async gotoNextRound() {
-					if (!this.isGoodReply) {
-						this.retry();
-						return;
-					}
-					const nextRound = await continueChat(this.chattingHistory);
-					console.log("next round data", nextRound);
-
-					this.chattingHistory.concat(nextRound.dialog);
-
-					for (; self.displayedNpcChatIndex < this.chattingHistory.length; self.displayedNpcChatIndex++) {
-						let npcIndex = getNpcIndex((this.chattingHistory[self.displayedNpcChatIndex]));
-						if (npcIndex >= 0) {
-							this.talkingNpc = npcIndex;
-							break;
-						}
-					}
-
-					this.state = 'npcTalk';
-				},
-
-				retry() {
-					this.state = 'userTalk';
-				},
-
 				talkingNpc: 0,
 				showInput: false,
 				focusInput: false,
@@ -177,6 +152,38 @@
 			handleClickRecording() {
 				this.isRecording = true;
 				this.startRecording();
+			},
+			async gotoNextRound() {
+				if (!this.isGoodReply) {
+					this.retry();
+					return;
+				}
+				const nextRound = await continueChat(this.chattingHistory);
+				console.log("next round data", nextRound);
+
+				this.chattingHistory = this.chattingHistory.concat(nextRound.dialog);
+				console.log("after concat, chatting history:", this.chattingHistory);
+
+				let someoneTalked = false;
+				for (; this.displayedNpcChatIndex < this.chattingHistory.length; ++this.displayedNpcChatIndex) {
+					let npcIndex = getNpcIndex((this.chattingHistory[this.displayedNpcChatIndex]));
+					if (npcIndex >= 0) {
+						this.talkingNpc = npcIndex;
+						console.log("someone talk:", this.talkingNpc);
+						someoneTalked = true;
+						break;
+					}
+				}
+
+				if (!someoneTalked) {
+					this.displayedNpcChatIndex--;
+				}
+
+				this.state = 'NpcTalk';
+			},
+
+			retry() {
+				this.state = 'userTalk';
 			},
 			startRecording() {
 				const options = {
@@ -313,9 +320,13 @@
 						this.judgeTitle = this.isGoodReply ? "做的好" : "继续努力";
 						if (!this.task1Finished) {
 							const allPositive = judgeResult.moods.every(item => parseInt(item.mood, 10) > 0);
-							this.task1Finished = true;
-							this.judgeTitle = `${this.task1Title} (1/1)`;
+							if (allPositive) {
+								this.task1Finished = true;
+								this.judgeTitle =
+									`${this.task1Title} (1/1)`;
+							}
 						}
+
 						this.judgeContent = judgeResult.comments;
 						this.state = 'judge';
 
@@ -326,33 +337,39 @@
 								if (parseInt(item.mood, 10) > 0) {
 									// 正数，增加 20 到 30 的随机值
 									randomValue = Math.floor(Math.random() * 11) + 20;
-									this.npcs[0].health += randomValue;
+									this.npcs[0].health = Math.min(this.npcs[0].health + randomValue,
+										100); // 保证最大值为100
 								} else if (parseInt(item.mood, 10) < 0) {
 									// 负数，减少 30 到 40 的随机值
 									randomValue = Math.floor(Math.random() * 11) + 30;
-									this.npcs[0].health -= randomValue;
+									this.npcs[0].health = Math.max(this.npcs[0].health - randomValue,
+										0); // 保证最小值为0
 								}
 							} else if (item.role === '同事A') {
 								if (parseInt(item.mood, 10) > 0) {
 									randomValue = Math.floor(Math.random() * 11) + 20;
-									this.npcs[0].health += randomValue;
+									this.npcs[1].health = Math.min(this.npcs[1].health + randomValue,
+										100); // 保证最大值为100
 								} else if (parseInt(item.mood, 10) < 0) {
 									randomValue = Math.floor(Math.random() * 11) + 30;
-									this.npcs[0].health -= randomValue;
+									this.npcs[1].health = Math.max(this.npcs[1].health - randomValue,
+										0); // 保证最小值为0
 								}
 							} else if (item.role === '同事B') {
 								if (parseInt(item.mood, 10) > 0) {
 									randomValue = Math.floor(Math.random() * 11) + 20;
-									this.npcs[0].health += randomValue;
+									this.npcs[2].health = Math.min(this.npcs[2].health + randomValue,
+										100); // 保证最大值为100
 								} else if (parseInt(item.mood, 10) < 0) {
 									randomValue = Math.floor(Math.random() * 11) + 30;
-									this.npcs[0].health -= randomValue;
+									this.npcs[2].health = Math.max(this.npcs[2].health - randomValue,
+										0); // 保证最小值为0
 								}
 							}
 						});
-
-						await this.Pass();
-						return;
+						if (this.task1Finished) {
+							await this.Pass();
+						}
 					} catch (error) {
 						console.error('在用户说话反馈过程中有错发生哦：', error);
 					}
@@ -379,6 +396,40 @@
 					this.showTippingCard
 				);
 			},
+
+			displayedMessages() {
+				const userChats = this.chattingHistory.filter(chat => chat.role === 'user');
+				const npcChats = this.chattingHistory.filter(chat =>
+					chat.role === '领导' || chat.role === '同事A' || chat.role === '同事B'
+				);
+
+				// 只保留来自 'user' 的最新一条
+				const latestUserChat = userChats.slice(-1); // 取最后一条
+
+				// 保留来自 '领导'、'同事A' 和 '同事B' 的最新三条消息
+				const latestNpcChats = npcChats.slice(-3); // 取最后三条
+
+				// 合并 'user' 的消息和 'npc' 的消息
+				return [...latestNpcChats, ...latestUserChat];
+
+			},
+
+			displayedHistory() {
+				const userChats = this.chattingHistory.filter(chat => chat.role === 'user');
+				const npcChats = this.chattingHistory.filter(chat =>
+					chat.role === '领导' || chat.role === '同事A' || chat.role === '同事B'
+				);
+
+				// 只保留来自 'user' 的最新一条
+				const latestUserChat = userChats.slice(-1); // 取最后一条
+
+				// 保留来自 '领导'、'同事A' 和 '同事B' 的最新三条消息
+				const latestNpcChats = npcChats.slice(-3); // 取最后三条
+
+				// 合并 'user' 的消息和 'npc' 的消息
+				return [...latestNpcChats, ...latestUserChat];
+			}
+
 		}
 	};
 </script>
