@@ -3,7 +3,7 @@
 		<scroll-view scroll-y style="height: 100%;">
 			<view class="content">
 				<!-- 保持原有的主内容 -->
-				<text class="score-title-head">早，{{username}}！</text>
+				<text class="score-title-head">早，{{homepageData.response.personal_info.name}}！</text>
 				<!-- 添加插图 -->
 
 				<image class="illustration1" :src="userCard" mode="widthFix"></image>

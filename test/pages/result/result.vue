@@ -2,9 +2,13 @@
 	<view class="container">
 		<scroll-view scroll-y style="height: 100%;">
 			<view class="content">
+				<!-- <view class="debug-info"> -->
+				  <!-- 如需调试信息，可取消注释以下行 -->
+				  <!-- <text>homepageData: {{ JSON.stringify(homepageData) }}</text> -->
+				<!-- </view> -->
 				<view class="header">
 					<image class="header-icon" src="/static/back.png"></image>
-					<text class="score-title-head">我的检测结果</text>
+					<text class="score-title-head">{{homepageData.response.personal_info.name}}我的检测结果</text>
 					<image class="header-icon" src="/static/battlefield/share.png"></image>
 				</view>
 				<view class="background-curve"></view>
@@ -267,6 +271,21 @@
 			}
 			if (this.interval) {
 				clearInterval(this.interval);
+			}
+		},
+		onReady() {
+			// 确保数据已经准备好
+			if (!this.username) {
+				uni.getStorage({
+					key: 'username',
+					success: (res) => {
+						this.username = res.data;
+						console.log('Username from storage:', this.username);
+					},
+					fail: () => {
+						console.error('Failed to get username from storage');
+					}
+				});
 			}
 		},
 		methods: {

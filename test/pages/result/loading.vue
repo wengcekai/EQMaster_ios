@@ -204,9 +204,7 @@
 							that.timeoutInterval = null;
 						}
 
-						const nextPageUrl =
-							`/pages/result/result?userId=${this.userId
-							||'some user id'}&username=${encodeURIComponent(this.username||'some username')}`;
+						const nextPageUrl = `/pages/result/result?jobId=${this.jobId}&userId=${this.userId}&username=${encodeURIComponent(this.username)}&gender=${this.gender}&birthday=${encodeURIComponent(JSON.stringify(this.birthday))}&options=${encodeURIComponent(JSON.stringify(this.selectedOptions))}&num=${this.num}`;
 
 						uni.setStorage({
 							key: 'response',

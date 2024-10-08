@@ -1777,16 +1777,16 @@ if (uni.restoreGlobal) {
               clearInterval(that.timeoutInterval);
               that.timeoutInterval = null;
             }
-            const nextPageUrl = `/pages/result/result?userId=${this.userId || "some user id"}&username=${encodeURIComponent(this.username || "some username")}`;
+            const nextPageUrl = `/pages/result/result?jobId=${this.jobId}&userId=${this.userId}&username=${encodeURIComponent(this.username)}&gender=${this.gender}&birthday=${encodeURIComponent(JSON.stringify(this.birthday))}&options=${encodeURIComponent(JSON.stringify(this.selectedOptions))}&num=${this.num}`;
             uni.setStorage({
               key: "response",
               data: result
             });
-            formatAppLog("log", "at pages/result/loading.vue:216", "begin to navigate");
+            formatAppLog("log", "at pages/result/loading.vue:214", "begin to navigate");
             uni.navigateTo({
               url: nextPageUrl,
               fail: (err) => {
-                formatAppLog("error", "at pages/result/loading.vue:220", "Navigation failed:", err);
+                formatAppLog("error", "at pages/result/loading.vue:218", "Navigation failed:", err);
                 uni.showToast({
                   title: "页面跳转失败",
                   icon: "none"
@@ -1795,7 +1795,7 @@ if (uni.restoreGlobal) {
             });
           },
           fail(error) {
-            formatAppLog("error", "at pages/result/loading.vue:229", "Error fetching homepage data:", error);
+            formatAppLog("error", "at pages/result/loading.vue:227", "Error fetching homepage data:", error);
           }
         });
       },
@@ -1831,7 +1831,7 @@ if (uni.restoreGlobal) {
       this.animateImage();
       this.timeoutInterval = setTimeout(() => {
         if (this.interval) {
-          formatAppLog("log", "at pages/result/loading.vue:273", "cancel splash by timeout.");
+          formatAppLog("log", "at pages/result/loading.vue:271", "cancel splash by timeout.");
           clearInterval(this.interval);
         }
       }, 3e4);
@@ -2041,42 +2041,42 @@ if (uni.restoreGlobal) {
       },
       illustrationSrc() {
         const scores = this.homepageData.response.eq_scores;
-        formatAppLog("log", "at pages/result/result.vue:218", "results for backgrounds:", scores);
+        formatAppLog("log", "at pages/result/result.vue:222", "results for backgrounds:", scores);
         const minScore = Math.min(scores.dimension1_score, scores.dimension2_score, scores.dimension3_score, scores.dimension4_score, scores.dimension5_score);
         if (minScore === scores.dimension1_score) {
-          formatAppLog("log", "at pages/result/result.vue:224", "illustration src:", "1");
+          formatAppLog("log", "at pages/result/result.vue:228", "illustration src:", "1");
           return "/static/aniimals/kapibala.png";
         } else if (minScore === scores.dimension2_score) {
-          formatAppLog("log", "at pages/result/result.vue:227", "illustration src:", "2");
+          formatAppLog("log", "at pages/result/result.vue:231", "illustration src:", "2");
           return "/static/aniimals/houzi.png";
         } else if (minScore === scores.dimension3_score) {
-          formatAppLog("log", "at pages/result/result.vue:230", "illustration src:", "3");
+          formatAppLog("log", "at pages/result/result.vue:234", "illustration src:", "3");
           return "/static/aniimals/ciwei.png";
         } else if (minScore === scores.dimension4_score) {
-          formatAppLog("log", "at pages/result/result.vue:233", "illustration src:", "4");
+          formatAppLog("log", "at pages/result/result.vue:237", "illustration src:", "4");
           return "/static/aniimals/tuoniao.png";
         } else if (minScore === scores.dimension5_score) {
-          formatAppLog("log", "at pages/result/result.vue:236", "illustration src:", "5");
+          formatAppLog("log", "at pages/result/result.vue:240", "illustration src:", "5");
           return "/static/aniimals/lang.png";
         }
       }
     },
     onLoad(option) {
-      formatAppLog("log", "at pages/result/result.vue:242", "option", option);
+      formatAppLog("log", "at pages/result/result.vue:246", "option", option);
       this.userId = option.userId || "";
       this.username = decodeURIComponent(option.username || "");
       try {
         uni.getStorage({
           key: "response",
           success: (res) => {
-            formatAppLog("log", "at pages/result/result.vue:250", "########successfully retrieved data", res);
+            formatAppLog("log", "at pages/result/result.vue:254", "########successfully retrieved data", res);
             this.homepageData = res.data;
-            formatAppLog("log", "at pages/result/result.vue:252", "begin to draw radar");
+            formatAppLog("log", "at pages/result/result.vue:256", "begin to draw radar");
             this.drawRadar();
           }
         });
       } catch (e) {
-        formatAppLog("log", "at pages/result/result.vue:257", "something error happened", e);
+        formatAppLog("log", "at pages/result/result.vue:261", "something error happened", e);
       }
     },
     onUnload() {
@@ -2090,6 +2090,20 @@ if (uni.restoreGlobal) {
         clearInterval(this.interval);
       }
     },
+    onReady() {
+      if (!this.username) {
+        uni.getStorage({
+          key: "username",
+          success: (res) => {
+            this.username = res.data;
+            formatAppLog("log", "at pages/result/result.vue:283", "Username from storage:", this.username);
+          },
+          fail: () => {
+            formatAppLog("error", "at pages/result/result.vue:286", "Failed to get username from storage");
+          }
+        });
+      }
+    },
     methods: {
       progressWidth(value) {
         const percentage = value / this.maxScore * 100;
@@ -2098,11 +2112,11 @@ if (uni.restoreGlobal) {
       circleLeftPosition(value) {
         const percentage1 = value / this.maxScore * 100;
         const progressBarWidth = uni.getSystemInfoSync().windowWidth * 0.8;
-        formatAppLog("log", "at pages/result/result.vue:283", percentage1);
+        formatAppLog("log", "at pages/result/result.vue:302", percentage1);
         return percentage1 / 100 * progressBarWidth;
       },
       drawRadar() {
-        formatAppLog("log", "at pages/result/result.vue:288", "======begin to draw radar chart, data:", this.homepageData.response);
+        formatAppLog("log", "at pages/result/result.vue:307", "======begin to draw radar chart, data:", this.homepageData.response);
         const data = [
           {
             subject: "维度1",
@@ -2130,12 +2144,12 @@ if (uni.restoreGlobal) {
             fullMark: 100
           }
         ];
-        formatAppLog("log", "at pages/result/result.vue:315", "Draw radar started");
+        formatAppLog("log", "at pages/result/result.vue:334", "Draw radar started");
         drawRadar("radarCanvas", data);
-        formatAppLog("log", "at pages/result/result.vue:317", "Draw radar stopped");
+        formatAppLog("log", "at pages/result/result.vue:336", "Draw radar stopped");
       },
       navigateToGuide() {
-        formatAppLog("log", "at pages/result/result.vue:320", "Navigating to guide with data:", {
+        formatAppLog("log", "at pages/result/result.vue:339", "Navigating to guide with data:", {
           userId: this.userId,
           username: this.username,
           jobId: this.homepageData.response.personal_info.job_id
@@ -2157,12 +2171,22 @@ if (uni.restoreGlobal) {
         style: { "height": "100%" }
       }, [
         vue.createElementVNode("view", { class: "content" }, [
+          vue.createCommentVNode(' <view class="debug-info"> '),
+          vue.createCommentVNode(" 如需调试信息，可取消注释以下行 "),
+          vue.createCommentVNode(" <text>homepageData: {{ JSON.stringify(homepageData) }}</text> "),
+          vue.createCommentVNode(" </view> "),
           vue.createElementVNode("view", { class: "header" }, [
             vue.createElementVNode("image", {
               class: "header-icon",
               src: _imports_0$6
             }),
-            vue.createElementVNode("text", { class: "score-title-head" }, "我的检测结果"),
+            vue.createElementVNode(
+              "text",
+              { class: "score-title-head" },
+              vue.toDisplayString($data.homepageData.response.personal_info.name) + "我的检测结果",
+              1
+              /* TEXT */
+            ),
             vue.createElementVNode("image", {
               class: "header-icon",
               src: _imports_1$5
@@ -3995,7 +4019,7 @@ if (uni.restoreGlobal) {
           vue.createElementVNode(
             "text",
             { class: "score-title-head" },
-            "早，" + vue.toDisplayString($data.username) + "！",
+            "早，" + vue.toDisplayString($data.homepageData.response.personal_info.name) + "！",
             1
             /* TEXT */
           ),

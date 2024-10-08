@@ -4,7 +4,7 @@
   background-color: #2F2F38;
   /* display: flex; */
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   padding-top: 3.125rem;
   width: 100%;
   height: 100%;
@@ -15,7 +15,8 @@
   display: flex; 
   flex-direction: column;
   align-items: left;
-  width: 360px;
+  width: 340px;
+  margin-left: 20px;
 }
 .iconback[data-v-dd383ca2] {
   width: 1.875rem;
@@ -180,7 +181,7 @@
   flex-direction: row;
 }
 .card-a[data-v-dd383ca2] {
-  width: 360px;
+  width: 320px;
   background-color: #373742;
   border-radius: 1.5625rem;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
@@ -196,14 +197,14 @@
 .card-b[data-v-dd383ca2] {
 	  flex: 0 0 auto; /* 防止卡片被压缩 */
 	  width: 140px;
-  width: 140px;
-  height: 180px;
+  width: 100px;
+  height: 140px;
   background-color: #EDED68;
   border-radius: 1.5625rem;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
   position: relative;
   z-index: 20;
-  text-align: center;
+  text-align: left;
   display: flex;
   flex-direction: column;
   align-items: left;
@@ -212,15 +213,14 @@
 }
 .card-b1[data-v-dd383ca2] {
 	  flex: 0 0 auto; /* 防止卡片被压缩 */
-	  width: 140px;
-  width: 140px;
-  height: 180px;
+  width: 100px;
+  height: 140px;
   background-color: #89E3C9;
   border-radius: 1.5625rem;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
   position: relative;
   z-index: 20;
-  text-align: center;
+  text-align: left;
   display: flex;
   flex-direction: column;
   align-items: left;
@@ -230,8 +230,8 @@
 .card-b2[data-v-dd383ca2] {
 	  flex: 0 0 auto; /* 防止卡片被压缩 */
 	  width: 140px;
-  width: 140px;
-  height: 180px;
+  width: 100px;
+  height: 140px;
   background-color: #F0EBE5;
   border-radius: 1.5625rem;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
@@ -446,7 +446,7 @@
   padding: 5px;
 }
 .card-titleab[data-v-dd383ca2] {
-  font-size: 0.9375rem;
+  font-size: 0.8125rem;
   color: #000000;
   font-weight: bold;
   margin-bottom: 0.3125rem;
@@ -463,7 +463,8 @@
   color: #000000;
   font-weight: bold;
   font-size: 1.125rem;
-  left: 140px;
+  position: absolute;
+  left: 170px;
 }
 .card-title12[data-v-dd383ca2] {
 position: absolute;
@@ -788,7 +789,7 @@ left:30px;
   text-align: center;
   display: flex;
   flex-direction: row;
-  align-items: left;
+  align-items: center;
   padding: 0.625rem;
   margin-bottom: 0.9375rem;
 }

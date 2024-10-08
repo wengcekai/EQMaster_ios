@@ -497,7 +497,7 @@ export default {
   background-color: #2F2F38;
   /* display: flex; */
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   padding-top: 100rpx;
   width: 100%;
   height: 100%;
@@ -509,7 +509,8 @@ export default {
   display: flex; 
   flex-direction: column;
   align-items: left;
-  width: 360px;
+  width: 340px;
+  margin-left: 20px;
 }
 
 .iconback {
@@ -686,7 +687,7 @@ export default {
 }
 
 .card-a {
-  width: 360px;
+  width: 320px;
   background-color: #373742;
   border-radius: 50rpx;
   box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
@@ -703,14 +704,14 @@ export default {
 .card-b {
 	  flex: 0 0 auto; /* 防止卡片被压缩 */
 	  width: 140px;
-  width: 140px;
-  height: 180px;
+  width: 100px;
+  height: 140px;
   background-color: #EDED68;
   border-radius: 50rpx;
   box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
   position: relative;
   z-index: 20;
-  text-align: center;
+  text-align: left;
   display: flex;
   flex-direction: column;
   align-items: left;
@@ -719,15 +720,14 @@ export default {
 }
 .card-b1 {
 	  flex: 0 0 auto; /* 防止卡片被压缩 */
-	  width: 140px;
-  width: 140px;
-  height: 180px;
+  width: 100px;
+  height: 140px;
   background-color: #89E3C9;
   border-radius: 50rpx;
   box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
   position: relative;
   z-index: 20;
-  text-align: center;
+  text-align: left;
   display: flex;
   flex-direction: column;
   align-items: left;
@@ -737,8 +737,8 @@ export default {
 .card-b2 {
 	  flex: 0 0 auto; /* 防止卡片被压缩 */
 	  width: 140px;
-  width: 140px;
-  height: 180px;
+  width: 100px;
+  height: 140px;
   background-color: #F0EBE5;
   border-radius: 50rpx;
   box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
@@ -979,7 +979,7 @@ export default {
   padding: 5px;
 }
 .card-titleab {
-  font-size: 30rpx;
+  font-size: 26rpx;
   color: #000000;
   font-weight: bold;
   margin-bottom: 10rpx;
@@ -998,7 +998,9 @@ export default {
   color: #000000;
   font-weight: bold;
   font-size: 36rpx;
-  left: 140px;
+  position: absolute;
+  left: 170px;
+  
 }
 
 .card-title12 {
@@ -1365,7 +1367,7 @@ left:30px;
   text-align: center;
   display: flex;
   flex-direction: row;
-  align-items: left;
+  align-items: center;
   padding: 20rpx;
   margin-bottom: 30rpx;
 
