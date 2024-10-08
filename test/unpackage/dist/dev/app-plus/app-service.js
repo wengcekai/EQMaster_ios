@@ -38,6 +38,83 @@ if (uni.restoreGlobal) {
       console[type].apply(console, [...args, filename]);
     }
   }
+  const _imports_0$f = "/static/启动页闪屏.png";
+  const _imports_1$9 = "/static/landingB.png";
+  const _export_sfc = (sfc, props) => {
+    const target = sfc.__vccOpts || sfc;
+    for (const [key, val] of props) {
+      target[key] = val;
+    }
+    return target;
+  };
+  const _sfc_main$y = {
+    data() {
+      return {
+        showSplash: false,
+        // 控制闪屏显示
+        username: ""
+        // 用于存储从上一页接收的用户名
+      };
+    },
+    methods: {
+      startQuiz() {
+        this.username = "user_" + Math.floor(Math.random() * 1e4);
+        uni.navigateTo({
+          url: `/pages/experience/experience?username=${this.username}`
+        });
+      },
+      goToLogin() {
+        uni.navigateTo({
+          url: "/pages/login/login"
+        });
+      }
+    },
+    onLoad(options) {
+      if (options.username) {
+        this.username = options.username;
+      }
+    },
+    mounted() {
+      formatAppLog("log", "at pages/landing/landing.vue:51", "页面已挂载");
+      if (this.$route && this.$route.query.username) {
+        this.username = this.$route.query.username;
+        formatAppLog("log", "at pages/landing/landing.vue:55", "接收到的用户名:", this.username);
+      }
+      setTimeout(() => {
+        formatAppLog("log", "at pages/landing/landing.vue:60", "隐藏闪屏");
+        this.showSplash = false;
+      }, 2e3);
+    }
+  };
+  function _sfc_render$x(_ctx, _cache, $props, $setup, $data, $options) {
+    return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, [
+      $data.showSplash ? (vue.openBlock(), vue.createElementBlock("view", {
+        key: 0,
+        class: "splash-screen"
+      }, [
+        vue.createElementVNode("image", {
+          class: "splash-image",
+          src: _imports_0$f,
+          mode: "widthFix"
+        })
+      ])) : vue.createCommentVNode("v-if", true),
+      vue.createCommentVNode(" 添加背景图片 "),
+      vue.createElementVNode("image", {
+        class: "background-image",
+        src: _imports_1$9,
+        mode: "widthFix"
+      }),
+      vue.createCommentVNode(" 开始体验按钮 "),
+      vue.createElementVNode("view", {
+        class: "button button1",
+        onClick: _cache[0] || (_cache[0] = (...args) => $options.startQuiz && $options.startQuiz(...args))
+      }, [
+        vue.createElementVNode("text", { class: "button-text" }, "开始体验")
+      ]),
+      vue.createElementVNode("text", { class: "login-text" }, "登录已有账号")
+    ]);
+  }
+  const PagesLandingLanding = /* @__PURE__ */ _export_sfc(_sfc_main$y, [["render", _sfc_render$x], ["__scopeId", "data-v-f45ff4f6"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/pages/landing/landing.vue"]]);
   const BASE_URL = "https://eqmaster.azurewebsites.net/chat/batttlefield";
   const EVAL_URL = "https://eqmaster.azurewebsites.net/eval/battlefield";
   function sendRequest(person_id, course_id, chat_content, url = BASE_URL) {
@@ -145,15 +222,8 @@ if (uni.restoreGlobal) {
     }
     return -1;
   }
-  const _imports_0$f = "/static/battlefield/background.png";
-  const _export_sfc = (sfc, props) => {
-    const target = sfc.__vccOpts || sfc;
-    for (const [key, val] of props) {
-      target[key] = val;
-    }
-    return target;
-  };
-  const _sfc_main$y = {
+  const _imports_0$e = "/static/battlefield/background.png";
+  const _sfc_main$x = {
     async mounted() {
       const result = await startField(1, "string");
       formatAppLog("log", "at pages/battlefield/battlefield-loading.vue:18", "result from start field:", result);
@@ -166,11 +236,11 @@ if (uni.restoreGlobal) {
       });
     }
   };
-  function _sfc_render$x(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$w(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "background-image loading-container" }, [
       vue.createElementVNode("image", {
         class: "background-image",
-        src: _imports_0$f,
+        src: _imports_0$e,
         mode: "aspectFill"
       }),
       vue.createCommentVNode(" Content "),
@@ -179,77 +249,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesBattlefieldBattlefieldLoading = /* @__PURE__ */ _export_sfc(_sfc_main$y, [["render", _sfc_render$x], ["__scopeId", "data-v-f3b7f371"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/pages/battlefield/battlefield-loading.vue"]]);
-  const _imports_0$e = "/static/启动页闪屏.png";
-  const _imports_1$9 = "/static/landingB.png";
-  const _sfc_main$x = {
-    data() {
-      return {
-        showSplash: false,
-        // 控制闪屏显示
-        username: ""
-        // 用于存储从上一页接收的用户名
-      };
-    },
-    methods: {
-      startQuiz() {
-        this.username = "user_" + Math.floor(Math.random() * 1e4);
-        uni.navigateTo({
-          url: `/pages/experience/experience?username=${this.username}`
-        });
-      },
-      goToLogin() {
-        uni.navigateTo({
-          url: "/pages/login/login"
-        });
-      }
-    },
-    onLoad(options) {
-      if (options.username) {
-        this.username = options.username;
-      }
-    },
-    mounted() {
-      formatAppLog("log", "at pages/landing/landing.vue:51", "页面已挂载");
-      if (this.$route && this.$route.query.username) {
-        this.username = this.$route.query.username;
-        formatAppLog("log", "at pages/landing/landing.vue:55", "接收到的用户名:", this.username);
-      }
-      setTimeout(() => {
-        formatAppLog("log", "at pages/landing/landing.vue:60", "隐藏闪屏");
-        this.showSplash = false;
-      }, 2e3);
-    }
-  };
-  function _sfc_render$w(_ctx, _cache, $props, $setup, $data, $options) {
-    return vue.openBlock(), vue.createElementBlock("view", { class: "container" }, [
-      $data.showSplash ? (vue.openBlock(), vue.createElementBlock("view", {
-        key: 0,
-        class: "splash-screen"
-      }, [
-        vue.createElementVNode("image", {
-          class: "splash-image",
-          src: _imports_0$e,
-          mode: "widthFix"
-        })
-      ])) : vue.createCommentVNode("v-if", true),
-      vue.createCommentVNode(" 添加背景图片 "),
-      vue.createElementVNode("image", {
-        class: "background-image",
-        src: _imports_1$9,
-        mode: "widthFix"
-      }),
-      vue.createCommentVNode(" 开始体验按钮 "),
-      vue.createElementVNode("view", {
-        class: "button button1",
-        onClick: _cache[0] || (_cache[0] = (...args) => $options.startQuiz && $options.startQuiz(...args))
-      }, [
-        vue.createElementVNode("text", { class: "button-text" }, "开始体验")
-      ]),
-      vue.createElementVNode("text", { class: "login-text" }, "登录已有账号")
-    ]);
-  }
-  const PagesLandingLanding = /* @__PURE__ */ _export_sfc(_sfc_main$x, [["render", _sfc_render$w], ["__scopeId", "data-v-f45ff4f6"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/pages/landing/landing.vue"]]);
+  const PagesBattlefieldBattlefieldLoading = /* @__PURE__ */ _export_sfc(_sfc_main$x, [["render", _sfc_render$w], ["__scopeId", "data-v-f3b7f371"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/pages/battlefield/battlefield-loading.vue"]]);
   const _sfc_main$w = {
     props: {
       name: {
@@ -293,7 +293,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const NpcComment = /* @__PURE__ */ _export_sfc(_sfc_main$w, [["render", _sfc_render$v], ["__scopeId", "data-v-dd44ef29"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/components/NpcComment.vue"]]);
+  const NpcComment = /* @__PURE__ */ _export_sfc(_sfc_main$w, [["render", _sfc_render$v], ["__scopeId", "data-v-dd44ef29"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/components/NpcComment.vue"]]);
   const _imports_0$d = "/static/summary-bg.png";
   const _sfc_main$v = {
     components: {
@@ -410,7 +410,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesBattlefieldBattlefieldSummary = /* @__PURE__ */ _export_sfc(_sfc_main$v, [["render", _sfc_render$u], ["__scopeId", "data-v-2b5d4ef4"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/pages/battlefield/battlefield-summary.vue"]]);
+  const PagesBattlefieldBattlefieldSummary = /* @__PURE__ */ _export_sfc(_sfc_main$v, [["render", _sfc_render$u], ["__scopeId", "data-v-2b5d4ef4"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/pages/battlefield/battlefield-summary.vue"]]);
   const _sfc_main$u = {
     props: {
       isActive: {
@@ -431,7 +431,7 @@ if (uni.restoreGlobal) {
       /* CLASS */
     );
   }
-  const ProgressBar = /* @__PURE__ */ _export_sfc(_sfc_main$u, [["render", _sfc_render$t], ["__scopeId", "data-v-aad32a68"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/components/ProgressBar.vue"]]);
+  const ProgressBar = /* @__PURE__ */ _export_sfc(_sfc_main$u, [["render", _sfc_render$t], ["__scopeId", "data-v-aad32a68"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/components/ProgressBar.vue"]]);
   const _imports_0$c = "/static/battlefield/back-iconpng.png";
   const _sfc_main$t = {
     components: {
@@ -490,7 +490,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesBattlefieldBattlefieldTask = /* @__PURE__ */ _export_sfc(_sfc_main$t, [["render", _sfc_render$s], ["__scopeId", "data-v-f52b0df4"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/pages/battlefield/battlefield-task.vue"]]);
+  const PagesBattlefieldBattlefieldTask = /* @__PURE__ */ _export_sfc(_sfc_main$t, [["render", _sfc_render$s], ["__scopeId", "data-v-f52b0df4"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/pages/battlefield/battlefield-task.vue"]]);
   const _imports_0$b = "/static/diamond.png";
   const _imports_1$8 = "/static/dashboard2/star.jpg";
   const _imports_2$7 = "/static/dashboard2/1.jpg";
@@ -887,7 +887,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesDashboardDashboard2 = /* @__PURE__ */ _export_sfc(_sfc_main$s, [["render", _sfc_render$r], ["__scopeId", "data-v-dea04644"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/pages/dashboard/dashboard2.vue"]]);
+  const PagesDashboardDashboard2 = /* @__PURE__ */ _export_sfc(_sfc_main$s, [["render", _sfc_render$r], ["__scopeId", "data-v-dea04644"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/pages/dashboard/dashboard2.vue"]]);
   const _imports_2$6 = "/static/battlefield/diamond.png";
   const _sfc_main$r = {
     props: {
@@ -913,7 +913,7 @@ if (uni.restoreGlobal) {
       )
     ]);
   }
-  const RewardBar = /* @__PURE__ */ _export_sfc(_sfc_main$r, [["render", _sfc_render$q], ["__scopeId", "data-v-860e4543"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/components/RewardBar.vue"]]);
+  const RewardBar = /* @__PURE__ */ _export_sfc(_sfc_main$r, [["render", _sfc_render$q], ["__scopeId", "data-v-860e4543"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/components/RewardBar.vue"]]);
   const _sfc_main$q = {
     props: {
       health: {
@@ -981,7 +981,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const NpcStatus = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$p], ["__scopeId", "data-v-dafce8e7"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/components/NpcStatus.vue"]]);
+  const NpcStatus = /* @__PURE__ */ _export_sfc(_sfc_main$q, [["render", _sfc_render$p], ["__scopeId", "data-v-dafce8e7"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/components/NpcStatus.vue"]]);
   const _imports_0$a = "/static/battlefield/character_background.png";
   const _sfc_main$p = {
     props: {
@@ -1030,7 +1030,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const LargeAvatarBubble = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$o], ["__scopeId", "data-v-f3476ae6"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/components/LargeAvatarBubble.vue"]]);
+  const LargeAvatarBubble = /* @__PURE__ */ _export_sfc(_sfc_main$p, [["render", _sfc_render$o], ["__scopeId", "data-v-f3476ae6"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/components/LargeAvatarBubble.vue"]]);
   const _sfc_main$o = {
     props: {
       title: {
@@ -1113,7 +1113,7 @@ if (uni.restoreGlobal) {
       /* STYLE */
     );
   }
-  const Judge = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["render", _sfc_render$n], ["__scopeId", "data-v-a1094024"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/components/Judge.vue"]]);
+  const Judge = /* @__PURE__ */ _export_sfc(_sfc_main$o, [["render", _sfc_render$n], ["__scopeId", "data-v-a1094024"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/components/Judge.vue"]]);
   const _imports_0$9 = "/static/battlefield/quit.png";
   const _imports_1$7 = "/static/battlefield/tipping-left.png";
   const _imports_3$4 = "/static/battlefield/tipping-right.png";
@@ -1244,7 +1244,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const Tipping = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$m], ["__scopeId", "data-v-6f0eed4e"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/components/Tipping.vue"]]);
+  const Tipping = /* @__PURE__ */ _export_sfc(_sfc_main$n, [["render", _sfc_render$m], ["__scopeId", "data-v-6f0eed4e"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/components/Tipping.vue"]]);
   const _imports_0$8 = "/static/battlefield/question-mark.png";
   const _imports_1$6 = "/static/battlefield/tip-yellow.png";
   const _sfc_main$m = {
@@ -1277,7 +1277,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const TippingChatBox = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$l], ["__scopeId", "data-v-23a165a0"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/components/TippingChatBox.vue"]]);
+  const TippingChatBox = /* @__PURE__ */ _export_sfc(_sfc_main$m, [["render", _sfc_render$l], ["__scopeId", "data-v-23a165a0"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/components/TippingChatBox.vue"]]);
   const _sfc_main$l = {
     props: {
       wording: {
@@ -1297,7 +1297,7 @@ if (uni.restoreGlobal) {
       )
     ]);
   }
-  const SelfChatBox = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["__scopeId", "data-v-ca8700c1"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/components/SelfChatBox.vue"]]);
+  const SelfChatBox = /* @__PURE__ */ _export_sfc(_sfc_main$l, [["render", _sfc_render$k], ["__scopeId", "data-v-ca8700c1"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/components/SelfChatBox.vue"]]);
   const _sfc_main$k = {
     props: {
       avatar: {
@@ -1350,7 +1350,7 @@ if (uni.restoreGlobal) {
       )
     ]);
   }
-  const NpcChatBox = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__scopeId", "data-v-7860702c"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/components/NpcChatBox.vue"]]);
+  const NpcChatBox = /* @__PURE__ */ _export_sfc(_sfc_main$k, [["render", _sfc_render$j], ["__scopeId", "data-v-7860702c"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/components/NpcChatBox.vue"]]);
   function findLastName(str) {
     const regex = /(小李|小王)(?!.*(小李|小王))/;
     const match = str.match(regex);
@@ -1716,7 +1716,7 @@ if (uni.restoreGlobal) {
     }, [
       vue.createElementVNode("image", {
         class: "background-image",
-        src: _imports_0$f,
+        src: _imports_0$e,
         mode: "aspectFill"
       }),
       vue.createElementVNode("view", { class: "overlay" }),
@@ -1905,7 +1905,7 @@ if (uni.restoreGlobal) {
       ])) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const PagesBattlefieldBattlefieldPlayground = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__scopeId", "data-v-520df1b5"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/pages/battlefield/battlefield-playground.vue"]]);
+  const PagesBattlefieldBattlefieldPlayground = /* @__PURE__ */ _export_sfc(_sfc_main$j, [["render", _sfc_render$i], ["__scopeId", "data-v-520df1b5"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/pages/battlefield/battlefield-playground.vue"]]);
   const _sfc_main$i = {
     components: {
       ProgressBar
@@ -1949,7 +1949,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesBattlefieldBattlefieldIntro = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__scopeId", "data-v-29c1a59c"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/pages/battlefield/battlefield-intro.vue"]]);
+  const PagesBattlefieldBattlefieldIntro = /* @__PURE__ */ _export_sfc(_sfc_main$i, [["render", _sfc_render$h], ["__scopeId", "data-v-29c1a59c"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/pages/battlefield/battlefield-intro.vue"]]);
   const _imports_0$7 = "/static/cta.png";
   const _sfc_main$h = {
     data() {
@@ -2127,16 +2127,16 @@ if (uni.restoreGlobal) {
               clearInterval(that.timeoutInterval);
               that.timeoutInterval = null;
             }
-            const nextPageUrl = `/pages/result/result?userId=${this.userId || "some user id"}&username=${encodeURIComponent(this.username || "some username")}`;
+            const nextPageUrl = `/pages/result/result?jobId=${this.jobId}&userId=${this.userId}&username=${encodeURIComponent(this.username)}&gender=${this.gender}&birthday=${encodeURIComponent(JSON.stringify(this.birthday))}&options=${encodeURIComponent(JSON.stringify(this.selectedOptions))}&num=${this.num}`;
             uni.setStorage({
               key: "response",
               data: result
             });
-            formatAppLog("log", "at pages/result/loading.vue:216", "begin to navigate");
+            formatAppLog("log", "at pages/result/loading.vue:214", "begin to navigate");
             uni.navigateTo({
               url: nextPageUrl,
               fail: (err) => {
-                formatAppLog("error", "at pages/result/loading.vue:220", "Navigation failed:", err);
+                formatAppLog("error", "at pages/result/loading.vue:218", "Navigation failed:", err);
                 uni.showToast({
                   title: "页面跳转失败",
                   icon: "none"
@@ -2145,7 +2145,7 @@ if (uni.restoreGlobal) {
             });
           },
           fail(error) {
-            formatAppLog("error", "at pages/result/loading.vue:229", "Error fetching homepage data:", error);
+            formatAppLog("error", "at pages/result/loading.vue:227", "Error fetching homepage data:", error);
           }
         });
       },
@@ -2181,7 +2181,7 @@ if (uni.restoreGlobal) {
       this.animateImage();
       this.timeoutInterval = setTimeout(() => {
         if (this.interval) {
-          formatAppLog("log", "at pages/result/loading.vue:273", "cancel splash by timeout.");
+          formatAppLog("log", "at pages/result/loading.vue:271", "cancel splash by timeout.");
           clearInterval(this.interval);
         }
       }, 3e4);
@@ -2252,7 +2252,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesResultLoading = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__scopeId", "data-v-af79a7c4"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/pages/result/loading.vue"]]);
+  const PagesResultLoading = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$g], ["__scopeId", "data-v-af79a7c4"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/pages/result/loading.vue"]]);
   function drawRadar(canvasId, data) {
     formatAppLog("log", "at scripts/draw_radar.js:22", "started to draw radar chart");
     formatAppLog("log", "at scripts/draw_radar.js:23", "data", data);
@@ -2391,42 +2391,42 @@ if (uni.restoreGlobal) {
       },
       illustrationSrc() {
         const scores = this.homepageData.response.eq_scores;
-        formatAppLog("log", "at pages/result/result.vue:218", "results for backgrounds:", scores);
+        formatAppLog("log", "at pages/result/result.vue:222", "results for backgrounds:", scores);
         const minScore = Math.min(scores.dimension1_score, scores.dimension2_score, scores.dimension3_score, scores.dimension4_score, scores.dimension5_score);
         if (minScore === scores.dimension1_score) {
-          formatAppLog("log", "at pages/result/result.vue:224", "illustration src:", "1");
+          formatAppLog("log", "at pages/result/result.vue:228", "illustration src:", "1");
           return "/static/aniimals/kapibala.png";
         } else if (minScore === scores.dimension2_score) {
-          formatAppLog("log", "at pages/result/result.vue:227", "illustration src:", "2");
+          formatAppLog("log", "at pages/result/result.vue:231", "illustration src:", "2");
           return "/static/aniimals/houzi.png";
         } else if (minScore === scores.dimension3_score) {
-          formatAppLog("log", "at pages/result/result.vue:230", "illustration src:", "3");
+          formatAppLog("log", "at pages/result/result.vue:234", "illustration src:", "3");
           return "/static/aniimals/ciwei.png";
         } else if (minScore === scores.dimension4_score) {
-          formatAppLog("log", "at pages/result/result.vue:233", "illustration src:", "4");
+          formatAppLog("log", "at pages/result/result.vue:237", "illustration src:", "4");
           return "/static/aniimals/tuoniao.png";
         } else if (minScore === scores.dimension5_score) {
-          formatAppLog("log", "at pages/result/result.vue:236", "illustration src:", "5");
+          formatAppLog("log", "at pages/result/result.vue:240", "illustration src:", "5");
           return "/static/aniimals/lang.png";
         }
       }
     },
     onLoad(option) {
-      formatAppLog("log", "at pages/result/result.vue:242", "option", option);
+      formatAppLog("log", "at pages/result/result.vue:246", "option", option);
       this.userId = option.userId || "";
       this.username = decodeURIComponent(option.username || "");
       try {
         uni.getStorage({
           key: "response",
           success: (res) => {
-            formatAppLog("log", "at pages/result/result.vue:250", "########successfully retrieved data", res);
+            formatAppLog("log", "at pages/result/result.vue:254", "########successfully retrieved data", res);
             this.homepageData = res.data;
-            formatAppLog("log", "at pages/result/result.vue:252", "begin to draw radar");
+            formatAppLog("log", "at pages/result/result.vue:256", "begin to draw radar");
             this.drawRadar();
           }
         });
       } catch (e) {
-        formatAppLog("log", "at pages/result/result.vue:257", "something error happened", e);
+        formatAppLog("log", "at pages/result/result.vue:261", "something error happened", e);
       }
     },
     onUnload() {
@@ -2440,6 +2440,20 @@ if (uni.restoreGlobal) {
         clearInterval(this.interval);
       }
     },
+    onReady() {
+      if (!this.username) {
+        uni.getStorage({
+          key: "username",
+          success: (res) => {
+            this.username = res.data;
+            formatAppLog("log", "at pages/result/result.vue:283", "Username from storage:", this.username);
+          },
+          fail: () => {
+            formatAppLog("error", "at pages/result/result.vue:286", "Failed to get username from storage");
+          }
+        });
+      }
+    },
     methods: {
       progressWidth(value) {
         const percentage = value / this.maxScore * 100;
@@ -2448,11 +2462,11 @@ if (uni.restoreGlobal) {
       circleLeftPosition(value) {
         const percentage1 = value / this.maxScore * 100;
         const progressBarWidth = uni.getSystemInfoSync().windowWidth * 0.8;
-        formatAppLog("log", "at pages/result/result.vue:283", percentage1);
+        formatAppLog("log", "at pages/result/result.vue:302", percentage1);
         return percentage1 / 100 * progressBarWidth;
       },
       drawRadar() {
-        formatAppLog("log", "at pages/result/result.vue:288", "======begin to draw radar chart, data:", this.homepageData.response);
+        formatAppLog("log", "at pages/result/result.vue:307", "======begin to draw radar chart, data:", this.homepageData.response);
         const data = [
           {
             subject: "维度1",
@@ -2480,12 +2494,12 @@ if (uni.restoreGlobal) {
             fullMark: 100
           }
         ];
-        formatAppLog("log", "at pages/result/result.vue:315", "Draw radar started");
+        formatAppLog("log", "at pages/result/result.vue:334", "Draw radar started");
         drawRadar("radarCanvas", data);
-        formatAppLog("log", "at pages/result/result.vue:317", "Draw radar stopped");
+        formatAppLog("log", "at pages/result/result.vue:336", "Draw radar stopped");
       },
       navigateToGuide() {
-        formatAppLog("log", "at pages/result/result.vue:320", "Navigating to guide with data:", {
+        formatAppLog("log", "at pages/result/result.vue:339", "Navigating to guide with data:", {
           userId: this.userId,
           username: this.username,
           jobId: this.homepageData.response.personal_info.job_id
@@ -2507,12 +2521,22 @@ if (uni.restoreGlobal) {
         style: { "height": "100%" }
       }, [
         vue.createElementVNode("view", { class: "content" }, [
+          vue.createCommentVNode(' <view class="debug-info"> '),
+          vue.createCommentVNode(" 如需调试信息，可取消注释以下行 "),
+          vue.createCommentVNode(" <text>homepageData: {{ JSON.stringify(homepageData) }}</text> "),
+          vue.createCommentVNode(" </view> "),
           vue.createElementVNode("view", { class: "header" }, [
             vue.createElementVNode("image", {
               class: "header-icon",
               src: _imports_0$6
             }),
-            vue.createElementVNode("text", { class: "score-title-head" }, "我的检测结果"),
+            vue.createElementVNode(
+              "text",
+              { class: "score-title-head" },
+              vue.toDisplayString($data.homepageData.response.personal_info.name) + "我的检测结果",
+              1
+              /* TEXT */
+            ),
             vue.createElementVNode("image", {
               class: "header-icon",
               src: _imports_1$5
@@ -2823,7 +2847,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesResultResult = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__scopeId", "data-v-b615976f"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/pages/result/result.vue"]]);
+  const PagesResultResult = /* @__PURE__ */ _export_sfc(_sfc_main$g, [["render", _sfc_render$f], ["__scopeId", "data-v-b615976f"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/pages/result/result.vue"]]);
   const _imports_0$5 = "/static/bg1.png";
   const _imports_1$4 = "/static/sign.png";
   const _sfc_main$f = {
@@ -3035,7 +3059,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesTestTest5 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__scopeId", "data-v-f87db42d"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/pages/test/test5.vue"]]);
+  const PagesTestTest5 = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__scopeId", "data-v-f87db42d"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/pages/test/test5.vue"]]);
   const _imports_0$4 = "/static/rec-right.png";
   const _imports_2$3 = "/static/icon3.png";
   const _sfc_main$e = {
@@ -3100,7 +3124,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const OnboardingChatBubble = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__scopeId", "data-v-9e1372ab"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/components/OnboardingChatBubble.vue"]]);
+  const OnboardingChatBubble = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__scopeId", "data-v-9e1372ab"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/components/OnboardingChatBubble.vue"]]);
   const _sfc_main$d = {
     components: {
       OnboardingChatBubble
@@ -3222,7 +3246,7 @@ if (uni.restoreGlobal) {
       }, null, 8, ["userName", "avatar", "dismiss", "description"])
     ]);
   }
-  const PagesTestTest1 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-f400b819"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/pages/test/test1.vue"]]);
+  const PagesTestTest1 = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-f400b819"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/pages/test/test1.vue"]]);
   const _sfc_main$c = {
     data() {
       return {
@@ -3361,7 +3385,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesTestTest = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-727d09f0"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/pages/test/test.vue"]]);
+  const PagesTestTest = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-727d09f0"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/pages/test/test.vue"]]);
   const _imports_0$3 = "/static/jobicon.png";
   const _imports_1$3 = "/static/relationshipicon.png";
   const _sfc_main$b = {
@@ -3501,7 +3525,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesPreferencePreference2 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__scopeId", "data-v-50f1e56a"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/pages/preference/preference2.vue"]]);
+  const PagesPreferencePreference2 = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__scopeId", "data-v-50f1e56a"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/pages/preference/preference2.vue"]]);
   const _sfc_main$a = {
     data() {
       const date = /* @__PURE__ */ new Date();
@@ -3641,7 +3665,7 @@ if (uni.restoreGlobal) {
       vue.createElementVNode("view", { class: "mask bottom" })
     ]);
   }
-  const DatePicker = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__scopeId", "data-v-9f4f5132"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/components/DatePicker.vue"]]);
+  const DatePicker = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__scopeId", "data-v-9f4f5132"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/components/DatePicker.vue"]]);
   const _sfc_main$9 = {
     components: {
       DatePicker
@@ -3719,7 +3743,7 @@ if (uni.restoreGlobal) {
       /* STABLE_FRAGMENT */
     );
   }
-  const PagesPreferencePreference1 = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__file", "/Users/taokai/codes/EQMaster_ios/test/pages/preference/preference1.vue"]]);
+  const PagesPreferencePreference1 = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/pages/preference/preference1.vue"]]);
   const _imports_0$1 = "/static/female.png";
   const _imports_1$2 = "/static/male.png";
   const _imports_2$2 = "/static/4.png";
@@ -3842,7 +3866,7 @@ if (uni.restoreGlobal) {
       /* STABLE_FRAGMENT */
     );
   }
-  const PagesPreferencePreference = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-7539d408"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/pages/preference/preference.vue"]]);
+  const PagesPreferencePreference = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-7539d408"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/pages/preference/preference.vue"]]);
   const _sfc_main$7 = {
     data() {
       return {
@@ -4046,7 +4070,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesTestTest2 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-51a7cd0a"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/pages/test/test2.vue"]]);
+  const PagesTestTest2 = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-51a7cd0a"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/pages/test/test2.vue"]]);
   const _imports_1$1 = "/static/fullbutton.png";
   const _imports_2$1 = "/static/tip.png";
   const _imports_3$1 = "/static/add.png";
@@ -4345,7 +4369,7 @@ if (uni.restoreGlobal) {
           vue.createElementVNode(
             "text",
             { class: "score-title-head" },
-            "早，" + vue.toDisplayString($data.username) + "！",
+            "早，" + vue.toDisplayString($data.homepageData.response.personal_info.name) + "！",
             1
             /* TEXT */
           ),
@@ -4642,7 +4666,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesDashboardDashboard = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-75e816e7"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/pages/dashboard/dashboard.vue"]]);
+  const PagesDashboardDashboard = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-75e816e7"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/pages/dashboard/dashboard.vue"]]);
   const _sfc_main$5 = vue.defineComponent({
     data() {
       return {
@@ -4739,7 +4763,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesPreferencePreference3 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-95eb0c6e"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/pages/preference/preference3.vue"]]);
+  const PagesPreferencePreference3 = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-95eb0c6e"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/pages/preference/preference3.vue"]]);
   const _sfc_main$4 = {
     data() {
       return {
@@ -4870,7 +4894,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesTestTest3 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-a9c4f038"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/pages/test/test3.vue"]]);
+  const PagesTestTest3 = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-a9c4f038"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/pages/test/test3.vue"]]);
   const _imports_1 = "/static/renew.png";
   const _imports_3 = "/static/edit.png";
   const _imports_4 = "/static/lock.png";
@@ -5447,7 +5471,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesProfileProfile = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-dd383ca2"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/pages/profile/profile.vue"]]);
+  const PagesProfileProfile = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-dd383ca2"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/pages/profile/profile.vue"]]);
   const _sfc_main$2 = {
     data() {
       return {
@@ -5529,7 +5553,7 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-e4e4508d"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/pages/login/login.vue"]]);
+  const PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-e4e4508d"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/pages/login/login.vue"]]);
   const _sfc_main$1 = {
     data() {
       return {
@@ -5597,9 +5621,9 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesExperienceExperience = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-5164d016"], ["__file", "/Users/taokai/codes/EQMaster_ios/test/pages/experience/experience.vue"]]);
-  __definePage("pages/battlefield/battlefield-loading", PagesBattlefieldBattlefieldLoading);
+  const PagesExperienceExperience = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__scopeId", "data-v-5164d016"], ["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/pages/experience/experience.vue"]]);
   __definePage("pages/landing/landing", PagesLandingLanding);
+  __definePage("pages/battlefield/battlefield-loading", PagesBattlefieldBattlefieldLoading);
   __definePage("pages/battlefield/battlefield-summary", PagesBattlefieldBattlefieldSummary);
   __definePage("pages/battlefield/battlefield-task", PagesBattlefieldBattlefieldTask);
   __definePage("pages/dashboard/dashboard2", PagesDashboardDashboard2);
@@ -5634,7 +5658,7 @@ if (uni.restoreGlobal) {
       formatAppLog("log", "at App.vue:32", "App Exit");
     }
   };
-  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/taokai/codes/EQMaster_ios/test/App.vue"]]);
+  const App = /* @__PURE__ */ _export_sfc(_sfc_main, [["__file", "/Users/wengcekai/Desktop/eqmaster-kt/EQMaster_ios/test/App.vue"]]);
   function createApp() {
     const app = vue.createVueApp(App);
     return {
